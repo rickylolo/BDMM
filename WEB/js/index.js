@@ -2,10 +2,11 @@
 $(document).ready(function(){
     
     $('#ButtonLogIn').click(function(){
-      window.location.href = "mainPage.html";
+      window.location.href = "mainPage.php";
   
       });
-
+      
+      // Prevenir que este evento cierre mi modal
       $('.SexoUsuario').on("click",function (event) {
         event.preventDefault();
         $("#gender-user").val($(this).text());
