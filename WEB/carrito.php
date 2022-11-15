@@ -21,7 +21,7 @@
         <header class="miHeader">
             <div class="row">
                 <div class="col-6 ">
-                    <a class="navbar-brand" href="mainPage.html"><img src="img/jyp-logo.jpg" id="jypLogo"></a>
+                    <a class="navbar-brand" href="mainPage.php"><img src="img/jyp-logo.jpg" id="jypLogo"></a>
                 </div>
                 <div class="col-4">
                 </div>
@@ -29,7 +29,7 @@
                     <div class="d-flex flex-column dropstart misDatosUsuario">
                         <div class="miImagen dropdown p-2 mx-auto" id="DatosUser" data-bs-toggle="dropdown"
                             aria-expanded="false"><img src="img/avatar.jpg" id="pfp" class="rounded-circle"></div>
-                        <a class="fs-4 fw-bold mb-3 mx-auto miImgCarrito" href="carrito.html"><i
+                        <a class="fs-4 fw-bold mb-3 mx-auto miImgCarrito" href="carrito.php"><i
                                 class="bi bi-cart"></i></a>
                         <ul class="dropdown-menu" aria-labelledby="DatosUser">
                             <li class="mx-auto">
@@ -39,12 +39,12 @@
                             <li><a class="dropdown-item" href="" data-bs-toggle="modal"
                                     data-bs-target="#miModalEditUser">Editar Perfil</a></li>
                             <li><a class="dropdown-item" href="">Hacer perfil público/privado</a></li>
-                            <li><a class="dropdown-item" href="pedidos.html">Mis pedidos</a></li>
-                            <li><a class="dropdown-item" href="listas.html">Mis listas</a></li>
-                            <li><a class="dropdown-item" href="paginaAdmin.html">Página Admin</a></li>
-                            <li><a class="dropdown-item" href="paginaVendedor.html">Página Vendedor</a></li>
+                            <li><a class="dropdown-item" href="pedidos.php">Mis pedidos</a></li>
+                            <li><a class="dropdown-item" href="listas.php">Mis listas</a></li>
+                            <li><a class="dropdown-item" href="paginaAdmin.php">Página Admin</a></li>
+                            <li><a class="dropdown-item" href="paginaVendedor.php">Página Vendedor</a></li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="index.html">Salir</a></li>
+                            <li><a class="dropdown-item" href="index.php">Salir</a></li>
                         </ul>
                     </div>
                 </div>
@@ -69,11 +69,11 @@
                             <i class="bi bi-list"></i>CATEGORÍAS
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="search.html">Álbumes</a></li>
-                            <li><a class="dropdown-item" href="search.html">Photocards</a></li>
-                            <li><a class="dropdown-item" href="search.html">Pósters</a></li>
-                            <li><a class="dropdown-item" href="search.html">Photobooks</a></li>
-                            <li><a class="dropdown-item" href="search.html">Ropa</a></li>
+                            <li><a class="dropdown-item" href="search.php">Álbumes</a></li>
+                            <li><a class="dropdown-item" href="search.php">Photocards</a></li>
+                            <li><a class="dropdown-item" href="search.php">Pósters</a></li>
+                            <li><a class="dropdown-item" href="search.php">Photobooks</a></li>
+                            <li><a class="dropdown-item" href="search.php">Ropa</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -89,7 +89,7 @@
     <div class="container">
         <div class="separador"></div>
         <div class="col-12 fs-2 fw-bolder d-flex justify-content-end">
-            <a class="btn btn-sm bg-primary" href="pedidos.html">Consulta
+            <a class="btn btn-sm bg-primary" href="pedidos.php">Consulta
                 de pedidos realizados</a>
         </div>
         <!-- CARRITO -->

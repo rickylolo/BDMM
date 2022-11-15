@@ -1,10 +1,10 @@
 USE BDMM_PROYECTO;
 
 /*--------------------------------------------------------------------------------USUARIOS--------------------------------------------------------------------------*/
-DROP VIEW IF EXISTS userLogin;
+DROP VIEW IF EXISTS userLoginID;
 
-CREATE VIEW userLogin AS
-SELECT Usuario_id as ID,nickUsuario as username,fotoPerfil,CONCAT(nombreUsuario,' ',apellidoPaterno,' ',apellidoMaterno) as nombreCompleto
+CREATE VIEW userLoginID AS
+SELECT Usuario_id AS ID, nickUsuario AS usuario, userPassword AS pass
 FROM Usuario;
 
 
