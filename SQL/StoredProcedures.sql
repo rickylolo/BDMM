@@ -58,7 +58,7 @@ BEGIN
           UPDATE Usuario SET esPrivado = sp_esPrivado WHERE Usuario_id = sp_Usuario_id;
    END IF;
     IF Operacion = 'L' THEN /*LOG IN USUARIO*/
-	SELECT ID FROM userLoginID WHERE usuario = sp_nickUsuario AND pass = sp_userPassword;
+	SELECT ID,username,fotoPerfil,nombreCompleto FROM userLogin WHERE nickUsuario = sp_nickUsuario AND userPassword = sp_userPassword;
    END IF;
       IF Operacion = 'G' THEN /*GET DATOS USUARIOS*/
 	SELECT Usuario_id,correo,nickUsuario,userPassword,rolUsuario,fotoPerfil,nombreUsuario,apellidoMaterno,apellidoPaterno,fechaNacimiento,sexo,esPrivado FROM Usuario WHERE Usuario_id = sp_Usuario_id;
@@ -68,9 +68,6 @@ BEGIN
     FROM Usuario; 
    END IF;
 END //
-
-
-SELECT * FROM Usuario;
 /*
 CALL sp_GestionUsuario('I', #Operacion
 NULL, #Id Usuario

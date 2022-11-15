@@ -70,29 +70,10 @@ class User extends DB
         return $query;
     }
 
-     function log_in($username, $password)
-    {
-        $consulta = "CALL sp_GestionUsuario('L', 
-        NULL,
-        NULL,
-        '$username', 
-        '$password', 
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL); ";
-        $query = $this->connect()->query($consulta);
-        return $query;
-    }
-
     function actualizarUser($id, $email, $username, $password, $user_Type, $user_IMG, $names, $lastNameP, $lastNameM, $fechaNac,  $genero)
     {
         $user_IMG = mysqli_escape_string($this->myCon(), $user_IMG); //IMAGEN
-        $update = "CALL sp_GestionUsuario('E', 
+        $insert = "CALL sp_GestionUsuario('E', 
         $id,
         '$email',
         '$username', 
@@ -104,8 +85,8 @@ class User extends DB
         '$lastNameM', 
         '$fechaNac', 
         '$genero',
-         NULL); ";
-        $query = $this->connect()->query($update);
+        1); ";
+        $query = $this->connect()->query($insert);
         return $query;
     }
 

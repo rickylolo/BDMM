@@ -30,5 +30,4 @@ $(document).ready(function () {
 
     $("#product-category").val($(this).text());
   });
-  //Cargar mis datos
 });

@@ -1,4 +1,8 @@
 $(document).ready(function () {
+  $("#ButtonLogIn").click(function () {
+    window.location.href = "mainPage.php";
+  });
+
   // Prevenir que este evento cierre mi modal
   $(".SexoUsuario").on("click", function (event) {
     event.preventDefault();

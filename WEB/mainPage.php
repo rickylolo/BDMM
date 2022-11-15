@@ -1,7 +1,3 @@
-<?php
-session_start(); // Inicio mi sesion PHP
-
-?>
 <!DOCTYPE html>
 <html>
 
@@ -19,11 +15,6 @@ session_start(); // Inicio mi sesion PHP
 </head>
 
 <body>
-      <?php
-  if ($_SESSION != NULL) { // Si mi sesion no es nula significa que un usuario inicio sesion
-    echo '<input type="hidden" value="' . $_SESSION['Usuario_id'] . '" id="miUserIdActual">'; // Valor del id del usuario en un campo invisible
-  }
-  ?>
     <!--                 HEADER                 -->
     <div class="container">
         <header class="miHeader">
@@ -44,7 +35,7 @@ session_start(); // Inicio mi sesion PHP
                                 <p class="fs-5 p-1 mx-auto" id="miNombre">rickylolo</p>
                             </li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="" id="EditarPerfil" data-bs-toggle="modal"
+                            <li><a class="dropdown-item" href="" data-bs-toggle="modal"
                                     data-bs-target="#miModalEditUser">Editar Perfil</a></li>
                             <li><a class="dropdown-item" href="">Hacer perfil público/privado</a></li>
                             <li><a class="dropdown-item" href="pedidos.php">Mis pedidos</a></li>

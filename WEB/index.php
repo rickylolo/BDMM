@@ -128,7 +128,6 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<form method="POST" action="php/user_API.php">
 					<div class="separador"></div>
 					<div class="row modalTexto">
 						Nombre de usuario o correo
@@ -157,7 +156,6 @@
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 
 				</div>
-				</form>
 			</div>
 		</div>
 
