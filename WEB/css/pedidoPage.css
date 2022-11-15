@@ -1,11 +1,11 @@
 .productoImagenes {
-    object-fit: fill;
-    width: 10.0rem;
-    height: 10.0rem;
-    max-width: 10.0rem;
-    max-height: 10.0rem;
+  object-fit: fill;
+  width: 10rem;
+  height: 10rem;
+  max-width: 10rem;
+  max-height: 10rem;
 }
 
-.btn{
-    color: white;
+.btn {
+  color: white;
 }

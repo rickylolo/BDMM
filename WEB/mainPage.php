@@ -20,7 +20,7 @@
         <header class="miHeader">
             <div class="row">
                 <div class="col-6 ">
-                    <a class="navbar-brand" href="mainPage.html"><img src="img/jyp-logo.jpg" id="jypLogo"></a>
+                    <a class="navbar-brand" href="mainPage.php"><img src="img/jyp-logo.jpg" id="jypLogo"></a>
                 </div>
                 <div class="col-4">
                 </div>
@@ -28,7 +28,7 @@
                     <div class="d-flex flex-column dropstart misDatosUsuario">
                         <div class="miImagen dropdown p-2 mx-auto" id="DatosUser" data-bs-toggle="dropdown"
                             aria-expanded="false"><img src="img/avatar.jpg" id="pfp" class="rounded-circle"></div>
-                        <a class="fs-4 fw-bold mb-3 mx-auto miImgCarrito" href="carrito.html"><i
+                        <a class="fs-4 fw-bold mb-3 mx-auto miImgCarrito" href="carrito.php"><i
                                 class="bi bi-cart"></i></a>
                         <ul class="dropdown-menu" aria-labelledby="DatosUser">
                             <li class="mx-auto">
@@ -38,12 +38,12 @@
                             <li><a class="dropdown-item" href="" data-bs-toggle="modal"
                                     data-bs-target="#miModalEditUser">Editar Perfil</a></li>
                             <li><a class="dropdown-item" href="">Hacer perfil público/privado</a></li>
-                            <li><a class="dropdown-item" href="pedidos.html">Mis pedidos</a></li>
-                            <li><a class="dropdown-item" href="listas.html">Mis listas</a></li>
-                            <li><a class="dropdown-item" href="paginaAdmin.html">Página Admin</a></li>
-                            <li><a class="dropdown-item" href="paginaVendedor.html">Página Vendedor</a></li>
+                            <li><a class="dropdown-item" href="pedidos.php">Mis pedidos</a></li>
+                            <li><a class="dropdown-item" href="listas.php">Mis listas</a></li>
+                            <li><a class="dropdown-item" href="paginaAdmin.php">Página Admin</a></li>
+                            <li><a class="dropdown-item" href="paginaVendedor.php">Página Vendedor</a></li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="index.html">Salir</a></li>
+                            <li><a class="dropdown-item" href="index.php">Salir</a></li>
                         </ul>
                     </div>
                 </div>
@@ -68,11 +68,11 @@
                             <i class="bi bi-list"></i>CATEGORÍAS
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="search.html">Álbumes</a></li>
-                            <li><a class="dropdown-item" href="search.html">Photocards</a></li>
-                            <li><a class="dropdown-item" href="search.html">Pósters</a></li>
-                            <li><a class="dropdown-item" href="search.html">Photobooks</a></li>
-                            <li><a class="dropdown-item" href="search.html">Ropa</a></li>
+                            <li><a class="dropdown-item" href="search.php">Álbumes</a></li>
+                            <li><a class="dropdown-item" href="search.php">Photocards</a></li>
+                            <li><a class="dropdown-item" href="search.php">Pósters</a></li>
+                            <li><a class="dropdown-item" href="search.php">Photobooks</a></li>
+                            <li><a class="dropdown-item" href="search.php">Ropa</a></li>
 
                         </ul>
                     </li>
@@ -100,22 +100,22 @@
                         </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <a href="producto.html">
+                                <a href="producto.php">
                                     <img src="img/Stray-Kids-Comeback-2022.jpg" class="mx-auto d-block w-100" alt="...">
                                 </a>
                             </div>
                             <div class="carousel-item ">
-                                <a href="producto.html">
+                                <a href="producto.php">
                                     <img src="img/TwiceTTT.jpg" class="mx-auto d-block w-100" alt="...">
                                 </a>
                             </div>
                             <div class="carousel-item ">
-                                <a href="producto.html">
+                                <a href="producto.php">
                                     <img src="img/itzyCheckmate.jpg" class="mx-auto d-block w-100" alt="...">
                                 </a>
                             </div>
                             <div class="carousel-item ">
-                                <a href="producto.html">
+                                <a href="producto.php">
                                     <img src="img/nmixxOO.jpg" class="mx-auto d-block w-100" alt="...">
                                 </a>
                             </div>
@@ -142,7 +142,7 @@
                 <div class="content">
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/celebrate.jpg" class="post-img">
                             </a>
                         </div>
@@ -156,7 +156,7 @@
 
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/tasteOfLove.jpg" class="post-img">
                             </a>
                         </div>
@@ -170,7 +170,7 @@
 
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/nmixxAlbum.jpg" class="post-img">
                             </a>
                         </div>
@@ -184,7 +184,7 @@
 
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/oddinarySK.jpg" class="post-img">
                             </a>
                         </div>
@@ -208,7 +208,7 @@
                 <div class="content">
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/celebrate.jpg" class="post-img">
                             </a>
                         </div>
@@ -222,7 +222,7 @@
 
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/tasteOfLove.jpg" class="post-img">
                             </a>
                         </div>
@@ -236,7 +236,7 @@
 
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/nmixxAlbum.jpg" class="post-img">
                             </a>
                         </div>
@@ -251,7 +251,7 @@
 
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/oddinarySK.jpg" class="post-img">
                             </a>
                         </div>
@@ -275,7 +275,7 @@
                 <div class="content">
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/celebrate.jpg" class="post-img">
                             </a>
                         </div>
@@ -289,7 +289,7 @@
 
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/tasteOfLove.jpg" class="post-img">
                             </a>
                         </div>
@@ -303,7 +303,7 @@
 
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/nmixxAlbum.jpg" class="post-img">
                             </a>
                         </div>
@@ -317,7 +317,7 @@
 
                     <article class="post">
                         <div class="post-header">
-                            <a href="producto.html">
+                            <a href="producto.php">
                                 <img src="img/oddinarySK.jpg" class="post-img">
                             </a>
                         </div>
