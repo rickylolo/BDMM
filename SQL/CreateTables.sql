@@ -2,6 +2,7 @@ CREATE DATABASE BDMM_PROYECTO;
 USE BDMM_PROYECTO;
 
 -- 												TABLA DE USUARIOS										 --
+DROP TABLE IF EXISTS Usuario;
 CREATE TABLE Usuario(
 	Usuario_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria Tabla Usuario',
 	correo VARCHAR(40) NOT NULL  COMMENT'Correo electrónico del usuario',
@@ -21,6 +22,7 @@ CREATE TABLE Usuario(
 );
 
 -- 												TABLA DE METODO DE PAGO DE LOS USUARIOS								 --
+DROP TABLE IF EXISTS MetodoUsuario;
 CREATE TABLE MetodoUsuario(
 	MetodoUsuario_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de los Metodos de pago del usuario',
     Usuario_id INT(6) NOT NULL COMMENT'Clave Foránea del usuario',
@@ -35,16 +37,19 @@ CREATE TABLE MetodoUsuario(
 );
 
 -- 												TABLA DE METODOS DE PAGO --
+DROP TABLE IF EXISTS MetodoPago;
 CREATE TABLE MetodoPago(
 	MetodoPago_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de los Metodos de pago',
+    Usuario_id_Registro INT(6) NOT NULL COMMENT'Clave Foránea del usuario que registro el metodo',
     tipoMetodo VARCHAR(30) NOT NULL COMMENT'Tipo del metodo de pago',
 	nombreMetodo  VARCHAR(30) NOT NULL COMMENT'Nombre del metodo de pago',
-    imagenMetodo BLOB NOT NULL COMMENT'Imagen del metodo de pago',
+    imagenMetodo MEDIUMBLOB NOT NULL COMMENT'Imagen del metodo de pago',
  CONSTRAINT PK_MetodoPago
 	PRIMARY KEY (MetodoPago_id)
 );
 
--- 												TABLA DE PEDIDOS--
+-- 												TABLA DE PEDIDOS									--
+DROP TABLE IF EXISTS Pedido;
 CREATE TABLE Pedido(
 	Pedido_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de los pedidos',
     Lista_id  INT(6) NOT NULL COMMENT'Clave Foránea de la lista que engloba el pedido',
@@ -66,7 +71,8 @@ CREATE TABLE Pedido(
 );
 
 
--- 												TABLA DE LISTA--
+-- 												TABLA DE LISTA										--
+DROP TABLE IF EXISTS Lista;
 CREATE TABLE Lista(
 	Lista_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de las listas',
     Usuario_id  INT(6) NOT NULL COMMENT'Clave Foránea del el cliente que realizo la lista',
@@ -85,6 +91,7 @@ CREATE TABLE Lista(
 );
 
 -- 												TABLA DE PRODUCTOS DE LA LISTA--
+DROP TABLE IF EXISTS ListaProducto;
 CREATE TABLE ListaProducto(
 	ListaProducto_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de los productos de la lista',
     Producto_id  INT(6) NOT NULL COMMENT'Clave Foránea de el producto',
@@ -101,6 +108,7 @@ CREATE TABLE ListaProducto(
 );
 
 -- 												TABLA DE PRODUCTOS--
+DROP TABLE IF EXISTS Producto;
 CREATE TABLE Producto(
 	Producto_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de los productos',
     Usuario_id  INT(6) NOT NULL COMMENT'Clave Foránea de el usuario que registro el producto',
@@ -118,6 +126,7 @@ CREATE TABLE Producto(
 
 
 -- 												TABLA DE CATEGORIA--
+DROP TABLE IF EXISTS Categoria;
 CREATE TABLE Categoria(
 	Categoria_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de las categorias',
     Usuario_id  INT(6) NOT NULL COMMENT'Clave Foránea de el usuario que registro la categoria',
@@ -132,6 +141,7 @@ CREATE TABLE Categoria(
 );
 
 -- 												TABLA DE CATEGORIA DE LOS PRODUCTOS--
+DROP TABLE IF EXISTS CategoriaProducto;
 CREATE TABLE CategoriaProducto(
 	CategoriaProducto_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de las categorias en los productos',
     Producto_id  INT(6)  NOT NULL COMMENT'Clave Foránea de el producto',
@@ -148,6 +158,7 @@ CREATE TABLE CategoriaProducto(
 
 
 -- 												TABLA DE MULTIMEDIA DE LOS PRODUCTOS--
+DROP TABLE IF EXISTS ProductoMultimedia;
 CREATE TABLE ProductoMultimedia(
 	ProductoMultimedia_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de la multimedia en los productos',
     Producto_id  INT(6) NOT NULL COMMENT'Clave Foránea de el producto',
@@ -162,6 +173,7 @@ CREATE TABLE ProductoMultimedia(
 
 
 -- 											TABLA DE VALORACION DE USUARIOS--
+DROP TABLE IF EXISTS UsuarioValoracion;
 CREATE TABLE UsuarioValoracion(
 	UsuarioValoracion_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de la valoracion de los productos',
     Usuario_id  INT(6) NOT NULL COMMENT'Clave Foránea de el usuario',
@@ -178,6 +190,7 @@ CREATE TABLE UsuarioValoracion(
 );
 
 -- 								TABLA DE COMENTARIOS DE LOS PRODUCTOS --
+DROP TABLE IF EXISTS ComentarioProducto;
 CREATE TABLE ComentarioProducto(
 	ComentarioProducto_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de comentarios de los productos',
     Usuario_id  INT(6) NOT NULL COMMENT'Clave Foránea de el usuario',
@@ -193,6 +206,7 @@ CREATE TABLE ComentarioProducto(
 );
 
 -- 								TABLA DE COTIZACION --
+DROP TABLE IF EXISTS UsuarioCotizacion;
 CREATE TABLE UsuarioCotizacion(
 	UsuarioCotizacion_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria la cotizacion de los productos',
     Usuario_id  INT(6) NOT NULL COMMENT'Clave Foránea de el usuario comprador',

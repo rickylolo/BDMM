@@ -58,45 +58,124 @@ BEGIN
           UPDATE Usuario SET esPrivado = sp_esPrivado WHERE Usuario_id = sp_Usuario_id;
    END IF;
     IF Operacion = 'L' THEN /*LOG IN USUARIO*/
-	SELECT ID FROM userLoginID WHERE usuario = sp_nickUsuario AND pass = sp_userPassword;
+		SELECT ID 
+        FROM vUserLoginID 
+        WHERE 1=1 
+			AND usuario = sp_nickUsuario
+            AND pass = sp_userPassword;
    END IF;
       IF Operacion = 'G' THEN /*GET DATOS USUARIOS*/
-	SELECT Usuario_id,correo,nickUsuario,userPassword,rolUsuario,fotoPerfil,nombreUsuario,apellidoMaterno,apellidoPaterno,fechaNacimiento,sexo,esPrivado FROM Usuario WHERE Usuario_id = sp_Usuario_id;
+		SELECT ID,email,username,userRol,PFP,nombreCompleto,fecha,sexo,fecha,sexo,esPrivado 
+		FROM vUserData 
+		WHERE Usuario_id = sp_Usuario_id;
    END IF;
      IF Operacion = 'A' THEN /*GET DATOS USUARIO*/
-	SELECT DISTINCT Usuario_id,fotoPerfil,nickUsuario,CONCAT(nombreUsuario,' ',apellidoPaterno,' ',apellidoMaterno) AS Nombre,correo
+	SELECT Usuario_id,fotoPerfil,nickUsuario,CONCAT(nombreUsuario,' ',apellidoPaterno,' ',apellidoMaterno) AS Nombre,correo
     FROM Usuario; 
    END IF;
 END //
 
+/*--------------------------------------------------------------------------------METODOS DE PAGO--------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS sp_GestionMetodoDePago;
+DELIMITER //
+CREATE PROCEDURE sp_GestionMetodoDePago
+(
+Operacion CHAR(1),
+sp_MetodoPago_id INT(6),
+sp_Usuario_id INT(6),
+sp_tipoMetodo VARCHAR(30),
+sp_nombreMetodo VARCHAR(30),
+sp_datosPago VARCHAR(30),
+sp_imagenMetodo MEDIUMBLOB
+)
 
-SELECT * FROM Usuario;
-/*
-CALL sp_GestionUsuario('I', #Operacion
-NULL, #Id Usuario
-'ricky_lolo29@hotmail.com', #Correo
-'rickylolo', #Nickname
-'123', #Contraseña
-1, #Rol de usuario
-NULL, #PFP
-'Ricardo Alberto', # Nombre(s)
-'Grimaldo', # Apellido Paterno
-'Estévez', # Apellido Materno
-'2001-06-29', # Fecha de nacimiento
-'Hombre', # Genero
-1); # Flag Perfil Privado
+BEGIN
+   IF Operacion = 'I' /*INSERT METODO DE PAGO*/
+   THEN  
+		INSERT INTO MetodoPago(tipoMetodo ,nombreMetodo ,imagenMetodo) 
+			VALUES (sp_tipoMetodo,sp_nombreMetodo,sp_imagenMetodo);
+   END IF;
+      IF Operacion = 'U' /*INSERT METODO DE PAGO DE USUARIO*/
+   THEN  
+		INSERT INTO MetodoUsuario(Usuario_id ,MetodoPago_id ,datosPago) 
+			VALUES (sp_Usuario_id,sp_MetodoPago_id,sp_datosPago);
+   END IF;
+   IF Operacion = 'E'  /*EDIT METODO DE PAGO*/
+    THEN 
+    	SET sp_tipoMetodo=IF(sp_tipoMetodo='',NULL,sp_tipoMetodo),
+			sp_nombreMetodo=IF(sp_nombreMetodo='',NULL,sp_nombreMetodo),
+            sp_imagenMetodo=IF(sp_imagenMetodo='',NULL,sp_imagenMetodo);
+		UPDATE MetodoPago 
+			SET tipoMetodo = IFNULL(sp_tipoMetodo,tipoMetodo), 
+			nombreMetodo=  IFNULL(sp_nombreMetodo,nombreMetodo), 
+			imagenMetodo= IFNULL(sp_imagenMetodo,imagenMetodo)
+		WHERE MetodoPago_id=sp_MetodoPago_id;
+   END IF;
+   
+   IF Operacion = 'D' THEN /*DELETE METODO DE PAGO*/
+          DELETE FROM MetodoPago WHERE  MetodoPago_id=sp_MetodoPago_id;
+   END IF;
+  
+   IF Operacion = 'G' THEN /*GET DATOS METODOS DE PAGO*/
+		SELECT MetodoPago_id,tipoMetodo,nombreMetodo,imagenMetodo
+		FROM vMetodoPago; 
+   END IF;
+   IF Operacion = 'M' THEN /*GET DATOS METODOS DE PAGO DE USUARIO*/
+		SELECT Usuario_id,MetodoPago_id,datosPago,tipoMetodo,nombreMetodo,imagenMetodo
+		FROM vUserMetodo; 
+   END IF;
+END //
 
-CALL sp_GestionUsuario('A', #Operacion
-NULL, #Id Usuario
-NULL, #Correo
-NULL, #Nickname
-NULL, #Contraseña
-NULL, #Rol de usuario
-NULL, #PFP
-NULL, # Nombre(s)
-NULL, # Apellido Paterno
-NULL, # Apellido Materno
-NULL, # Fecha de nacimiento
-NULL, # Genero
-NULL); # Flag Perfil Privado
-*/
+
+/*--------------------------------------------------------------------------------PEDIDOS--------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS sp_GestionPedido;
+DELIMITER //
+CREATE PROCEDURE sp_GestionPedido
+(
+Operacion CHAR(1),
+sp_Pedido_id INT(6),
+sp_Lista_id INT(6),
+sp_MetodoPago_id INT(6),
+sp_Usuario_id INT(6),
+sp_estadoPedido VARCHAR(30),
+sp_fechaEntrega DATE
+)
+BEGIN
+   IF Operacion = 'I' /*INSERT PEDIDO*/
+   THEN  
+		INSERT INTO Pedido(Lista_id ,MetodoPago_id,Usuario_id,estadoPedido) 
+			VALUES (sp_Lista_id,sp_MetodoPago_id,sp_Usuario_id,sp_estadoPedido);
+            #AFTER INSERT PEDIDO CREATE TRIGGER SUM COSTO ELEMENTOS LISTA
+   END IF;
+   IF Operacion = 'E'  /*EDIT PEDIDO*/
+    THEN 
+    	SET sp_Lista_id=IF(sp_Lista_id='',NULL,sp_Lista_id),
+			sp_MetodoPago_id=IF(sp_MetodoPago_id='',NULL,sp_MetodoPago_id),
+            sp_estadoPedido=IF(sp_estadoPedido='',NULL,sp_estadoPedido),
+            sp_fechaEntrega=IF(sp_fechaEntrega='',NULL,sp_fechaEntrega),
+            sp_Usuario_id=IF(sp_Usuario_id='',NULL,sp_Usuario_id);
+		UPDATE Pedido 
+			SET Lista_id = IFNULL(sp_Lista_id,Lista_id), 
+			MetodoPago_id=  IFNULL(sp_MetodoPago_id,MetodoPago_id), 
+			fechaEntrega=  IFNULL(sp_fechaEntrega,fechaEntrega), 
+			Usuario_id=  IFNULL(sp_Usuario_id,Usuario_id), 
+			estadoPedido= IFNULL(sp_estadoPedido,estadoPedido)
+		WHERE Pedido_id=sp_Pedido_id;
+   END IF;
+   
+   IF Operacion = 'D' THEN /*DELETE PEDIDO*/
+          DELETE FROM Pedido WHERE  Pedido_id=sp_Pedido_id;
+   END IF;
+  
+   IF Operacion = 'G' THEN /*GET DATOS PEDIDO*/
+		SELECT Pedido_id,Lista_id,MetodoPago_id,Usuario_id,estadoPedido,fechaPedido,fechaEntrega,MontoTotal,nombreLista,descripcion,imagenLista,tipoMetodo,nombreMetodo,imagenMetodo,correo,nickUsuario,apellidoMaterno,apellidoPaterno
+		FROM vPedido; 
+   END IF;
+   IF Operacion = 'M' THEN /*GET DATOS PRODUCTOS DE LA LISTA DEL PEDIDO*/
+		SELECT CantidadComprada,PrecioFinal,nombreProducto,descripcionProducto,esCotizado,Precio
+		FROM vPedidoProductosLista; 
+   END IF;
+END //
+
+
+/*--------------------------------------------------------------------------------PEDIDOS--------------------------------------------------------------------------*/
