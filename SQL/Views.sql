@@ -35,7 +35,7 @@ INNER JOIN MetodoPago ON MetodoPago.MetodoPago_id = Usuario.Usuario_id;
 DROP VIEW IF EXISTS vPedido;
 
 CREATE VIEW vPedido AS
-SELECT Pedido.Pedido_id,Pedido.Lista_id,Pedido.MetodoPago_id,Pedido.Usuario_id,estadoPedido,fechaPedido,fechaEntrega,MontoTotal,nombreLista,descripcion,imagenLista,tipoMetodo,nombreMetodo,imagenMetodo,correo,nickUsuario,apellidoMaterno,apellidoPaterno FROM Pedido
+SELECT Pedido.Pedido_id,Pedido.Lista_id,Pedido.MetodoPago_id,Pedido.Usuario_id,estadoPedido,fechaPedido,fechaEntrega,MontoTotal,nombreLista,descripcion,imagenLista,tipoMetodo,nombreMetodo,imagenMetodo,correo,nickUsuario,nombreUsuario,apellidoMaterno,apellidoPaterno FROM Pedido
 INNER JOIN Lista ON Lista.Lista_id = Pedido.Lista_id
 INNER JOIN MetodoPago ON MetodoPago.MetodoPago_id = Pedido.MetodoPago_id
 INNER JOIN Usuario ON Usuario.Usuario_id = Pedido.Usuario_id;
@@ -51,3 +51,14 @@ INNER JOIN Producto ON ListaProducto.Producto_id = Producto.Producto_id;
 
 
 /*--------------------------------------------------------------------------------PRODUCTO--------------------------------------------------------------------------*/
+DROP VIEW IF EXISTS vProducto;
+
+CREATE VIEW vProducto AS
+SELECT Producto_id,Usuario_id,nombreProducto,descripcionProducto,esCotizado,Precio,cantidadDisponible FROM Producto;
+
+/*--------------------------------------------------------------------------------CATEGORIA--------------------------------------------------------------------------*/
+DROP VIEW IF EXISTS vCategoria;
+
+CREATE VIEW vCategoria AS
+SELECT Categoria_id, nombreCategoria, colorCategoria, descripcionCategoria FROM Categoria;
+

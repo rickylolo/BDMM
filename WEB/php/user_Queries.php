@@ -4,11 +4,13 @@ include_once 'db.php';
 
 class User extends DB
 {
+
+    // ---------------------------------------CONSULTA DE INFORMACION------------------------------------------
     // QUERY Iniciar Sesion Usuario 
 
-    function Iniciar($emailUsername, $password)
+    function IniciarSesion($emailUsername, $password)
     {
-        $insert = "CALL sp_GestionUsuario('L', 
+        $get = "CALL sp_GestionUsuario('L', 
          NULL,
          NULL,
          '$emailUsername', 
@@ -21,11 +23,33 @@ class User extends DB
          NULL, 
          NULL,
          1); ";
-        $query = $this->connect()->query($insert);
+        $query = $this->connect()->query($get);
+        return $query;
+    }
+
+        // QUERY Get Datos Usuario
+
+    function getUserData($Usuario_id)
+    {
+        $get = "CALL sp_GestionUsuario('G', 
+         $Usuario_id,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL, 
+         NULL, 
+         NULL, 
+         NULL, 
+         NULL, 
+         NULL,
+         1); ";
+        $query = $this->connect()->query($get);
         return $query;
     }
 
 
+    // ---------------------------------------INSERTAR INFORMACION------------------------------------------
     // QUERY Insertar Usuario Comprador
 
     function insertarUsuarioComprador($email, $username, $password, $user_Type, $user_IMG, $names, $lastNameP, $lastNameM, $fechaNac,  $genero)
@@ -48,7 +72,7 @@ class User extends DB
         return $query;
     }
 
-    // QUERY Insertar Usuario Comprador
+    // QUERY Insertar Usuario Vendedor
 
     function insertarUserVendedor($email, $username, $password, $user_Type, $user_IMG, $names, $lastNameP, $lastNameM, $fechaNac,  $genero)
     {
@@ -70,25 +94,8 @@ class User extends DB
         return $query;
     }
 
-     function log_in($username, $password)
-    {
-        $consulta = "CALL sp_GestionUsuario('L', 
-        NULL,
-        NULL,
-        '$username', 
-        '$password', 
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL); ";
-        $query = $this->connect()->query($consulta);
-        return $query;
-    }
-
+   // ---------------------------------------ACTUALIZAR INFORMACION------------------------------------------
+   // QUERY Actualizar Usuario
     function actualizarUser($id, $email, $username, $password, $user_Type, $user_IMG, $names, $lastNameP, $lastNameM, $fechaNac,  $genero)
     {
         $user_IMG = mysqli_escape_string($this->myCon(), $user_IMG); //IMAGEN
@@ -111,7 +118,7 @@ class User extends DB
 
     function actualizarPrivacidad($id, $privacidad)
     {
-        $priv = "CALL sp_GestionUsuario('P', 
+        $update = "CALL sp_GestionUsuario('P', 
         $id,
         NULL,
         NULL, 
@@ -124,9 +131,11 @@ class User extends DB
         NULL, 
         NULL,
         $privacidad); ";
-        $query = $this->connect()->query($priv);
+        $query = $this->connect()->query($update);
         return $query;
     }
+
+     // ---------------------------------------ELIMINAR INFORMACION------------------------------------------
 }
 
 ?>

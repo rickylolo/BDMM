@@ -64,14 +64,13 @@ BEGIN
 			AND usuario = sp_nickUsuario
             AND pass = sp_userPassword;
    END IF;
-      IF Operacion = 'G' THEN /*GET DATOS USUARIOS*/
+      IF Operacion = 'A' THEN /*GET DATOS ALL USUARIOS*/
 		SELECT ID,email,username,userRol,PFP,nombreCompleto,fecha,sexo,fecha,sexo,esPrivado 
-		FROM vUserData 
-		WHERE Usuario_id = sp_Usuario_id;
+		FROM vUserData;
    END IF;
-     IF Operacion = 'A' THEN /*GET DATOS USUARIO*/
-	SELECT Usuario_id,fotoPerfil,nickUsuario,CONCAT(nombreUsuario,' ',apellidoPaterno,' ',apellidoMaterno) AS Nombre,correo
-    FROM Usuario; 
+     IF Operacion = 'G' THEN /*GET DATOS USUARIO*/
+	SELECT ID,email,username,userRol,PFP,nombreCompleto,fecha,sexo,fecha,sexo,esPrivado 
+		FROM vUserData WHERE ID = sp_Usuario_id;
    END IF;
 END //
 
@@ -92,8 +91,8 @@ sp_imagenMetodo MEDIUMBLOB
 BEGIN
    IF Operacion = 'I' /*INSERT METODO DE PAGO*/
    THEN  
-		INSERT INTO MetodoPago(tipoMetodo ,nombreMetodo ,imagenMetodo) 
-			VALUES (sp_tipoMetodo,sp_nombreMetodo,sp_imagenMetodo);
+		INSERT INTO MetodoPago(Usuario_id,tipoMetodo ,nombreMetodo ,imagenMetodo) 
+			VALUES (sp_Usuario_id,sp_tipoMetodo,sp_nombreMetodo,sp_imagenMetodo);
    END IF;
       IF Operacion = 'U' /*INSERT METODO DE PAGO DE USUARIO*/
    THEN  
@@ -127,7 +126,7 @@ BEGIN
 END //
 
 
-/*--------------------------------------------------------------------------------PEDIDOS--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------PEDIDO--------------------------------------------------------------------------*/
 DROP PROCEDURE IF EXISTS sp_GestionPedido;
 DELIMITER //
 CREATE PROCEDURE sp_GestionPedido
@@ -168,7 +167,7 @@ BEGIN
    END IF;
   
    IF Operacion = 'G' THEN /*GET DATOS PEDIDO*/
-		SELECT Pedido_id,Lista_id,MetodoPago_id,Usuario_id,estadoPedido,fechaPedido,fechaEntrega,MontoTotal,nombreLista,descripcion,imagenLista,tipoMetodo,nombreMetodo,imagenMetodo,correo,nickUsuario,apellidoMaterno,apellidoPaterno
+		SELECT Pedido_id,Lista_id,MetodoPago_id,Usuario_id,estadoPedido,fechaPedido,fechaEntrega,MontoTotal,nombreLista,descripcion,imagenLista,tipoMetodo,nombreMetodo,imagenMetodo,correo,nickUsuario,nombreUsuario,apellidoMaterno,apellidoPaterno
 		FROM vPedido; 
    END IF;
    IF Operacion = 'M' THEN /*GET DATOS PRODUCTOS DE LA LISTA DEL PEDIDO*/
@@ -178,4 +177,94 @@ BEGIN
 END //
 
 
-/*--------------------------------------------------------------------------------PEDIDOS--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------PRODUCTO--------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS sp_GestionProducto;
+DELIMITER //
+CREATE PROCEDURE sp_GestionProducto
+(
+Operacion CHAR(1),
+sp_Producto_id INT(6),
+sp_Usuario_id INT(6),
+sp_nombreProducto VARCHAR(30),
+sp_esCotizado VARCHAR(30),
+sp_Precio DECIMAL(9,2),
+sp_cantidadDisponible INT(6)
+)
+BEGIN
+   IF Operacion = 'I' /*INSERT PRODUCTO*/
+   THEN  
+		INSERT INTO Producto(Usuario_id ,nombreProducto,esCotizado,Precio,cantidadDisponible) 
+			VALUES (sp_Usuario_id,sp_nombreProducto,sp_esCotizado,sp_Precio,sp_cantidadDisponible);
+
+   END IF;
+   IF Operacion = 'E'  /*EDIT PRODUCTO*/
+    THEN 
+    	SET sp_Usuario_id=IF(sp_Usuario_id='',NULL,sp_Usuario_id),
+			sp_nombreProducto=IF(sp_nombreProducto='',NULL,sp_nombreProducto),
+            sp_esCotizado=IF(sp_esCotizado='',NULL,sp_esCotizado),
+            sp_Precio=IF(sp_Precio='',NULL,sp_Precio),
+            sp_cantidadDisponible=IF(sp_cantidadDisponible='',NULL,sp_cantidadDisponible);
+		UPDATE Producto 
+			SET Usuario_id = IFNULL(sp_Usuario_id,Usuario_id), 
+			nombreProducto=  IFNULL(sp_nombreProducto,nombreProducto), 
+			esCotizado=  IFNULL(sp_esCotizado,esCotizado), 
+			Precio=  IFNULL(sp_Precio,Precio), 
+			cantidadDisponible= IFNULL(sp_cantidadDisponible,cantidadDisponible)
+		WHERE Producto_id=sp_Producto_id;
+   END IF;
+   
+   IF Operacion = 'D' THEN /*DELETE PRODUCTO*/
+          DELETE FROM Producto WHERE  Producto_id=sp_Producto_id;
+   END IF;
+  
+   IF Operacion = 'G' THEN /*GET DATOS PRODUCTO*/
+		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible
+		FROM vProducto; 
+   END IF;
+
+END //
+
+/*--------------------------------------------------------------------------------CATEGORIA--------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS sp_GestionCategoria;
+SELECT * FROM Categoria;
+DELIMITER //
+CREATE PROCEDURE sp_GestionCategoria
+(
+Operacion CHAR(1),
+sp_Categoria_id INT(6),
+sp_Usuario_id INT(6),
+sp_nombreCategoria VARCHAR(30),
+sp_colorCategoria VARCHAR(10),
+sp_descripcionCategoria VARCHAR(30)
+)
+BEGIN
+   IF Operacion = 'I' /*INSERT CATEGORIA*/
+   THEN  
+		INSERT INTO Categoria(Usuario_id, nombreCategoria, colorCategoria, descripcionCategoria) 
+			VALUES (sp_Usuario_id, sp_nombreCategoria, sp_colorCategoria, sp_descripcionCategoria);
+
+   END IF;
+   IF Operacion = 'E'  /*EDIT CATEGORIA*/
+    THEN 
+    	SET sp_Usuario_id=IF(sp_Usuario_id='',NULL,sp_Usuario_id),
+			sp_nombreCategoria=IF(sp_nombreCategoria='',NULL,sp_nombreCategoria),
+            sp_colorCategoria=IF(sp_colorCategoria='',NULL,sp_colorCategoria),
+            sp_descripcionCategoria=IF(sp_descripcionCategoria='',NULL,sp_descripcionCategoria);
+		UPDATE Categoria 
+			SET Usuario_id = IFNULL(sp_Usuario_id,Usuario_id), 
+			nombreCategoria=  IFNULL(sp_nombreCategoria,nombreCategoria), 
+			colorCategoria=  IFNULL(sp_colorCategoria,colorCategoria), 
+			descripcionCategoria=  IFNULL(sp_descripcionCategoria,descripcionCategoria)
+		WHERE Categoria_id=sp_Categoria_id;
+   END IF;
+   
+   IF Operacion = 'D' THEN /*DELETE CATEGORIA*/
+          DELETE FROM Categoria WHERE  Categoria_id=sp_Categoria_id;
+   END IF;
+  
+   IF Operacion = 'G' THEN /*GET DATOS CATEGORIA*/
+		SELECT Categoria_id, nombreCategoria, colorCategoria, descripcionCategoria
+		FROM vCategoria; 
+   END IF;
+
+END //

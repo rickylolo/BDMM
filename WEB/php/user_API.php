@@ -1,5 +1,5 @@
 <?php
-include_once 'queryUser.php';
+include_once 'user_Queries.php';
 
 
 
@@ -14,14 +14,14 @@ class userAPI
         $arrUsers = array();
         $arrUsers["Datos"] = array();
 
-        $res = $user->log_in($usuario, $password);
+        $res = $user->IniciarSesion($usuario, $password);
 
         if ($res) { // Entra si hay información
             session_start();
             while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
 
                 $obj = array(
-                    "Usuario_id" => $row['ID']
+                    "id" => $row['ID']
                 );
                 $_SESSION['Usuario_id'] = $obj["Usuario_id"];
                 array_push($arrUsers["Datos"], $obj);
@@ -35,6 +35,39 @@ class userAPI
                     exit();
                 }
             }
+        } else {
+            header("Location:../index.php");
+            exit();
+        }
+    }
+
+    function getUserData($id_user)
+    {
+
+        $user = new User();
+        $arrUsers = array();
+        $arrUsers["Datos"] = array();
+
+        $res = $user->getUserData($id_user);
+        if ($res) { // Entra si hay información
+            session_start();
+            while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
+
+                $obj = array(
+                    "ID" => $row['ID'],
+                    "email" => $row['email'],
+                    "username" => $row['username'],
+                    "userRol" => $row['userRol'],
+                    "PFP" => base64_encode(($row['PFP'])),
+                    "nombreCompleto" => $row['nombreCompleto'],
+                    "fecha" => $row['fecha'],
+                    "sexo" => $row['sexo'],
+                    "esPrivado" => $row['esPrivado']
+                );
+                $_SESSION['ID'] = $obj["ID"];
+                array_push($arrUsers["Datos"], $obj);
+            }
+            echo json_encode($arrUsers["Datos"]);
         } else {
             header("Location:../index.php");
             exit();
@@ -67,8 +100,6 @@ class userAPI
         exit();
     }
 }
-
-
 
 //AJAX
 
@@ -104,6 +135,12 @@ if (isset($_POST['funcion'])) {
             $var = new userAPI();
             $var->actualizarUser($id, $_POST['email'], $_POST['usuario'], $_POST['contrasenia'], 1, $binariosImagen, $_POST['names'], $_POST['lastNameP'], $_POST['lastNameM'], $_POST['fechaNacimiento'], $_POST['genero']);
             break;
+        case "obtenerDataUsuario":
+            session_start();
+            $id = $_SESSION['id'];
+            $var = new userAPI();
+            $var->getUserData($id);
+            break;
     }
 }
 
@@ -115,7 +152,7 @@ if (isset($_GET['logout'])) {
     $var->cerrarSesion();
 }
 
-// AQUI ENTRA DESDE EL FORMS DE LOGIN 
+// AQUI ENTRA DESDE EL FORM DE LOGIN 
 // Buscar User
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $var = new userAPI();

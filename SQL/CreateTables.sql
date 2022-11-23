@@ -178,7 +178,7 @@ CREATE TABLE UsuarioValoracion(
 	UsuarioValoracion_id INT(6) AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de la valoracion de los productos',
     Usuario_id  INT(6) NOT NULL COMMENT'Clave Foránea de el usuario',
     Producto_id  INT(6) NOT NULL COMMENT'Clave Foránea de el producto',
-	valoración TINYINT NOT NULL COMMENT'Valor de la valoracion va de 1 a 5 estrellas',
+	valoracion TINYINT NOT NULL COMMENT'Valor de la valoracion va de 1 a 5 estrellas',
     comentario TINYTEXT COMMENT'Comentario de la valoracion',
     
  CONSTRAINT PK_UsuarioValoracion
