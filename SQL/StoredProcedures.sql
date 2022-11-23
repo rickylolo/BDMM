@@ -170,6 +170,12 @@ BEGIN
 		SELECT Pedido_id,Lista_id,MetodoPago_id,Usuario_id,estadoPedido,fechaPedido,fechaEntrega,MontoTotal,nombreLista,descripcion,imagenLista,tipoMetodo,nombreMetodo,imagenMetodo,correo,nickUsuario,nombreUsuario,apellidoMaterno,apellidoPaterno
 		FROM vPedido; 
    END IF;
+   
+   IF Operacion = 'U' THEN /*GET DATOS PEDIDO DE USUARIO*/
+		SELECT Pedido_id,Lista_id,MetodoPago_id,Usuario_id,estadoPedido,fechaPedido,fechaEntrega,MontoTotal,nombreLista,descripcion,imagenLista,tipoMetodo,nombreMetodo,imagenMetodo,correo,nickUsuario,nombreUsuario,apellidoMaterno,apellidoPaterno
+		FROM vPedido
+        WHERE Usuario_id = sp_Usuario_id; 
+   END IF;
    IF Operacion = 'M' THEN /*GET DATOS PRODUCTOS DE LA LISTA DEL PEDIDO*/
 		SELECT CantidadComprada,PrecioFinal,nombreProducto,descripcionProducto,esCotizado,Precio
 		FROM vPedidoProductosLista; 
