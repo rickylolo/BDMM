@@ -13,6 +13,7 @@ session_start(); // Inicio mi sesion PHP
     <link rel="shortcut icon" href="img\jyp-logo.jpg">
     <script src="js/jquery-3.6.0.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/adminMainScript.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/mainPage.css" rel="stylesheet">
     <link href="css/pedidoPage.css" rel="stylesheet">
@@ -92,11 +93,26 @@ session_start(); // Inicio mi sesion PHP
     </nav>
 
     <div class="container">
-        <div class="separador"></div>
-        <div class="col-12 fs-2 fw-bolder d-flex justify-content-end">
-            <div class="btn btn-sm bg-success" data-bs-toggle="modal" data-bs-target="#miModalRegistroAdmin">Registrar
-                Administrador(Solo SuperAdmin)</div>
-        </div>
+        <?php 
+        if($_SESSION["rol"] == 1){
+            echo'<div class="separador"></div>
+                <div class="col-12 fs-2 fw-bolder d-flex justify-content-end">
+                <div class="btn btn-sm bg-success" data-bs-toggle="modal" data-bs-target="#miModalRegistroAdmin">Registrar
+                Administrador</div>
+                <div class="btn btn-sm bg-success" data-bs-toggle="modal" data-bs-target="#miModalRegistroMetodoDePago">Registrar
+                Metodo de pago</div>
+                </div>
+                ';
+        }
+         if($_SESSION["rol"] == 2){
+            echo'<div class="separador"></div>';
+            echo'<div class="col-12 fs-2 fw-bolder d-flex justify-content-end">';
+            echo'<div class="btn btn-sm bg-success" data-bs-toggle="modal" data-bs-target="#miModalRegistroCategoria">';
+            echo'Registrar Categoria</div>';
+            echo'</div>';
+        }
+     
+        ?>
         <!-- PEDIDO -->
         <table class="table">
             <div class="row">
@@ -314,7 +330,10 @@ session_start(); // Inicio mi sesion PHP
     </div>
 
     <!--                MODALS                 -->
-    <!--  >MODAL WINDOW REGISTER<-->
+     <?php 
+      if($_SESSION["rol"] == 1){
+
+     echo'<!--  >MODAL WINDOW REGISTER<-->
     <div class="modal fade" id="miModalRegistroAdmin" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
         data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
@@ -323,119 +342,114 @@ session_start(); // Inicio mi sesion PHP
                     <h4 class="modal-title" id="modalTitle">Registro Administrador</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post" action="php\user_API.php" enctype="multipart/form-data">
-                    <div class="modal-body">
+                <form method="post">
+                	<div class="modal-body">
 
-                        <div class="row">
-                            <div class="col-12">
-                                <h5>Ingresa los siguientes datos</h5>
-                            </div>
-                        </div>
-                        <div class="row modalTexto">
-                            Correo Electrónico
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@</span>
-                            <input type="text" class="form-control" name="email" placeholder="Correo Electrónico"
-                                aria-label="Username" aria-describedby="basic-addon1">
-                        </div>
-
-
-                        <div class="row modalTexto">
-                            Nombre(s)
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-file-person"></i></span>
-                            <input type="text" class="form-control" name="names" placeholder="Nombre(s)"
-                                aria-label="Username" aria-describedby="basic-addon1">
-                        </div>
+					<div class="row">
+						<div class="col-12">
+							<h5>Ingresa los siguientes datos:</h5>
+						</div>
+					</div>
+					<form method="POST">
+						<div class="row modalTexto">
+							Correo Electrónico
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1">@</span>
+							<input type="text" class="form-control" id="email" name="email" placeholder="Correo Electrónico" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
 
 
-                        <div class="row modalTexto">
-                            Apellido(s)
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"> <i
-                                    class="bi bi-file-person-fill"></i></span>
-                            <input type="text" class="form-control" name="lastName" placeholder="Apellido(s)"
-                                aria-label="Username" aria-describedby="basic-addon1">
-                        </div>
-
-                        <div class="row modalTexto">
-                            Nombre de usuario
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-person"></i></span>
-                            <input type="text" class="form-control" name="usuario" placeholder="Nombre de usuario"
-                                aria-label="Username" aria-describedby="basic-addon1">
-                        </div>
-
-                        <div class="row modalTexto">
-                            Contraseña
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-key"></i></span>
-                            <input type="password" class="form-control" id="contrasenia" name="contrasenia"
-                                placeholder="Contraseña" aria-label="Username" aria-describedby="basic-addon1" required>
-                        </div>
-                        <p style="font-size: small;">La contraseña debe de incluir 8 caracteres al menos, y debe incluir
-                            una mayúscula, un carácter especial, y un número al menos.
-                        <p>
-
-                        <div class="row modalTexto">
-                            Confirmar Contraseña
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-key"></i></span>
-                            <input type="password" class="form-control" id="confirmar_contrasenia"
-                                name="confirmar_contrasenia" placeholder="Contraseña" aria-label="Username"
-                                aria-describedby="basic-addon1" required>
-                        </div>
-
-                        <div class="row modalTexto">
-                            Fecha de nacimiento
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-calendar"></i></span>
-                            <input type="date" class="form-control" name="Birthday" placeholder="Fecha de nacimiento"
-                                aria-label="Fecha de nacimiento" aria-describedby="basic-addon1">
-                        </div>
-
-                        <div class="row modalTexto">
-                            Sexo:
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="dropdown input-group-text" id="basic-addon1">
-                                <button class="btn dropdown-toggle text-black-50" type="button" id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Selecciona aquí:
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a href=" " class="dropdown-item SexoUsuario">Hombre</a></li>
-                                    <li><a href=" " class="dropdown-item SexoUsuario">Mujer</a></li>
-                                    <li><a href=" " class="dropdown-item">Otro</a></li>
-                                </ul>
-                            </div>
-                            <input type="text" class="form-control" name="gender-user" id="gender-user"
-                                placeholder="Sexo" aria-label="Sexo" aria-describedby="basic-addon1" required>
-                        </div>
-
-                        <div class="row modalTexto">
-                            Foto de perfil
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
-                            <input type="file" onchange="vista_preliminar2(event)" class="form-control" id="userIMG"
-                                name="userIMG" placeholder="Foto de perfil" aria-label="Username"
-                                aria-describedby="basic-addon1">
+						<div class="row modalTexto">
+							Nombre(s)
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"><i class="bi bi-file-person"></i></span>
+							<input type="text" class="form-control" id="names" name="names" placeholder="Nombre(s)" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
 
 
-                        </div>
-                        <div class="d-flex justify-content-center"><img src="" alt="" id="img-foto2" width="250px"
-                                height="250px"></div>
+						<div class="row modalTexto">
+							Apellido Paterno
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-file-person-fill"></i></span>
+							<input type="text" class="form-control" id="lastNameP" name="lastNameP" placeholder="Apellido Paterno" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="row modalTexto">
+							Apellido Materno
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-file-person-fill"></i></span>
+							<input type="text" class="form-control" id="lastNameM" name="lastNameM" placeholder="Apellido Materno" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="row modalTexto">
+							Nombre de usuario
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-person"></i></span>
+							<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Nombre de usuario" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="row modalTexto">
+							Contraseña
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-key"></i></span>
+							<input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="Contraseña" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+						<p style="font-size: small;">La contraseña debe de incluir 8 caracteres al menos, y debe incluir
+							una mayúscula, un carácter especial, y un número al menos.
+						<p>
+
+						<div class="row modalTexto">
+							Confirmar Contraseña
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-key"></i></span>
+							<input type="password" class="form-control" id="confirmar_contrasenia" name="confirmar_contrasenia" placeholder="Contraseña" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="row modalTexto">
+							Fecha de nacimiento
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-calendar"></i></span>
+							<input type="date" class="form-control" id="Birthday" name="Birthday" placeholder="Fecha de nacimiento" aria-label="Fecha de nacimiento" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="row modalTexto">
+							Sexo:
+						</div>
+						<div class="input-group mb-3">
+							<div class="dropdown input-group-text" id="basic-addon1">
+								<button class="btn dropdown-toggle text-black-50" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+									Selecciona aquí:
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+									<li><a href=" " class="dropdown-item SexoUsuario">Hombre</a></li>
+									<li><a href=" " class="dropdown-item SexoUsuario">Mujer</a></li>
+									<li><a href=" " class="dropdown-item SexoUsuario">Otro</a></li>
+								</ul>
+							</div>
+							<input type="text" class="form-control" name="gender-user" id="gender-user" placeholder="Sexo" aria-label="Sexo" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="row modalTexto">
+							Foto de perfil
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+							<input type="file" onchange="vista_preliminar2(event)" class="form-control" id="userIMG" name="userIMG" placeholder="Foto de perfil" aria-label="Username" aria-describedby="basic-addon1">
 
 
-                    </div>
+						</div>
+						<div class="d-flex justify-content-center"><img src="" alt="" id="img-foto2" width="250px" height="250px"></div>
+
+
+				</div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success" id="ButtonRegistro">Registrar
                             Administrador</button>
@@ -445,7 +459,133 @@ session_start(); // Inicio mi sesion PHP
             </div>
         </div>
     </div>
+    <!--  >MODAL WINDOW METODO DE PAGO<-->
+    <div class="modal fade" id="miModalRegistroMetodoDePago" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Registro Metodo de Pago</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post">
+                	<div class="modal-body">
 
+					<div class="row">
+						<div class="col-12">
+							<h5>Ingresa los siguientes datos:</h5>
+						</div>
+					</div>
+					<form method="POST">
+						<div class="row modalTexto">
+							Tipo de metodo de pago:
+						</div>
+						<div class="input-group mb-3">
+							<div class="dropdown input-group-text" id="basic-addon1">
+								<button class="btn dropdown-toggle text-black-50" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+									Selecciona aquí:
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+									<li><a href=" " class="dropdown-item MetodoPago">Efectivo</a></li>
+									<li><a href=" " class="dropdown-item MetodoPago">Transferencia</a></li>
+									<li><a href=" " class="dropdown-item MetodoPago">Otro</a></li>
+								</ul>
+							</div>
+							<input type="text" class="form-control" name="tipoMetodo" id="tipoMetodo" placeholder="" aria-label="Sexo" aria-describedby="basic-addon1">
+						</div>
+
+
+						<div class="row modalTexto">
+							Nombre del metodo
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"><i class="bi bi-file-person"></i></span>
+							<input type="text" class="form-control" id="nameMetodo" name="nameMetodo" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+
+
+						
+
+						<div class="row modalTexto">
+							Imagen del metodo de pago
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+							<input type="file" onchange="vista_preliminarMetPago(event)" class="form-control" id="metodoIMG" name="metodoIMG" placeholder="Foto de perfil" aria-label="Username" aria-describedby="basic-addon1">
+
+
+						</div>
+						<div class="d-flex justify-content-center"><img src="" alt="" id="img-foto-metodo" width="250px" height="250px"></div>
+
+
+				</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="ButtonRegistroMetodoPago">Registrar
+                            Metodo de Pago</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    ';
+        }
+     if($_SESSION["rol"] == 2){
+
+      echo' <!--  >MODAL WINDOW CATEGORIA<-->
+    <div class="modal fade" id="miModalRegistroCategoria" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Registro categoría</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post">
+                	<div class="modal-body">
+
+					<div class="row">
+						<div class="col-12">
+							<h5>Ingresa los siguientes datos:</h5>
+						</div>
+					</div>
+					<form method="POST">
+						<div class="row modalTexto">
+							Nombre de Categoria:
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1">@</span>
+							<input type="text" class="form-control" id="nameCat" name="nameCat" placeholder="Nombre de la categoría" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+
+
+						<div class="row modalTexto">
+							Color de la categoría:
+						</div>
+                    	<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-file-person-fill"></i></span>
+							<input type="color" class="form-control" id="colorCat" name="colorCat"  placeholder="Descripción de la categoría" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+					
+
+
+						<div class="row modalTexto">
+							Descripción de la categoría:
+						</div>
+					
+                        <textarea class="form-control" id="descCat" name="descCat"></textarea>			
+				</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="ButtonRegistroCategoria" data-bs-dismiss="modal">Registrar
+                            Categoría</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>';
+     }
+    ?>
     <!--FOOTER<-->
     <footer class="w-100 d-flex align-items justify-content-center flex-wrap">
         <p class="fs-5 px-3 pt-3 PCELText"><img src="img/jyp-logo.jpg" class="" width="80" height="40">

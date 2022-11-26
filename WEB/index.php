@@ -140,7 +140,7 @@ session_start(); // Inicio mi sesion PHP
 
 					<div class="input-group mb-3">
 						<span class="input-group-text" id="basic-addon1"><i class="bi bi-person-circle"></i></span>
-						<input type="text" class="form-control" name="username" placeholder="Usuario o Correo" aria-label="Username" aria-describedby="basic-addon1">
+						<input type="text" class="form-control" id="username" name="username" placeholder="Usuario o Correo" aria-label="Username" aria-describedby="basic-addon1">
 					</div>
 					<div class="separador"></div>
 					<div class="row modalTexto">
@@ -149,7 +149,7 @@ session_start(); // Inicio mi sesion PHP
 
 					<div class="input-group mb-3">
 						<span class="input-group-text" id="basic-addon1"><i class="bi bi-key"></i></span>
-						<input type="password" class="form-control" name="password" placeholder="Contraseña" aria-label="password" aria-describedby="basic-addon1">
+						<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" aria-label="password" aria-describedby="basic-addon1">
 					</div>
 					<div class="row">
 						<a href="miModal" data-bs-toggle="modal" data-bs-target="#miModal" data-bs-dismiss="modal">¿Aún
@@ -157,7 +157,7 @@ session_start(); // Inicio mi sesion PHP
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-success" id="ButtonLogIn">Iniciar Sesión</button>
+					<button type="button" class="btn btn-success" id="ButtonLogIn">Iniciar Sesión</button>
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 
 				</div>
@@ -179,7 +179,7 @@ session_start(); // Inicio mi sesion PHP
 
 					<div class="row">
 						<div class="col-12">
-							<h5>Ingresa los siguientes datos</h5>
+							<h5>Ingresa los siguientes datos:</h5>
 						</div>
 					</div>
 					<form method="POST">
@@ -188,7 +188,7 @@ session_start(); // Inicio mi sesion PHP
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="basic-addon1">@</span>
-							<input type="text" class="form-control" name="email" placeholder="Correo Electrónico" aria-label="Username" aria-describedby="basic-addon1">
+							<input type="text" class="form-control" id="email" name="email" placeholder="Correo Electrónico" aria-label="Username" aria-describedby="basic-addon1">
 						</div>
 
 
@@ -197,7 +197,7 @@ session_start(); // Inicio mi sesion PHP
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="basic-addon1"><i class="bi bi-file-person"></i></span>
-							<input type="text" class="form-control" name="names" placeholder="Nombre(s)" aria-label="Username" aria-describedby="basic-addon1">
+							<input type="text" class="form-control" id="names" name="names" placeholder="Nombre(s)" aria-label="Username" aria-describedby="basic-addon1">
 						</div>
 
 
@@ -206,7 +206,7 @@ session_start(); // Inicio mi sesion PHP
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-file-person-fill"></i></span>
-							<input type="text" class="form-control" name="lastNameP" placeholder="Apellido Paterno" aria-label="Username" aria-describedby="basic-addon1">
+							<input type="text" class="form-control" id="lastNameP" name="lastNameP" placeholder="Apellido Paterno" aria-label="Username" aria-describedby="basic-addon1">
 						</div>
 
 						<div class="row modalTexto">
@@ -214,7 +214,7 @@ session_start(); // Inicio mi sesion PHP
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-file-person-fill"></i></span>
-							<input type="text" class="form-control" name="lastNameM" placeholder="Apellido Materno" aria-label="Username" aria-describedby="basic-addon1">
+							<input type="text" class="form-control" id="lastNameM" name="lastNameM" placeholder="Apellido Materno" aria-label="Username" aria-describedby="basic-addon1">
 						</div>
 
 						<div class="row modalTexto">
@@ -222,7 +222,7 @@ session_start(); // Inicio mi sesion PHP
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-person"></i></span>
-							<input type="text" class="form-control" name="usuario" placeholder="Nombre de usuario" aria-label="Username" aria-describedby="basic-addon1">
+							<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Nombre de usuario" aria-label="Username" aria-describedby="basic-addon1">
 						</div>
 
 						<div class="row modalTexto">
@@ -249,7 +249,7 @@ session_start(); // Inicio mi sesion PHP
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-calendar"></i></span>
-							<input type="date" class="form-control" name="Birthday" placeholder="Fecha de nacimiento" aria-label="Fecha de nacimiento" aria-describedby="basic-addon1">
+							<input type="date" class="form-control" id="Birthday" name="Birthday" placeholder="Fecha de nacimiento" aria-label="Fecha de nacimiento" aria-describedby="basic-addon1">
 						</div>
 
 						<div class="row modalTexto">
@@ -263,7 +263,7 @@ session_start(); // Inicio mi sesion PHP
 								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 									<li><a href=" " class="dropdown-item SexoUsuario">Hombre</a></li>
 									<li><a href=" " class="dropdown-item SexoUsuario">Mujer</a></li>
-									<li><a href=" " class="dropdown-item">Otro</a></li>
+									<li><a href=" " class="dropdown-item SexoUsuario">Otro</a></li>
 								</ul>
 							</div>
 							<input type="text" class="form-control" name="gender-user" id="gender-user" placeholder="Sexo" aria-label="Sexo" aria-describedby="basic-addon1">
@@ -283,9 +283,8 @@ session_start(); // Inicio mi sesion PHP
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" id="ButtonRegistro">Registrar comprador</button>
-					<button type="button" class="btn btn-success" id="ButtonRegistroVendedor">Registrar
-						vendedor</button>
+					<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="ButtonRegistro">Registrar comprador</button>
+					<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="ButtonRegistroVendedor">Registrar vendedor</button>
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 				</div>
 				</form>

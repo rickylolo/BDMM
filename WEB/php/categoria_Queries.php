@@ -8,7 +8,7 @@ class categoria extends DB
      // QUERY Get Datos de todos los categorias
     function getAllCategorias()
     {
-        $get = "CALL sp_GestionCategoria('A', 
+        $get = "CALL sp_GestionCategoria('G', 
         NULL,
         NULL,
         NULL,

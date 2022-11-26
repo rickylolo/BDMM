@@ -64,16 +64,16 @@ if (isset($_POST['funcion'])) {
             session_start();
             $id = $_SESSION['id'];
             $var = new CategoriaAPI();
-            $var->insertarCategoria($id,$_POST['nombrecategoria'],$_POST['esCotizado'],$_POST['Precio'],$_POST['cantidadDisponible']);
+            $var->insertarCategoria($id,$_POST['nombreCategoria'],$_POST['colorCategoria'],$_POST['descripcionCategoria']);
             break;
         case "actualizarCategoria":
             $id = $_SESSION['id'];
             $var = new CategoriaAPI();
-            $var->actualizarCategoria($_POST['categoria_id'],$id,$_POST['nombrecategoria'],$_POST['esCotizado'],$_POST['Precio'],$_POST['cantidadDisponible']);
+            $var->actualizarCategoria($_POST['Categoria_id'],$id,$_POST['nombreCategoria'],$_POST['colorCategoria'],$_POST['descripcionCategoria']);
             break;
         case "eliminarCategoria":
             $var = new CategoriaAPI();
-            $var->eliminarCategoria($_POST['categoria_id']);
+            $var->eliminarCategoria($_POST['Categoria_id']);
             break;
         case "getCategorias":
             $var = new CategoriaAPI();

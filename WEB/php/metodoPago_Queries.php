@@ -15,6 +15,7 @@ class MetodoPago extends DB
          NULL,
          NULL,
          NULL,
+         NULL,
          NULL);";
         $query = $this->connect()->query($get);
         return $query;
@@ -30,6 +31,7 @@ class MetodoPago extends DB
         $insert = "CALL sp_GestionMetodoDePago('I', 
          NULL,
          $Usuario_id,
+         NULL,
          '$tipoMetodo',
          '$nombreMetodo',
          NULL,
@@ -46,6 +48,7 @@ class MetodoPago extends DB
         $update =  "CALL sp_GestionMetodoDePago('E', 
          $MetodoPago_id,
          NULL,
+         NULL,
          '$tipoMetodo',
          '$nombreMetodo',
          NULL,
@@ -59,6 +62,7 @@ class MetodoPago extends DB
     {
         $delete = "CALL sp_GestionMetodoDePago('D', 
          $MetodoPago_id,
+         NULL,
          NULL,
          NULL,
          NULL,

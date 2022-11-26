@@ -59,13 +59,25 @@ if (isset($_POST['funcion'])) {
     $funcion = $_POST['funcion'];
     switch ($funcion) {
         case "insertarMetodoPago":
+            session_start();
+            $id = $_SESSION['id'];
+            $tipoArchivo = $_FILES['file']['type'];
+            $nombreArchivo = $_FILES['file']['name'];
+            $tamanoArchivo = $_FILES['file']['size'];
+            $imagenSubida = fopen($_FILES['file']['tmp_name'], 'r');
+            $binariosImagen = fread($imagenSubida, $tamanoArchivo);
             $var = new MetodoPagoAPI();
-            $var->insertarMetodoPago($_POST['Usuario_id'],$_POST['tipoMetodo'],$_POST['nombreMetodo'],$_POST['imagenMetodo']);
+            $var->insertarMetodoPago($id,$_POST['tipoMetodo'],$_POST['nombreMetodo'],$binariosImagen);
             break;
 
         case "actualizarMetodoPago":
+            $tipoArchivo = $_FILES['file']['type'];
+            $nombreArchivo = $_FILES['file']['name'];
+            $tamanoArchivo = $_FILES['file']['size'];
+            $imagenSubida = fopen($_FILES['file']['tmp_name'], 'r');
+            $binariosImagen = fread($imagenSubida, $tamanoArchivo);
             $var = new MetodoPagoAPI();
-            $var->actualizarMetodoPago($_POST['MetodoPago_id'],$_POST['tipoMetodo'],$_POST['nombreMetodo'],$_POST['imagenMetodo']);
+            $var->actualizarMetodoPago($_POST['MetodoPago_id'],$_POST['tipoMetodo'],$_POST['nombreMetodo'], $binariosImagen);
             break;
         case "deleteMetodoPago":
             $var = new MetodoPagoAPI();

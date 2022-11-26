@@ -23,13 +23,14 @@ class producto extends DB
     // ---------------------------------------INSERTAR INFORMACION------------------------------------------
     // QUERY Insertar producto
 
-    function insertarProducto($Usuario_id ,$nombreProducto,$esCotizado,$Precio,$cantidadDisponible)
+    function insertarProducto($Usuario_id ,$nombreProducto,$descProducto,$esCotizado,$Precio,$cantidadDisponible)
     {
         $insert = "CALL sp_GestionProducto('I', 
         NULL,
         $Usuario_id,
         '$nombreProducto',
-        '$esCotizado',
+        '$descProducto',
+        $esCotizado,
         '$Precio',
         '$cantidadDisponible');";
         $query = $this->connect()->query($insert);
@@ -38,13 +39,14 @@ class producto extends DB
 
    // ---------------------------------------ACTUALIZAR INFORMACION------------------------------------------
    // QUERY Actualizar producto
-    function actualizarProducto($Producto_id,$Usuario_id ,$nombreProducto,$esCotizado,$Precio,$cantidadDisponible)
+    function actualizarProducto($Producto_id,$Usuario_id ,$nombreProducto,$descProducto,$esCotizado,$Precio,$cantidadDisponible)
     {
         $update =  "CALL sp_GestionProducto('E', 
         $Producto_id,
         $Usuario_id,
         '$nombreProducto',
-        '$esCotizado',
+        '$descProducto',
+        $esCotizado,
         '$Precio',
         '$cantidadDisponible');";
         $query = $this->connect()->query($update);

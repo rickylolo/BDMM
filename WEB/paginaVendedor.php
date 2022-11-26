@@ -13,6 +13,7 @@ session_start(); // Inicio mi sesion PHP
     <link rel="shortcut icon" href="img\jyp-logo.jpg">
     <script src="js/jquery-3.6.0.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/vendedorMainScript.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/mainPage.css" rel="stylesheet">
     <link href="css/pedidoPage.css" rel="stylesheet">
@@ -28,6 +29,7 @@ session_start(); // Inicio mi sesion PHP
                     <a class="navbar-brand" href="mainPage.php"><img src="img/jyp-logo.jpg" id="jypLogo"></a>
                 </div>
                 <div class="col-4">
+                  
                 </div>
                 <div class="col-2">
                     <div class="d-flex flex-column dropstart misDatosUsuario">
@@ -92,6 +94,7 @@ session_start(); // Inicio mi sesion PHP
     </nav>
 
     <div class="container">
+          <input type="text" id="idProductoSeleccionado">
         <div class="separador"></div>
         <div class="col-12 fs-2 fw-bolder d-flex justify-content-end">
             <div class="btn btn-sm bg-primary" data-bs-toggle="modal" data-bs-target="#miModalReporte">Consulta de
@@ -313,6 +316,139 @@ session_start(); // Inicio mi sesion PHP
     </div>
 
     <!--                MODALS                 -->
+
+    <!--  >MODAL EDIT USER<-->
+    <div class="modal fade" id="miModalEditUser" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Edita tus datos</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST">
+                    <div class="modal-body">
+
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12">
+                                <h5>Ingresa los siguientes datos:</h5>
+                            </div>
+                        </div>
+                        <div class="row modalTexto">
+                            Correo Electrónico
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+
+                            <input type="text" class="form-control" id="E_email" name="E_email"
+                                placeholder="Correo Electrónico" aria-label="Username" aria-describedby="basic-addon1"
+                                value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Nombre de usuario
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-person"></i></span>
+
+                            <input type="text" class="form-control" id="E_usuario" name="E_usuario"
+                                placeholder="Nombre de usuario" aria-label="Username" aria-describedby="basic-addon1"
+                                value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Nombre(s)
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-file-person"></i></span>
+                            <input type="text" class="form-control" id="E_names" name="E_names" placeholder="Nombre(s)"
+                                aria-label="Username" aria-describedby="basic-addon1" value="">
+
+                        </div>
+
+
+                        <div class="row modalTexto">
+                            Apellido Paterno
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i
+                                    class="bi bi-file-person-fill"></i></span>
+
+                            <input type="text" class="form-control" id="E_lastNameP" name="E_lastName"
+                                placeholder="Apellido(s)" aria-label="Username" aria-describedby="basic-addon1"
+                                value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Apellido Materno
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i
+                                    class="bi bi-file-person-fill"></i></span>
+
+                            <input type="text" class="form-control" id="E_lastNameM" name="E_lastName"
+                                placeholder="Apellido Materno" aria-label="Apellido Materno"
+                                aria-describedby="basic-addon1" value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Contraseña
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-key"></i></span>
+                            <input type="password" class="form-control" id="E_contrasenia" name="E_contrasenia"
+                                placeholder="Contraseña" aria-label="Username" aria-describedby="basic-addon1" value="">
+
+                        </div>
+                        <p style="font-size: small;">Contraseña con un mínimo de 8 caracteres, una
+                            mayúscula, una minúscula, un número y un carácter
+                            especial.
+                        <p>
+
+
+                        <div class="row modalTexto">
+                            Fecha de nacimiento
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i
+                                    class="bi bi-file-person-fill"></i></span>
+
+                            <input type="date" class="form-control" id="E_FechaNacimiento" name="E_FechaNacimiento"
+                                placeholder="Fecha de Nacimiento" aria-label="Fecha Nacimiento"
+                                aria-describedby="basic-addon1" value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Foto de perfil
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+                            <input type="file" onchange="vista_preliminarEditarPerfil(event)" class="form-control"
+                                id="E_userIMG" name="E_userIMG" placeholder="Foto de perfil" aria-label="Username"
+                                aria-describedby="basic-addon1">
+
+
+                        </div>
+                        <div class="d-flex justify-content-center"><img src="" alt="" id="img-foto" width="250px"
+                                height="250px"></div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="ButtonActualizarPerfil" name="EditUser"
+                            data-bs-dismiss="modal">Actualizar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <!--  >MODAL ALTA PRODUCTO<-->
     <div class="modal fade" id="miModalAltaProducto" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
         data-bs-backdrop="static">
@@ -322,101 +458,212 @@ session_start(); // Inicio mi sesion PHP
                     <h5 class="modal-title" id="modalTitle">Producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post" action="php\producto_API.php" enctype="multipart/form-data">
+                <form method="post">
                     <div class="modal-body">
-
-                        <div class="row">
-                            <div class="col-12">
-                                <h4>Ingresa los siguientes datos:</h4>
+                        <div class="divAltaProducto">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>Ingresa los siguientes datos:</h4>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row modalTexto">
-                            Nombre:
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-chat-left-text"></i></span>
-                            <input type="text" class="form-control" id="product_name" name="product_name"
-                                placeholder="Nombre del producto" aria-label="Username" aria-describedby="basic-addon1"
-                                required>
-                        </div>
-
-                        <div class="row modalTexto">
-                            Cantidad producto:
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-archive"></i></span>
-                            <input type="text" class="form-control" id="product_qty" name="product_qty"
-                                placeholder="Cantidad de producto" aria-label="Username" aria-describedby="basic-addon1"
-                                required>
-                        </div>
-
-                        <div class="row modalTexto">
-                            Descripción:
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-card-list"></i></span>
-                            <input type="text" class="form-control" id="product_desc" name="product_desc"
-                                placeholder="Descripción" aria-label="Username" aria-describedby="basic-addon1"
-                                required>
-                        </div>
-
-                        <div class="row modalTexto">
-                            Precio:
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-cash"></i></span>
-                            <input type="text" class="form-control" id="product_price" name="product_price"
-                                placeholder="Precio" aria-label="Username" aria-describedby="basic-addon1" required>
-                        </div>
-
-                        <div class="row modalTexto">
-                            Categoria:
-                        </div>
-                        <div class="input-group mb-3">
-
-                            <div class="dropdown input-group-text" id="basic-addon1">
-                                <button class="btn dropdown-toggle text-black-50" type="button" id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Selecciona aquí:
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a href=" " class="dropdown-item CategoriaProducto">Album</a></li>
-                                    <li><a href=" " class="dropdown-item CategoriaProducto">Photocards</a></li>
-                                    <li><a href=" " class="dropdown-item CategoriaProducto">Pósters</a></li>
-                                    <li><a href=" " class="dropdown-item CategoriaProducto">Photobooks</a></li>
-                                    <li><a href=" " class="dropdown-item CategoriaProducto">Ropa</a></li>
-
-                                </ul>
+                            <div class="row modalTexto">
+                                Nombre:
                             </div>
-                            <input type="text" class="form-control" name="product-category" id="product-category"
-                                placeholder="Categoría" aria-label="Username" aria-describedby="basic-addon1" readonly
-                                required>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i
+                                        class="bi bi-chat-left-text"></i></span>
+                                <input type="text" class="form-control" id="product_name" name="product_name"
+                                    placeholder="Nombre del producto" aria-label="Username"
+                                    aria-describedby="basic-addon1" required>
+                            </div>
+
+                            <div class="row modalTexto">
+                                Cantidad producto:
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-archive"></i></span>
+                                <input type="text" class="form-control" id="product_qty" name="product_qty"
+                                    placeholder="Cantidad de producto" aria-label="Username"
+                                    aria-describedby="basic-addon1" required>
+                            </div>
+
+                            <div class="row modalTexto">
+                                Descripción:
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-card-list"></i></span>
+                                <input type="text" class="form-control" id="product_desc" name="product_desc"
+                                    placeholder="Descripción" aria-label="Username" aria-describedby="basic-addon1"
+                                    required>
+                            </div>
+
+                            <div class="row modalTexto">
+                                Precio:
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-cash"></i></span>
+                                <input type="text" class="form-control" id="product_price" name="product_price"
+                                    placeholder="Precio" aria-label="Username" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="row modalTexto">
+                                Selecciona:
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="radio" name="product_cotizado" id="product_cotizado" value="1"
+                                        aria-label="Radio button for following text input">
+                                </div>
+                                <input type="text" class="form-control" placeholder="El producto es cotizado"
+                                    aria-label="Text input with radio button" onlyread>
+
+                            </div>
+                        <input type="hidden" id="product_cot" value="0">
+                            <button type="button" class="btn btn-success" id="ButtonRegistrarProducto">Crear
+                                Producto</button>
                         </div>
 
-                        <div class="row modalTexto">
-                            Imagen del producto(mín 3):
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
-                            <input type="file" onchange="vista_preliminarProducto(event)" class="form-control"
-                                id="producto_IMG" name="producto_IMG" placeholder="Foto del producto"
-                                aria-label="Username" aria-describedby="basic-addon1" required>
-                        </div>
-                        <div><img src="" alt="" id="P_img-foto" width="450px" height="250px"></div>
+                        <div id="añadirCategorias">
+                            <div class="row modalTexto">
+                                Categoria:
+                            </div>
+                            <div class="input-group mb-3">
 
-                        <div class="row modalTexto">
-                            Video del producto(mín 1):
+                                <div class="dropdown input-group-text" id="basic-addon1">
+                                    <button class="btn dropdown-toggle text-black-50" type="button"
+                                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Selecciona aquí:
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"
+                                        id="misCategoriasDropdown">
+
+
+                                    </ul>
+                                </div>
+                                <input type="text" class="form-control" name="product-category" id="product-category"
+                                    placeholder="Categoría" aria-label="Username" aria-describedby="basic-addon1"
+                                    readonly required>
+
+                            </div>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
                         </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
-                            <input type="file" onchange="vista_preliminarProducto(event)" class="form-control"
-                                id="producto_IMG" name="producto_IMG" placeholder="Foto del producto"
-                                aria-label="Username" aria-describedby="basic-addon1" required>
+                        <div id="añadirImagenes">
+                            <div class="row modalTexto">
+                                Imagen del producto(mín 3):
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+                                <input type="file" onchange="vista_preliminarProducto(event)" class="form-control"
+                                    id="producto_IMG" name="producto_IMG" placeholder="Foto del producto"
+                                    aria-label="Username" aria-describedby="basic-addon1" required>
+                            </div>
+                              <div id="miCarruselImagenes">
+                                <div id="carouselExampleDark" class="carousel carousel-dark slide"
+                                    data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
+                                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                                            aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                                            aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active" data-bs-interval="10000">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>First slide label</h5>
+                                                <p>Some representative placeholder content for the first slide.</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-bs-interval="2000">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Second slide label</h5>
+                                                <p>Some representative placeholder content for the second slide.</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Third slide label</h5>
+                                                <p>Some representative placeholder content for the third slide.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
                         </div>
-                        <div><img src="" alt="" id="P_img-foto" width="450px" height="250px"></div>
+                        <div id="añadirVideos">
+                            <div class="row modalTexto">
+                                Video del producto(mín 1):
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+                                <input type="file" onchange="vista_preliminarProductoVideo(event)" class="form-control"
+                                    id="producto_IMG_Video" name="producto_IMG" placeholder="Foto del producto"
+                                    aria-label="Username" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div id="miCarruselVideos">
+                                <div id="carouselExampleDark" class="carousel carousel-dark slide"
+                                    data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
+                                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                                            aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                                            aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active" data-bs-interval="10000">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>First slide label</h5>
+                                                <p>Some representative placeholder content for the first slide.</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-bs-interval="2000">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Second slide label</h5>
+                                                <p>Some representative placeholder content for the second slide.</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Third slide label</h5>
+                                                <p>Some representative placeholder content for the third slide.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Añadir</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </form>

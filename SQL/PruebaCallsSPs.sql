@@ -1,4 +1,6 @@
+USE BDMM_PROYECTO;
 
+/*--------------------------------------------------------------------------------USUARIOS--------------------------------------------------------------------------*/
 CALL sp_GestionUsuario('I', #Operacion
 NULL, #Id Usuario
 'ricky_lolo29@hotmail.com', #Correo
@@ -26,3 +28,13 @@ NULL, # Apellido Materno
 NULL, # Fecha de nacimiento
 NULL, # Genero
 NULL); # Flag Perfil Privado
+/*--------------------------------------------------------------------------------PRODUCTOS--------------------------------------------------------------------------*/
+CALL sp_GestionProducto('I', #Operacion
+NULL,
+8,
+"Album Twice Cheer Up",
+"Fallen Version Limited Edition",
+0,
+899.99,
+500
+);

@@ -89,14 +89,14 @@ class User extends DB
         '$lastNameM', 
         '$fechaNac', 
         '$genero',
-        1); ";
+        1);";
         $query = $this->connect()->query($insert);
         return $query;
     }
 
    // ---------------------------------------ACTUALIZAR INFORMACION------------------------------------------
    // QUERY Actualizar Usuario
-    function actualizarUser($id, $email, $username, $password, $user_Type, $user_IMG, $names, $lastNameP, $lastNameM, $fechaNac,  $genero)
+    function actualizarUser($id, $email, $username, $password,  $user_IMG, $names, $lastNameP, $lastNameM, $fechaNac)
     {
         $user_IMG = mysqli_escape_string($this->myCon(), $user_IMG); //IMAGEN
         $update = "CALL sp_GestionUsuario('E', 
@@ -104,14 +104,14 @@ class User extends DB
         '$email',
         '$username', 
         '$password', 
-         $user_Type,
+         NULL,
         '$user_IMG', 
         '$names', 
         '$lastNameP', 
         '$lastNameM', 
         '$fechaNac', 
-        '$genero',
-         NULL); ";
+         NULL,
+         NULL);";
         $query = $this->connect()->query($update);
         return $query;
     }

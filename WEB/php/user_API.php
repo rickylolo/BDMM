@@ -21,20 +21,14 @@ class userAPI
             while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
 
                 $obj = array(
-                    "id" => $row['ID']
+                    "id" => $row['ID'],
+                    "rol" => $row['rol']
                 );
-                $_SESSION['Usuario_id'] = $obj["Usuario_id"];
+                $_SESSION['id'] = $obj["id"];
+                $_SESSION['rol'] = $obj["rol"];
                 array_push($arrUsers["Datos"], $obj);
             }
-            if (!$res->fetch(PDO::FETCH_ASSOC)) {
-                if ($_SESSION != NULL) {
-                    header("Location:../mainPage.php");
-                    exit();
-                } else {
-                    header("Location:../index.php");
-                    exit();
-                }
-            }
+           echo json_encode($arrUsers["Datos"]);
         } else {
             header("Location:../index.php");
             exit();
@@ -50,7 +44,6 @@ class userAPI
 
         $res = $user->getUserData($id_user);
         if ($res) { // Entra si hay información
-            session_start();
             while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
 
                 $obj = array(
@@ -60,11 +53,13 @@ class userAPI
                     "userRol" => $row['userRol'],
                     "PFP" => base64_encode(($row['PFP'])),
                     "nombreCompleto" => $row['nombreCompleto'],
+                    "nombreUsuario" => $row['nombreUsuario'],
+                    "apellidoPaterno" => $row['apellidoPaterno'],
+                    "apellidoMaterno" => $row['apellidoMaterno'],
                     "fecha" => $row['fecha'],
                     "sexo" => $row['sexo'],
                     "esPrivado" => $row['esPrivado']
                 );
-                $_SESSION['ID'] = $obj["ID"];
                 array_push($arrUsers["Datos"], $obj);
             }
             echo json_encode($arrUsers["Datos"]);
@@ -86,10 +81,10 @@ class userAPI
         $user->insertarUserVendedor($email, $username, $password, $user_Type, $user_IMG, $names, $lastNameP, $lastNameM, $fechaNac,  $genero);
     }
 
-    function actualizarUser($id, $email, $username, $password, $user_Type, $user_IMG, $names, $lastNameP, $lastNameM, $fechaNac,  $genero)
+    function actualizarUser($id, $email, $username, $password,  $user_IMG, $names, $lastNameP, $lastNameM, $fechaNac)
     {
         $user = new User();
-        $user->actualizarUser($id, $email, $username, $password, $user_Type, $user_IMG, $names, $lastNameP, $lastNameM, $fechaNac,  $genero);
+        $user->actualizarUser($id, $email, $username, $password,$user_IMG, $names, $lastNameP, $lastNameM, $fechaNac);
     }
 
     function cerrarSesion()
@@ -102,18 +97,21 @@ class userAPI
 }
 
 //AJAX
-
 if (isset($_POST['funcion'])) {
     $funcion = $_POST['funcion'];
     switch ($funcion) {
-        case "registrarUsuarioComprador":
+        case "iniciarSesion":
+            $var = new userAPI();
+            $var->seleccionLoggeo($_POST['username'], $_POST['password']);
+            break;
+        case "registrarUsuarioAdministrador":
             $tipoArchivo = $_FILES['file']['type'];
             $nombreArchivo = $_FILES['file']['name'];
             $tamanoArchivo = $_FILES['file']['size'];
             $imagenSubida = fopen($_FILES['file']['tmp_name'], 'r');
             $binariosImagen = fread($imagenSubida, $tamanoArchivo);
             $var = new userAPI();
-            $var->insertarUserComprador($_POST['email'], $_POST['usuario'], $_POST['contrasenia'], 1, $binariosImagen, $_POST['names'], $_POST['lastNameP'], $_POST['lastNameM'], $_POST['fechaNacimiento'], $_POST['genero']);
+            $var->insertarUserComprador($_POST['email'], $_POST['usuario'], $_POST['contrasenia'], 2, $binariosImagen, $_POST['names'], $_POST['lastNameP'], $_POST['lastNameM'], $_POST['fechaNacimiento'], $_POST['genero']);
             break;
         case "registrarUsuarioVendedor":
             $tipoArchivo = $_FILES['file']['type'];
@@ -122,7 +120,16 @@ if (isset($_POST['funcion'])) {
             $imagenSubida = fopen($_FILES['file']['tmp_name'], 'r');
             $binariosImagen = fread($imagenSubida, $tamanoArchivo);
             $var = new userAPI();
-            $var->insertarUserVendedor($_POST['email'], $_POST['usuario'], $_POST['contrasenia'], 1, $binariosImagen, $_POST['names'], $_POST['lastNameP'], $_POST['lastNameM'], $_POST['fechaNacimiento'], $_POST['genero']);
+            $var->insertarUserVendedor($_POST['email'], $_POST['usuario'], $_POST['contrasenia'], 3, $binariosImagen, $_POST['names'], $_POST['lastNameP'], $_POST['lastNameM'], $_POST['fechaNacimiento'], $_POST['genero']);
+            break;
+        case "registrarUsuarioComprador":
+            $tipoArchivo = $_FILES['file']['type'];
+            $nombreArchivo = $_FILES['file']['name'];
+            $tamanoArchivo = $_FILES['file']['size'];
+            $imagenSubida = fopen($_FILES['file']['tmp_name'], 'r');
+            $binariosImagen = fread($imagenSubida, $tamanoArchivo);
+            $var = new userAPI();
+            $var->insertarUserComprador($_POST['email'], $_POST['usuario'], $_POST['contrasenia'], 4, $binariosImagen, $_POST['names'], $_POST['lastNameP'], $_POST['lastNameM'], $_POST['fechaNacimiento'], $_POST['genero']);
             break;
         case "actualizarUser":
             session_start();
@@ -133,7 +140,7 @@ if (isset($_POST['funcion'])) {
             $imagenSubida = fopen($_FILES['file']['tmp_name'], 'r');
             $binariosImagen = fread($imagenSubida, $tamanoArchivo);
             $var = new userAPI();
-            $var->actualizarUser($id, $_POST['email'], $_POST['usuario'], $_POST['contrasenia'], 1, $binariosImagen, $_POST['names'], $_POST['lastNameP'], $_POST['lastNameM'], $_POST['fechaNacimiento'], $_POST['genero']);
+            $var->actualizarUser($id, $_POST['email'], $_POST['usuario'], $_POST['contrasenia'],$binariosImagen, $_POST['names'], $_POST['lastNameP'], $_POST['lastNameM'], $_POST['fechaNacimiento']);
             break;
         case "obtenerDataUsuario":
             session_start();
@@ -144,17 +151,9 @@ if (isset($_POST['funcion'])) {
     }
 }
 
-
-// PROCEDIMIENTOS NO ASINCRONOS, Necesita de actualizar la pagina para funcionar o redirigir a otra
 //Cerrar Sesión
 if (isset($_GET['logout'])) {
     $var = new userAPI();
     $var->cerrarSesion();
 }
 
-// AQUI ENTRA DESDE EL FORM DE LOGIN 
-// Buscar User
-if (isset($_POST['username']) && isset($_POST['password'])) {
-    $var = new userAPI();
-    $var->seleccionLoggeo($_POST['username'], $_POST['password']);
-}

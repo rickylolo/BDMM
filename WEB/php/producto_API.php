@@ -14,7 +14,6 @@ class ProductoAPI
         $arrProductos["Datos"] = array();
         $res = $producto->getAllProductos();
         if ($res) { // Entra si hay información
-            session_start();
             while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
 
                 $obj = array(
@@ -31,21 +30,37 @@ class ProductoAPI
             }
             echo json_encode($arrProductos["Datos"]);
         } else {
-            header("Location:../paginaAdmin.php");
+            header("Location:../paginaVendedor.php");
             exit();
         }
     }
 
-    function insertarProducto($Usuario_id,$nombreProducto,$esCotizado,$Precio,$cantidadDisponible)
+    function insertarProducto($Usuario_id,$nombreProducto,$descProducto,$esCotizado,$Precio,$cantidadDisponible)
     {
         $producto = new producto();
-        $producto->insertarProducto($Usuario_id,$nombreProducto,$esCotizado,$Precio,$cantidadDisponible);
+        $arrProductos = array();
+        $arrProductos["Datos"] = array();
+        $res =  $producto->insertarProducto($Usuario_id,$nombreProducto,$descProducto,$esCotizado,$Precio,$cantidadDisponible);
+        if ($res) { // Entra si hay información
+    
+            while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
+                $obj = array(
+                    "Producto_id" => $row['Producto_id']
+                   
+                );
+                array_push($arrProductos["Datos"], $obj);
+            }
+            echo json_encode($arrProductos["Datos"]);
+        } else {
+            header("Location:../paginaVendedor.php");
+            exit();
+        }
     }
 
-    function actualizarProducto($Producto_id,$Usuario_id,$nombreProducto,$esCotizado,$Precio,$cantidadDisponible)
+    function actualizarProducto($Producto_id,$Usuario_id,$nombreProducto,$descProducto,$esCotizado,$Precio,$cantidadDisponible)
     {
         $producto = new producto();
-        $producto->actualizarProducto($Producto_id,$Usuario_id,$nombreProducto,$esCotizado,$Precio,$cantidadDisponible);
+        $producto->actualizarProducto($Producto_id,$Usuario_id,$nombreProducto,$descProducto,$esCotizado,$Precio,$cantidadDisponible);
     }
  
     function eliminarProducto($Producto_id)
@@ -65,12 +80,12 @@ if (isset($_POST['funcion'])) {
             session_start();
             $id = $_SESSION['id'];
             $var = new ProductoAPI();
-            $var->insertarProducto($id,$_POST['nombreProducto'],$_POST['esCotizado'],$_POST['Precio'],$_POST['cantidadDisponible']);
+            $var->insertarProducto($id,$_POST['nombreProducto'],$_POST['descProducto'],$_POST['esCotizado'],$_POST['Precio'],$_POST['cantidadDisponible']);
             break;
         case "actualizarProducto":
             $id = $_SESSION['id'];
             $var = new ProductoAPI();
-            $var->actualizarProducto($_POST['Producto_id'],$id,$_POST['nombreProducto'],$_POST['esCotizado'],$_POST['Precio'],$_POST['cantidadDisponible']);
+            $var->actualizarProducto($_POST['Producto_id'],$id,$_POST['nombreProducto'],$_POST['descProducto'],$_POST['esCotizado'],$_POST['Precio'],$_POST['cantidadDisponible']);
             break;
         case "eliminarProducto":
             $var = new ProductoAPI();

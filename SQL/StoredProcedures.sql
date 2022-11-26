@@ -5,16 +5,16 @@ DELIMITER //
 CREATE PROCEDURE sp_GestionUsuario
 (
 Operacion CHAR(1),
-sp_Usuario_id INT(6),
-sp_correo VARCHAR(30),
+sp_Usuario_id INT,
+sp_correo VARCHAR(40),
 sp_nickUsuario VARCHAR(30),
 sp_userPassword VARCHAR(30),
-sp_rolUsuario VARCHAR(30),
-sp_fotoPerfil VARCHAR(30),
+sp_rolUsuario TINYINT,
+sp_fotoPerfil MEDIUMBLOB,
 sp_nombreUsuario VARCHAR(30),
-sp_apellidoMaterno  VARCHAR(30),
 sp_apellidoPaterno  VARCHAR(30),
-sp_fechaNacimiento  VARCHAR(30),
+sp_apellidoMaterno  VARCHAR(30),
+sp_fechaNacimiento VARCHAR(30),
 sp_sexo VARCHAR(10),
 sp_esPrivado BIT
 )
@@ -23,7 +23,7 @@ BEGIN
    IF Operacion = 'I' /*INSERT USUARIO*/
    THEN  
 		INSERT INTO Usuario(correo ,nickUsuario ,userPassword ,rolUsuario ,fotoPerfil ,nombreUsuario ,apellidoMaterno ,apellidoPaterno ,fechaNacimiento ,sexo,fechaRegistro) 
-			VALUES (sp_correo,sp_nickUsuario,sp_userPassword,sp_rolUsuario,sp_fotoPerfil,sp_nombreUsuario,sp_apellidoMaterno,sp_apellidoPaterno,sp_fechaNacimiento,sp_sexo,CURRENT_TIMESTAMP);
+			VALUES (sp_correo,sp_nickUsuario,sp_userPassword,sp_rolUsuario,sp_fotoPerfil,sp_nombreUsuario,sp_apellidoMaterno,sp_apellidoPaterno,sp_fechaNacimiento,sp_sexo,now());
    END IF;
 	IF Operacion = 'E'  /*EDIT USUARIO*/
     THEN 
@@ -35,8 +35,7 @@ BEGIN
 			sp_nombreUsuario=IF(sp_nombreUsuario='',NULL,sp_nombreUsuario),
 			sp_apellidoMaterno=IF(sp_apellidoMaterno='',NULL,sp_apellidoMaterno),
             sp_apellidoPaterno=IF(sp_apellidoPaterno='',NULL,sp_apellidoPaterno),
-            sp_fechaNacimiento=IF(sp_fechaNacimiento='',NULL,sp_fechaNacimiento),
-            sp_sexo=IF(sp_sexo='',NULL,sp_sexo);
+            sp_fechaNacimiento=IF(sp_fechaNacimiento='',NULL,sp_fechaNacimiento);
 		UPDATE Usuario 
 			SET correo = IFNULL(sp_correo,correo), 
 			nickUsuario=  IFNULL(sp_nickUsuario,nickUsuario), 
@@ -46,8 +45,7 @@ BEGIN
 			nombreUsuario= IFNULL(sp_nombreUsuario,nombreUsuario), 
 			apellidoMaterno= IFNULL(sp_apellidoMaterno,apellidoMaterno),
             apellidoPaterno= IFNULL(sp_apellidoPaterno,apellidoPaterno),
-            fechaNacimiento= IFNULL(sp_fechaNacimiento,fechaNacimiento),
-            sexo= IFNULL(sp_sexo,sexo)
+            fechaNacimiento= IFNULL(sp_fechaNacimiento,fechaNacimiento)
      
 		WHERE Usuario_id=sp_Usuario_id;
    END IF;
@@ -58,7 +56,7 @@ BEGIN
           UPDATE Usuario SET esPrivado = sp_esPrivado WHERE Usuario_id = sp_Usuario_id;
    END IF;
     IF Operacion = 'L' THEN /*LOG IN USUARIO*/
-		SELECT ID 
+		SELECT ID,rol 
         FROM vUserLoginID 
         WHERE 1=1 
 			AND usuario = sp_nickUsuario
@@ -69,7 +67,7 @@ BEGIN
 		FROM vUserData;
    END IF;
      IF Operacion = 'G' THEN /*GET DATOS USUARIO*/
-	SELECT ID,email,username,userRol,PFP,nombreCompleto,fecha,sexo,fecha,sexo,esPrivado 
+	SELECT ID, email, username, userRol, PFP, nombreCompleto, apellidoPaterno, apellidoMaterno, nombreUsuario, fecha, sexo, esPrivado
 		FROM vUserData WHERE ID = sp_Usuario_id;
    END IF;
 END //
@@ -80,8 +78,9 @@ DELIMITER //
 CREATE PROCEDURE sp_GestionMetodoDePago
 (
 Operacion CHAR(1),
-sp_MetodoPago_id INT(6),
-sp_Usuario_id INT(6),
+sp_MetodoPago_id INT,
+sp_Usuario_id_Registro INT,
+sp_Usuario_id INT,
 sp_tipoMetodo VARCHAR(30),
 sp_nombreMetodo VARCHAR(30),
 sp_datosPago VARCHAR(30),
@@ -91,8 +90,8 @@ sp_imagenMetodo MEDIUMBLOB
 BEGIN
    IF Operacion = 'I' /*INSERT METODO DE PAGO*/
    THEN  
-		INSERT INTO MetodoPago(Usuario_id,tipoMetodo ,nombreMetodo ,imagenMetodo) 
-			VALUES (sp_Usuario_id,sp_tipoMetodo,sp_nombreMetodo,sp_imagenMetodo);
+		INSERT INTO MetodoPago(Usuario_id_Registro,tipoMetodo ,nombreMetodo ,imagenMetodo) 
+			VALUES (sp_Usuario_id_Registro,sp_tipoMetodo,sp_nombreMetodo,sp_imagenMetodo);
    END IF;
       IF Operacion = 'U' /*INSERT METODO DE PAGO DE USUARIO*/
    THEN  
@@ -132,10 +131,10 @@ DELIMITER //
 CREATE PROCEDURE sp_GestionPedido
 (
 Operacion CHAR(1),
-sp_Pedido_id INT(6),
-sp_Lista_id INT(6),
-sp_MetodoPago_id INT(6),
-sp_Usuario_id INT(6),
+sp_Pedido_id INT,
+sp_Lista_id INT,
+sp_MetodoPago_id INT,
+sp_Usuario_id INT,
 sp_estadoPedido VARCHAR(30),
 sp_fechaEntrega DATE
 )
@@ -192,27 +191,34 @@ Operacion CHAR(1),
 sp_Producto_id INT(6),
 sp_Usuario_id INT(6),
 sp_nombreProducto VARCHAR(30),
-sp_esCotizado VARCHAR(30),
+sp_descripcionProducto VARCHAR(30),
+sp_esCotizado BIT,
 sp_Precio DECIMAL(9,2),
 sp_cantidadDisponible INT(6)
 )
 BEGIN
+   DECLARE u_id INT; 
    IF Operacion = 'I' /*INSERT PRODUCTO*/
    THEN  
-		INSERT INTO Producto(Usuario_id ,nombreProducto,esCotizado,Precio,cantidadDisponible) 
-			VALUES (sp_Usuario_id,sp_nombreProducto,sp_esCotizado,sp_Precio,sp_cantidadDisponible);
+		INSERT INTO Producto(Usuario_id ,nombreProducto,descripcionProducto,esCotizado,Precio,cantidadDisponible) 
+			VALUES (sp_Usuario_id,sp_nombreProducto,sp_descripcionProducto,sp_esCotizado,sp_Precio,sp_cantidadDisponible);
+		SET u_id = last_insert_id();
+        SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible
+		FROM vProducto WHERE Producto_id = u_id;
 
    END IF;
    IF Operacion = 'E'  /*EDIT PRODUCTO*/
     THEN 
     	SET sp_Usuario_id=IF(sp_Usuario_id='',NULL,sp_Usuario_id),
 			sp_nombreProducto=IF(sp_nombreProducto='',NULL,sp_nombreProducto),
+            sp_descripcionProducto=IF(sp_descripcionProducto='',NULL,sp_descripcionProducto),
             sp_esCotizado=IF(sp_esCotizado='',NULL,sp_esCotizado),
             sp_Precio=IF(sp_Precio='',NULL,sp_Precio),
             sp_cantidadDisponible=IF(sp_cantidadDisponible='',NULL,sp_cantidadDisponible);
 		UPDATE Producto 
 			SET Usuario_id = IFNULL(sp_Usuario_id,Usuario_id), 
 			nombreProducto=  IFNULL(sp_nombreProducto,nombreProducto), 
+            descripcionProducto=  IFNULL(sp_descripcionProducto,descripcionProducto), 
 			esCotizado=  IFNULL(sp_esCotizado,esCotizado), 
 			Precio=  IFNULL(sp_Precio,Precio), 
 			cantidadDisponible= IFNULL(sp_cantidadDisponible,cantidadDisponible)
@@ -223,7 +229,7 @@ BEGIN
           DELETE FROM Producto WHERE  Producto_id=sp_Producto_id;
    END IF;
   
-   IF Operacion = 'G' THEN /*GET DATOS PRODUCTO*/
+   IF Operacion = 'A' THEN /*GET DATOS PRODUCTOS*/
 		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible
 		FROM vProducto; 
    END IF;
@@ -237,11 +243,11 @@ DELIMITER //
 CREATE PROCEDURE sp_GestionCategoria
 (
 Operacion CHAR(1),
-sp_Categoria_id INT(6),
-sp_Usuario_id INT(6),
+sp_Categoria_id INT,
+sp_Usuario_id INT,
 sp_nombreCategoria VARCHAR(30),
 sp_colorCategoria VARCHAR(10),
-sp_descripcionCategoria VARCHAR(30)
+sp_descripcionCategoria VARCHAR(30) 
 )
 BEGIN
    IF Operacion = 'I' /*INSERT CATEGORIA*/

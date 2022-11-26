@@ -4,14 +4,14 @@ USE BDMM_PROYECTO;
 DROP VIEW IF EXISTS vUserLoginID;
 
 CREATE VIEW vUserLoginID AS
-SELECT Usuario_id AS ID, nickUsuario AS usuario, userPassword AS pass
+SELECT Usuario_id AS ID, nickUsuario AS usuario, userPassword AS pass, rolUsuario AS rol
 FROM Usuario;
 
 
 DROP VIEW IF EXISTS vUserData;
 
 CREATE VIEW vUserData AS
-SELECT 	Usuario_id AS ID,correo AS email,nickUsuario AS username,rolUsuario AS userRol,fotoPerfil AS PFP,CONCAT(nombreUsuario,' ',apellidoPaterno,' ',apellidoMaterno) AS nombreCompleto,fechaNacimiento AS fecha,sexo,esPrivado 
+SELECT 	Usuario_id AS ID,correo AS email,nickUsuario AS username,rolUsuario AS userRol,fotoPerfil AS PFP,CONCAT(nombreUsuario,' ',apellidoPaterno,' ',apellidoMaterno) AS nombreCompleto,apellidoPaterno,apellidoMaterno,nombreUsuario,fechaNacimiento AS fecha,sexo,esPrivado 
 FROM Usuario;
  
 

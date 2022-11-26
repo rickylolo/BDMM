@@ -36,12 +36,12 @@ session_start(); // Inicio mi sesion PHP
                 <div class="col-2">
                     <div class="d-flex flex-column dropstart misDatosUsuario">
                         <div class="miImagen dropdown p-2 mx-auto" id="DatosUser" data-bs-toggle="dropdown"
-                            aria-expanded="false"><img src="img/avatar.jpg" id="pfp" class="rounded-circle"></div>
+                            aria-expanded="false"><img src="" id="pfp" class="rounded-circle"></div>
                         <a class="fs-4 fw-bold mb-3 mx-auto miImgCarrito" href="carrito.php"><i
                                 class="bi bi-cart"></i></a>
                         <ul class="dropdown-menu" aria-labelledby="DatosUser">
                             <li class="mx-auto">
-                                <p class="fs-5 p-1 mx-auto" id="miNombre">rickylolo</p>
+                                <p class="fs-5 p-1 mx-auto" id="miNombre"></p>
                             </li>
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" href="" id="EditarPerfil" data-bs-toggle="modal"
@@ -76,13 +76,7 @@ session_start(); // Inicio mi sesion PHP
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-list"></i>CATEGORÍAS
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="search.php">Álbumes</a></li>
-                            <li><a class="dropdown-item" href="search.php">Photocards</a></li>
-                            <li><a class="dropdown-item" href="search.php">Pósters</a></li>
-                            <li><a class="dropdown-item" href="search.php">Photobooks</a></li>
-                            <li><a class="dropdown-item" href="search.php">Ropa</a></li>
-
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="misCategorias">
                         </ul>
                     </li>
                 </ul>
@@ -356,7 +350,7 @@ session_start(); // Inicio mi sesion PHP
                     <h4 class="modal-title" id="modalTitle">Edita tus datos</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post" action="php\user_API.php" enctype="multipart/form-data">
+                <form method="POST">
                     <div class="modal-body">
 
                         <div class="row d-flex justify-content-center">
@@ -400,14 +394,27 @@ session_start(); // Inicio mi sesion PHP
 
 
                         <div class="row modalTexto">
-                            Apellido(s)
+                            Apellido Paterno
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"> <i
                                     class="bi bi-file-person-fill"></i></span>
 
-                            <input type="text" class="form-control" id="E_lastName" name="E_lastName"
+                            <input type="text" class="form-control" id="E_lastNameP" name="E_lastName"
                                 placeholder="Apellido(s)" aria-label="Username" aria-describedby="basic-addon1"
+                                value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Apellido Materno
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i
+                                    class="bi bi-file-person-fill"></i></span>
+
+                            <input type="text" class="form-control" id="E_lastNameM" name="E_lastName"
+                                placeholder="Apellido Materno" aria-label="Apellido Materno" aria-describedby="basic-addon1"
                                 value="">
 
                         </div>
@@ -445,7 +452,7 @@ session_start(); // Inicio mi sesion PHP
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
-                            <input type="file" onchange="vista_preliminar(event)" class="form-control" id="E_userIMG"
+                            <input type="file" onchange="vista_preliminarEditarPerfil(event)" class="form-control" id="E_userIMG"
                                 name="E_userIMG" placeholder="Foto de perfil" aria-label="Username"
                                 aria-describedby="basic-addon1">
 
@@ -456,7 +463,7 @@ session_start(); // Inicio mi sesion PHP
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn" name="EditUser">Actualizar</button>
+                        <button type="button" class="btn btn-success" id="ButtonActualizarPerfil" name="EditUser" data-bs-dismiss="modal">Actualizar</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
