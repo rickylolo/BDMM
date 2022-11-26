@@ -1,5 +1,13 @@
 DROP DATABASE BDMM_PROYECTO;
 CREATE DATABASE BDMM_PROYECTO;
+
+
+
+
+
+
+
+
 USE BDMM_PROYECTO;
 
 -- 												TABLA DE USUARIOS										 --
@@ -103,11 +111,14 @@ CREATE TABLE Producto(
 	esCotizado BIT DEFAULT 0 COMMENT'Bandera que indica si el producto es cotizado',
 	Precio DECIMAL(9,2) UNSIGNED COMMENT'Precio final del producto',
     cantidadDisponible INT(6) NOT NULL COMMENT'Cantidad disponible de producto',
-    
+    esAprobado BIT DEFAULT 0 COMMENT'Bandera que indica si el producto fue aprobado',
+    Usuario_id_aprobado  INT COMMENT'Clave Foránea de el usuario que aprobo el producto',
  CONSTRAINT PK_Producto
 	PRIMARY KEY (Producto_id),
  CONSTRAINT FK_Producto_usuario
-	FOREIGN KEY (Usuario_id) REFERENCES Usuario(Usuario_id)
+	FOREIGN KEY (Usuario_id) REFERENCES Usuario(Usuario_id),
+ CONSTRAINT FK_Producto_usuario_aprobado
+	FOREIGN KEY (Usuario_id_aprobado) REFERENCES Usuario(Usuario_id)
 );
 
 

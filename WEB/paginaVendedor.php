@@ -134,7 +134,7 @@ session_start(); // Inicio mi sesion PHP
             </thead>
 
 
-            <tbody>
+            <tbody id="misProductosPendientesAprobar">
 
                 <tr>
                     <td class="productoImagen">
@@ -157,7 +157,8 @@ session_start(); // Inicio mi sesion PHP
                         $1,352.56
                     </td>
                     <td>
-                        <div class="btn btn-sm bg-primary">Detalles</div>
+                        <div class="btn bg-primary editarProducto" data-bs-toggle="modal" data-bs-target="#miModalEditarProducto"><i class="bi bi-pen"></i></div>
+                        <div class="btn bg-danger eliminarProducto"><i class="bi bi-trash"></i></div>
                     </td>
                 </tr>
 
@@ -674,6 +675,231 @@ session_start(); // Inicio mi sesion PHP
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+      <!--  >MODAL EDITAR PRODUCTO<-->
+    <div class="modal fade" id="miModalEditarProducto" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                        <div id="E_divAltaProducto">
+                                  
+                            <input type="hidden" id="product_cot" value="0">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>Ingresa los siguientes datos:</h4>
+                                </div>
+                            </div>
+                            <div class="row modalTexto">
+                                Nombre:
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i
+                                        class="bi bi-chat-left-text"></i></span>
+                                <input type="text" class="form-control" id="E_product_name" name="E_product_name"
+                                    placeholder="Nombre del producto" aria-label="Username"
+                                    aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="row modalTexto">
+                                Cantidad producto:
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-archive"></i></span>
+                                <input type="text" class="form-control" id="E_product_qty" name="E_product_qty"
+                                    placeholder="Cantidad de producto" aria-label="Username"
+                                    aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="row modalTexto">
+                                Descripción:
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-card-list"></i></span>
+                                <input type="text" class="form-control" id="E_product_desc" name="E_product_desc"
+                                    placeholder="Descripción" aria-label="Username" aria-describedby="basic-addon1"
+                                    required>
+                            </div>
+                            <div class="row modalTexto">
+                                Precio:
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-cash"></i></span>
+                                <input type="text" class="form-control" id="E_product_price" name="E_product_price"
+                                    placeholder="Precio" aria-label="Username" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="row modalTexto">
+                                Selecciona:
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="radio" name="product_cotizado" id="product_cotizado" value="1"
+                                        aria-label="Radio button for following text input">
+                                </div>
+                                <input type="text" class="form-control" placeholder="El producto es cotizado"
+                                    aria-label="Text input with radio button" onlyread>
+
+                            </div>          
+                            <button type="button" class="btn btn-success" id="ButtonRegistrarProducto">Crear
+                                Producto</button>
+                        </div>
+                        <div id="E_añadirCategorias">
+                            <div class="row modalTexto">
+                                Categoria:
+                            </div>
+                            <div class="input-group mb-3">
+
+                                <div class="dropdown input-group-text" id="basic-addon1">
+                                    <button class="btn dropdown-toggle text-black-50" type="button"
+                                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Selecciona aquí:
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"
+                                        id="misCategoriasDropdown">
+
+
+                                    </ul>
+                                </div>
+                                <input type="text" class="form-control" name="product-category" id="product-category"
+                                    placeholder="Categoría" aria-label="Username" aria-describedby="basic-addon1"
+                                    readonly required>
+
+                            </div>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
+                        </div>
+                        <div id="E_añadirImagenes">
+                            <div class="row modalTexto">
+                                Imagen del producto(mín 3):
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+                                <input type="file" onchange="vista_preliminarProducto(event)" class="form-control"
+                                    id="producto_IMG" name="producto_IMG" placeholder="Foto del producto"
+                                    aria-label="Username" aria-describedby="basic-addon1" required>
+                            </div>
+                              <div id="E_miCarruselImagenes">
+                                <div id="carouselExampleDark" class="carousel carousel-dark slide"
+                                    data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
+                                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                                            aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                                            aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active" data-bs-interval="10000">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>First slide label</h5>
+                                                <p>Some representative placeholder content for the first slide.</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-bs-interval="2000">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Second slide label</h5>
+                                                <p>Some representative placeholder content for the second slide.</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Third slide label</h5>
+                                                <p>Some representative placeholder content for the third slide.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
+                        </div>
+                        <div id="E_añadirVideos">
+                            <div class="row modalTexto">
+                                Video del producto(mín 1):
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+                                <input type="file" onchange="vista_preliminarProductoVideo(event)" class="form-control"
+                                    id="producto_IMG_Video" name="producto_IMG" placeholder="Foto del producto"
+                                    aria-label="Username" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div id="E_miCarruselVideos">
+                                <div id="carouselExampleDark" class="carousel carousel-dark slide"
+                                    data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
+                                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                                            aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                                            aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active" data-bs-interval="10000">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>First slide label</h5>
+                                                <p>Some representative placeholder content for the first slide.</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-bs-interval="2000">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Second slide label</h5>
+                                                <p>Some representative placeholder content for the second slide.</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="..." class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Third slide label</h5>
+                                                <p>Some representative placeholder content for the third slide.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="mostrarCategoriaProductEdit">Siguiente</button>
+                        <button type="button" class="btn btn-primary" id="mostrarProductoBack">Anterior</button>
+                        <button type="button" class="btn btn-primary" id="mostrarImagenesProductEdit">Siguiente</button>
+                        <button type="button" class="btn btn-primary" id="mostrarCategoriaProductEditBack">Anterior</button>
+                        <button type="button" class="btn btn-primary" id="mostrarVideosProductEdit">Siguiente</button>
+                        <button type="button" class="btn btn-primary" id="mostrarImagenesProductEditBack">Anterior</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
             </div>

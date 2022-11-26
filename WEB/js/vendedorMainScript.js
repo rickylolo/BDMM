@@ -5,6 +5,21 @@ $(document).ready(function () {
   $("#añadirImagenes").hide();
   $("#añadirVideos").hide();
 
+  // MODAL EDITAR PRODUCTO
+  //DIVS
+  $("#E_divAltaProducto").show();
+  $("#E_añadirCategorias").hide();
+  $("#E_añadirImagenes").hide();
+  $("#E_añadirVideos").hide();
+
+  //BOTONES
+  $("#mostrarCategoriaProductEdit").show();
+  $("#mostrarProductoBack").hide();
+  $("#mostrarImagenesProductEdit").hide();
+  $("#mostrarCategoriaProductEditBack").hide();
+  $("#mostrarVideosProductEdit").hide();
+  $("#mostrarImagenesProductEditBack").hide();
+
   cargarCategorias();
 
   //CARGAR DATOS
@@ -88,5 +103,102 @@ $(document).ready(function () {
     $("#product-category").val(miNombreCategoria);
 
     event.preventDefault();
+  });
+
+  // BOTONES MI MODAL EDIT
+  $("#mostrarCategoriaProductEdit").click(function () {
+    //DIVS
+    $("#E_divAltaProducto").hide();
+    $("#E_añadirCategorias").show();
+    $("#E_añadirImagenes").hide();
+    $("#E_añadirVideos").hide();
+
+    //BOTONES
+    $("#mostrarCategoriaProductEdit").hide();
+    $("#mostrarProductoBack").show();
+    $("#mostrarImagenesProductEdit").show();
+    $("#mostrarCategoriaProductEditBack").hide();
+    $("#mostrarVideosProductEdit").hide();
+    $("#mostrarImagenesProductEditBack").hide();
+  });
+
+  $("#mostrarProductoBack").click(function () {
+    //DIVS
+    $("#E_divAltaProducto").show();
+    $("#E_añadirCategorias").hide();
+    $("#E_añadirImagenes").hide();
+    $("#E_añadirVideos").hide();
+
+    //BOTONES
+    $("#mostrarCategoriaProductEdit").show();
+    $("#mostrarProductoBack").hide();
+    $("#mostrarImagenesProductEdit").hide();
+    $("#mostrarCategoriaProductEditBack").hide();
+    $("#mostrarVideosProductEdit").hide();
+    $("#mostrarImagenesProductEditBack").hide();
+  });
+
+  $("#mostrarImagenesProductEdit").click(function () {
+    //DIVS
+    $("#E_divAltaProducto").hide();
+    $("#E_añadirCategorias").hide();
+    $("#E_añadirImagenes").show();
+    $("#E_añadirVideos").hide();
+
+    //BOTONES
+    $("#mostrarCategoriaProductEdit").hide();
+    $("#mostrarProductoBack").hide();
+    $("#mostrarImagenesProductEdit").hide();
+    $("#mostrarCategoriaProductEditBack").show();
+    $("#mostrarVideosProductEdit").show();
+    $("#mostrarImagenesProductEditBack").hide();
+  });
+
+  $("#mostrarCategoriaProductEditBack").click(function () {
+    //DIVS
+    $("#E_divAltaProducto").hide();
+    $("#E_añadirCategorias").show();
+    $("#E_añadirImagenes").hide();
+    $("#E_añadirVideos").hide();
+
+    //BOTONES
+    $("#mostrarCategoriaProductEdit").hide();
+    $("#mostrarProductoBack").show();
+    $("#mostrarImagenesProductEdit").show();
+    $("#mostrarCategoriaProductEditBack").hide();
+    $("#mostrarVideosProductEdit").hide();
+    $("#mostrarImagenesProductEditBack").hide();
+  });
+
+  $("#mostrarVideosProductEdit").click(function () {
+    //DIVS
+    $("#E_divAltaProducto").hide();
+    $("#E_añadirCategorias").hide();
+    $("#E_añadirImagenes").hide();
+    $("#E_añadirVideos").show();
+
+    //BOTONES
+    $("#mostrarCategoriaProductEdit").hide();
+    $("#mostrarProductoBack").hide();
+    $("#mostrarImagenesProductEdit").hide();
+    $("#mostrarCategoriaProductEditBack").hide();
+    $("#mostrarVideosProductEdit").hide();
+    $("#mostrarImagenesProductEditBack").show();
+  });
+
+  $("#mostrarImagenesProductEditBack").click(function () {
+    //DIVS
+    $("#E_divAltaProducto").hide();
+    $("#E_añadirCategorias").hide();
+    $("#E_añadirImagenes").show();
+    $("#E_añadirVideos").hide();
+
+    //BOTONES
+    $("#mostrarCategoriaProductEdit").hide();
+    $("#mostrarProductoBack").hide();
+    $("#mostrarImagenesProductEdit").hide();
+    $("#mostrarCategoriaProductEditBack").show();
+    $("#mostrarVideosProductEdit").show();
+    $("#mostrarImagenesProductEditBack").hide();
   });
 });
