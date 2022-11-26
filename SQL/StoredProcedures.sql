@@ -203,7 +203,7 @@ BEGIN
 		INSERT INTO Producto(Usuario_id ,nombreProducto,descripcionProducto,esCotizado,Precio,cantidadDisponible) 
 			VALUES (sp_Usuario_id,sp_nombreProducto,sp_descripcionProducto,sp_esCotizado,sp_Precio,sp_cantidadDisponible);
 		SET u_id = last_insert_id();
-        SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible
+        SELECT Producto_id
 		FROM vProducto WHERE Producto_id = u_id;
 
    END IF;

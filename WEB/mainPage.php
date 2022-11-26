@@ -44,13 +44,29 @@ session_start(); // Inicio mi sesion PHP
                                 <p class="fs-5 p-1 mx-auto" id="miNombre"></p>
                             </li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="" id="EditarPerfil" data-bs-toggle="modal"
-                                    data-bs-target="#miModalEditUser">Editar Perfil</a></li>
-                            <li><a class="dropdown-item" href="">Hacer perfil público/privado</a></li>
-                            <li><a class="dropdown-item" href="pedidos.php">Mis pedidos</a></li>
-                            <li><a class="dropdown-item" href="listas.php">Mis listas</a></li>
-                            <li><a class="dropdown-item" href="paginaAdmin.php">Página Admin</a></li>
-                            <li><a class="dropdown-item" href="paginaVendedor.php">Página Vendedor</a></li>
+                            <li><a class="dropdown-item" href="" id="EditarPerfil" data-bs-toggle="modal" data-bs-target="#miModalEditUser">Editar Perfil</a></li>
+                            <?php 
+                            if($_SESSION["rol"] == 1){
+                            echo' <li><a class="dropdown-item" href="paginaAdmin.php">Página Admin</a></li>';
+                            }
+                             if($_SESSION["rol"] == 2){
+                             echo' <li><a class="dropdown-item" href="paginaAdmin.php">Página Admin</a></li>';
+                            }
+                             if($_SESSION["rol"] == 3){
+                             echo'<li><a class="dropdown-item" href="paginaVendedor.php">Página Vendedor</a></li>';
+                            }
+                             if($_SESSION["rol"] == 4){
+                             echo'<li><a class="dropdown-item" href="">Hacer perfil público/privado</a></li>';
+                             echo' <li><a class="dropdown-item" href="pedidos.php">Mis pedidos</a></li>';
+                             echo'<li><a class="dropdown-item" href="listas.php">Mis listas</a></li>';
+                             
+                            
+                            }
+                            ?>
+                           
+                           
+                      
+                          
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" href="index.php">Salir</a></li>
                         </ul>
@@ -58,7 +74,6 @@ session_start(); // Inicio mi sesion PHP
                 </div>
 
         </header>
-
     </div>
     <!--                 NAVBAR                 -->
     <nav class="navbar sticky-top navbar-expand-lg navbar-light miNav">

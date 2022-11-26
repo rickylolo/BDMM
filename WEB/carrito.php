@@ -22,7 +22,7 @@ session_start(); // Inicio mi sesion PHP
 <body>
     <!--                 HEADER                 -->
     <div class="container">
-        <header class="miHeader">
+         <header class="miHeader">
             <div class="row">
                 <div class="col-6 ">
                     <a class="navbar-brand" href="mainPage.php"><img src="img/jyp-logo.jpg" id="jypLogo"></a>
@@ -32,21 +32,37 @@ session_start(); // Inicio mi sesion PHP
                 <div class="col-2">
                     <div class="d-flex flex-column dropstart misDatosUsuario">
                         <div class="miImagen dropdown p-2 mx-auto" id="DatosUser" data-bs-toggle="dropdown"
-                            aria-expanded="false"><img src="img/avatar.jpg" id="pfp" class="rounded-circle"></div>
+                            aria-expanded="false"><img src="" id="pfp" class="rounded-circle"></div>
                         <a class="fs-4 fw-bold mb-3 mx-auto miImgCarrito" href="carrito.php"><i
                                 class="bi bi-cart"></i></a>
                         <ul class="dropdown-menu" aria-labelledby="DatosUser">
                             <li class="mx-auto">
-                                <p class="fs-5 p-1 mx-auto" id="miNombre">rickylolo</p>
+                                <p class="fs-5 p-1 mx-auto" id="miNombre"></p>
                             </li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="" data-bs-toggle="modal"
-                                    data-bs-target="#miModalEditUser">Editar Perfil</a></li>
-                            <li><a class="dropdown-item" href="">Hacer perfil público/privado</a></li>
-                            <li><a class="dropdown-item" href="pedidos.php">Mis pedidos</a></li>
-                            <li><a class="dropdown-item" href="listas.php">Mis listas</a></li>
-                            <li><a class="dropdown-item" href="paginaAdmin.php">Página Admin</a></li>
-                            <li><a class="dropdown-item" href="paginaVendedor.php">Página Vendedor</a></li>
+                            <li><a class="dropdown-item" href="" id="EditarPerfil" data-bs-toggle="modal" data-bs-target="#miModalEditUser">Editar Perfil</a></li>
+                            <?php 
+                            if($_SESSION["rol"] == 1){
+                            echo' <li><a class="dropdown-item" href="paginaAdmin.php">Página Admin</a></li>';
+                            }
+                             if($_SESSION["rol"] == 2){
+                             echo' <li><a class="dropdown-item" href="paginaAdmin.php">Página Admin</a></li>';
+                            }
+                             if($_SESSION["rol"] == 3){
+                             echo'<li><a class="dropdown-item" href="paginaVendedor.php">Página Vendedor</a></li>';
+                            }
+                             if($_SESSION["rol"] == 4){
+                             echo'<li><a class="dropdown-item" href="">Hacer perfil público/privado</a></li>';
+                             echo' <li><a class="dropdown-item" href="pedidos.php">Mis pedidos</a></li>';
+                             echo'<li><a class="dropdown-item" href="listas.php">Mis listas</a></li>';
+                             
+                            
+                            }
+                            ?>
+                           
+                           
+                      
+                          
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" href="index.php">Salir</a></li>
                         </ul>
