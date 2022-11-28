@@ -54,7 +54,21 @@ INNER JOIN Producto ON ListaProducto.Producto_id = Producto.Producto_id;
 DROP VIEW IF EXISTS vProducto;
 
 CREATE VIEW vProducto AS
-SELECT Producto_id,Usuario_id,nombreProducto,descripcionProducto,esCotizado,Precio,cantidadDisponible FROM Producto;
+SELECT A.Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia,esVideo FROM Producto A
+LEFT JOIN ProductoMultimedia B
+ON A.Producto_id = B.Producto_id
+WHERE esAprobado = 1 
+GROUP BY A.Producto_id;
+
+DROP VIEW IF EXISTS vProductoNoAprobado;
+
+CREATE VIEW vProductoNoAprobado AS
+SELECT A.Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia,esVideo FROM Producto A
+LEFT JOIN ProductoMultimedia B
+ON A.Producto_id = B.Producto_id
+WHERE esAprobado = 0 
+GROUP BY A.Producto_id;
+
 
 /*--------------------------------------------------------------------------------CATEGORIA--------------------------------------------------------------------------*/
 DROP VIEW IF EXISTS vCategoria;

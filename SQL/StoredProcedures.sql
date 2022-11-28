@@ -205,7 +205,6 @@ BEGIN
 		SET u_id = last_insert_id();
         SELECT Producto_id
 		FROM vProducto WHERE Producto_id = u_id;
-
    END IF;
    IF Operacion = 'E'  /*EDIT PRODUCTO*/
     THEN 
@@ -224,14 +223,32 @@ BEGIN
 			cantidadDisponible= IFNULL(sp_cantidadDisponible,cantidadDisponible)
 		WHERE Producto_id=sp_Producto_id;
    END IF;
-   
    IF Operacion = 'D' THEN /*DELETE PRODUCTO*/
           DELETE FROM Producto WHERE  Producto_id=sp_Producto_id;
    END IF;
-  
    IF Operacion = 'A' THEN /*GET DATOS PRODUCTOS*/
-		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible
+		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia
 		FROM vProducto; 
+   END IF;
+    IF Operacion = 'N' THEN /*GET DATOS PRODUCTOS NO APROBADOS*/
+		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia
+		FROM vProductoNoAprobado; 
+   END IF;
+     IF Operacion = 'V' THEN /*GET DATOS PRODUCTOS VENDEDOR*/
+		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia, esVideo
+		FROM vProducto WHERE Usuario_id = sp_Usuario_id; 
+   END IF;
+     IF Operacion = 'T' THEN /*GET DATOS PRODUCTOS NO APROBADOS VENDEDOR*/
+		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia, esVideo
+		FROM vProductoNoAprobado WHERE Usuario_id = sp_Usuario_id; 
+   END IF;
+   IF Operacion = 'Z' THEN /*GET DATOS PRODUCTO APROBADO*/
+		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia, esVideo
+		FROM vProducto WHERE Producto_id = sp_Producto_id; 
+   END IF;
+   IF Operacion = 'G' THEN /*GET DATOS PRODUCTO NO APROBADO*/
+		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia, esVideo
+		FROM vProductoNoAprobado WHERE Producto_id = sp_Producto_id; 
    END IF;
 
 END //
@@ -278,5 +295,6 @@ BEGIN
 		SELECT Categoria_id, nombreCategoria, colorCategoria, descripcionCategoria
 		FROM vCategoria; 
    END IF;
-
 END //
+
+SELECT * FROM Producto;

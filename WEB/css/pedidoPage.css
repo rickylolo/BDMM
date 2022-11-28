@@ -9,3 +9,9 @@
 .btn {
   color: white;
 }
+
+#misProductosNoAprobados {
+  align-self: center;
+  margin: auto;
+  text-align: center;
+}

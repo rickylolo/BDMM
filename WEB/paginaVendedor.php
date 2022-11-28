@@ -105,17 +105,20 @@ session_start(); // Inicio mi sesion PHP
     <div class="container">
           <input type="text" id="idProductoSeleccionado">
         <div class="separador"></div>
-        <div class="col-12 fs-2 fw-bolder d-flex justify-content-end">
+        <div class="col-12 fs-2 fw-bolder d-flex justify-content-center">
             <div class="btn btn-sm bg-primary" data-bs-toggle="modal" data-bs-target="#miModalReporte">Consulta de
                 Ventas</div>
             <div class="btn btn-sm bg-success" data-bs-toggle="modal" data-bs-target="#miModalAltaProducto">Agregar
                 productos</div>
         </div>
         <!-- PRODUCTOS -->
-        <table class="table">
+        <table class="table" id="ProductosPendientes">
             <div class="row">
-                <div class="col-6 fs-2 fw-bolder d-flex justify-content-start">
+                <div class="col-6 fs-4 fw-bolder d-flex justify-content-start">
                     Pendientes por aprobar:
+                </div>
+                 <div class="col-6 d-flex justify-content-end">
+                   <div class="btn btn-sm bg-primary" id="mostrarMasPendientes">Ocultar/Mostrar</div>
                 </div>
 
 
@@ -123,200 +126,50 @@ session_start(); // Inicio mi sesion PHP
             <hr class="bg-danger border-2 border-top border-dark">
             <thead>
                 <tr>
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio Unitario</th>
-                    <th scope="col">Precio Total</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col" class="text-center">Imagen</th>
+                    <th scope="col" class="text-center">Nombre</th>
+                    <th scope="col" class="text-center">Descripción</th>
+                    <th scope="col" class="text-center">Stock</th>
+                    <th scope="col" class="text-center">Precio</th>
+                    <th scope="col" class="text-center">Es cotizado</th>
+                    <th scope="col" class="text-center">Acciones</th>
                 </tr>
             </thead>
 
 
-            <tbody id="misProductosPendientesAprobar">
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/celebrate.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum Twice Celebrate
-                    </td>
-                    <td class="productodesc">
-                        Celebrate - Version A - incl. DVD
-                    </td>
-                    <td class="productoStock">
-                        1
-                    </td>
-                    <td class="productoPrecio">
-                        $1,352.56
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $1,352.56
-                    </td>
-                    <td>
-                        <div class="btn bg-primary editarProducto" data-bs-toggle="modal" data-bs-target="#miModalEditarProducto"><i class="bi bi-pen"></i></div>
-                        <div class="btn bg-danger eliminarProducto"><i class="bi bi-trash"></i></div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/tasteOfLove.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum Twice Taste of love
-                    </td>
-                    <td class="productodesc">
-                        Taste Of Love - Fallen Version Photocards Included
-                    </td>
-                    <td class="productoStock">
-                        2
-                    </td>
-                    <td class="productoPrecio">
-                        $899.00
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $1,798.00
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-primary">Detalles</div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/nmixxAlbum.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum NMIXX AD MARE
-                    </td>
-                    <td class="productodesc">
-                        NMIXX 1st Single - incl. DVD
-                    </td>
-                    <td class="productoStock">
-                        1
-                    </td>
-                    <td class="productoPrecio">
-                        $673.00
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $673.00
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-primary">Detalles</div>
-                    </td>
-                </tr>
-
+            <tbody id="misProductosNoAprobados">
             </tbody>
 
         </table>
 
         <div class="separador"></div>
-        <table class="table">
+        <table class="table" id="ProductosAprobados">
             <div class="row">
-                <div class="col-6 fs-2 fw-bolder d-flex justify-content-start">
+                <div class="col-6 fs-4 fw-bolder d-flex justify-content-start">
                     Productos aprobados:
                 </div>
-
+                <div class="col-6 d-flex justify-content-end">
+                  <div class="btn btn-sm bg-primary" id="mostrarMasAprobados">Ocultar/Mostrar</div>
+                </div>
 
             </div>
             <hr class="bg-danger border-2 border-top border-dark">
             <thead>
                 <tr>
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio Unitario</th>
-                    <th scope="col">Precio Total</th>
-                    <th scope="col">Acciones</th>
+                   <th scope="col" class="text-center">Imagen</th>
+                    <th scope="col" class="text-center">Nombre</th>
+                    <th scope="col" class="text-center">Descripción</th>
+                    <th scope="col" class="text-center">Stock</th>
+                    <th scope="col" class="text-center">Precio</th>
+                    <th scope="col" class="text-center">Es cotizado</th>
+                    <th scope="col" class="text-center">Acciones</th>
                 </tr>
             </thead>
 
 
-            <tbody>
+            <tbody id="misProductosAprobados">
 
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/celebrate.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum Twice Celebrate
-                    </td>
-                    <td class="productodesc">
-                        Celebrate - Version A - incl. DVD
-                    </td>
-                    <td class="productoStock">
-                        1
-                    </td>
-                    <td class="productoPrecio">
-                        $1,352.56
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $1,352.56
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-primary">Detalles</div>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/tasteOfLove.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum Twice Taste of love
-                    </td>
-                    <td class="productodesc">
-                        Taste Of Love - Fallen Version Photocards Included
-                    </td>
-                    <td class="productoStock">
-                        2
-                    </td>
-                    <td class="productoPrecio">
-                        $899.00
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $1,798.00
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-primary">Detalles</div>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/nmixxAlbum.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum NMIXX AD MARE
-                    </td>
-                    <td class="productodesc">
-                        NMIXX 1st Single - incl. DVD
-                    </td>
-                    <td class="productoStock">
-                        1
-                    </td>
-                    <td class="productoPrecio">
-                        $673.00
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $673.00
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-primary">Detalles</div>
-                    </td>
-                </tr>
+           
 
             </tbody>
 
@@ -694,7 +547,7 @@ session_start(); // Inicio mi sesion PHP
                     <div class="modal-body">
                         <div id="E_divAltaProducto">
                                   
-                            <input type="hidden" id="product_cot" value="0">
+                            <input type="hidden" id="E_product_cot" value="0">
                             <div class="row">
                                 <div class="col-12">
                                     <h4>Ingresa los siguientes datos:</h4>
@@ -741,14 +594,14 @@ session_start(); // Inicio mi sesion PHP
                             </div>
                             <div class="input-group">
                                 <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="radio" name="product_cotizado" id="product_cotizado" value="1"
+                                    <input class="form-check-input mt-0" type="radio" name="E_product_cotizado" id="E_product_cotizado" value="1"
                                         aria-label="Radio button for following text input">
                                 </div>
                                 <input type="text" class="form-control" placeholder="El producto es cotizado"
                                     aria-label="Text input with radio button" onlyread>
 
                             </div>          
-                            <button type="button" class="btn btn-success" id="ButtonRegistrarProducto">Crear
+                            <button type="button" class="btn btn-success" id="ButtonActualizarProducto">Actualizar
                                 Producto</button>
                         </div>
                         <div id="E_añadirCategorias">
@@ -759,7 +612,7 @@ session_start(); // Inicio mi sesion PHP
 
                                 <div class="dropdown input-group-text" id="basic-addon1">
                                     <button class="btn dropdown-toggle text-black-50" type="button"
-                                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        id="E_dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         Selecciona aquí:
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"
@@ -768,7 +621,7 @@ session_start(); // Inicio mi sesion PHP
 
                                     </ul>
                                 </div>
-                                <input type="text" class="form-control" name="product-category" id="product-category"
+                                <input type="text" class="form-control" name="E_product-category" id="E_product-category"
                                     placeholder="Categoría" aria-label="Username" aria-describedby="basic-addon1"
                                     readonly required>
 
@@ -780,10 +633,10 @@ session_start(); // Inicio mi sesion PHP
                                 Imagen del producto(mín 3):
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+                                <span class="input-group-text" id="E_basic-addon1"> <i class="bi bi-camera"> </i></span>
                                 <input type="file" onchange="vista_preliminarProducto(event)" class="form-control"
-                                    id="producto_IMG" name="producto_IMG" placeholder="Foto del producto"
-                                    aria-label="Username" aria-describedby="basic-addon1" required>
+                                    id="E_producto_IMG" name="E_producto_IMG" placeholder="Foto del producto"
+                                    aria-label="Username" aria-describedby="E_basic-addon1" required>
                             </div>
                               <div id="E_miCarruselImagenes">
                                 <div id="carouselExampleDark" class="carousel carousel-dark slide"
@@ -838,10 +691,10 @@ session_start(); // Inicio mi sesion PHP
                                 Video del producto(mín 1):
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+                                <span class="input-group-text" id="E_basic-addon2"> <i class="bi bi-camera"> </i></span>
                                 <input type="file" onchange="vista_preliminarProductoVideo(event)" class="form-control"
-                                    id="producto_IMG_Video" name="producto_IMG" placeholder="Foto del producto"
-                                    aria-label="Username" aria-describedby="basic-addon1" required>
+                                    id="E_producto_Video" name="producto_IMG" placeholder="Foto del producto"
+                                    aria-label="Username" aria-describedby="E_basic-addon2" required>
                             </div>
                             <div id="E_miCarruselVideos">
                                 <div id="carouselExampleDark" class="carousel carousel-dark slide"
