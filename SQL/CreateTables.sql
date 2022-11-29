@@ -147,13 +147,14 @@ CREATE TABLE Categoria(
     Usuario_id  INT NOT NULL COMMENT'Clave Foránea de el usuario que registro la categoria',
     nombreCategoria VARCHAR(30) NOT NULL COMMENT'Nombre de la categoria',
     colorCategoria VARCHAR(10) NOT NULL COMMENT'Codigo de color',
-    descripcionCategoria VARCHAR(30) NOT NULL COMMENT'Descripcion de la categoria',
+    descripcionCategoria VARCHAR(200) NOT NULL COMMENT'Descripcion de la categoria',
     
  CONSTRAINT PK_Categoria
 	PRIMARY KEY (Categoria_id),
  CONSTRAINT FK_Categoria_Usuario
 	FOREIGN KEY (Usuario_id) REFERENCES Usuario(Usuario_id)
 );
+
 
 -- 												TABLA DE CATEGORIA DE LOS PRODUCTOS--
 DROP TABLE IF EXISTS CategoriaProducto;

@@ -60,6 +60,7 @@ $(document).ready(function () {
     })
       .done(function (data) {
         var items = JSON.parse(data);
+        $("#misCategorias").empty();
         for (let i = 0; i < items.length; i++) {
           $("#misCategorias").append(
             `

@@ -107,15 +107,15 @@ class producto extends DB
         '$nombreProducto',
         '$descProducto',
         $esCotizado,
-        '$Precio',
-        '$cantidadDisponible');";
+        $Precio,
+        $cantidadDisponible);";
         $query = $this->connect()->query($insert);
         return $query;
     } 
 
    // ---------------------------------------ACTUALIZAR INFORMACION------------------------------------------
    // QUERY Actualizar producto
-    function actualizarProducto($Producto_id,$Usuario_id ,$nombreProducto,$descProducto,$esCotizado,$Precio,$cantidadDisponible)
+    function actualizarProducto($Producto_id,$Usuario_id ,$nombreProducto,$descProducto,$esCotizado,float $Precio,$cantidadDisponible)
     {
         $update =  "CALL sp_GestionProducto('E', 
         $Producto_id,
@@ -123,8 +123,8 @@ class producto extends DB
         '$nombreProducto',
         '$descProducto',
         $esCotizado,
-        '$Precio',
-        '$cantidadDisponible');";
+        $Precio,
+        $cantidadDisponible);";
         $query = $this->connect()->query($update);
         return $query;
     }

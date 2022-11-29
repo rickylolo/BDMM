@@ -198,28 +198,29 @@ sp_cantidadDisponible INT(6)
 )
 BEGIN
    DECLARE u_id INT; 
+   DECLARE u_Precio DECIMAL(9,2);
    IF Operacion = 'I' /*INSERT PRODUCTO*/
    THEN  
 		INSERT INTO Producto(Usuario_id ,nombreProducto,descripcionProducto,esCotizado,Precio,cantidadDisponible) 
 			VALUES (sp_Usuario_id,sp_nombreProducto,sp_descripcionProducto,sp_esCotizado,sp_Precio,sp_cantidadDisponible);
 		SET u_id = last_insert_id();
         SELECT Producto_id
-		FROM vProducto WHERE Producto_id = u_id;
+		FROM vProductoNoAprobado WHERE Producto_id = u_id;
    END IF;
    IF Operacion = 'E'  /*EDIT PRODUCTO*/
     THEN 
+		SET u_Precio = CONVERT(sp_Precio,DECIMAL(9,2));
     	SET sp_Usuario_id=IF(sp_Usuario_id='',NULL,sp_Usuario_id),
 			sp_nombreProducto=IF(sp_nombreProducto='',NULL,sp_nombreProducto),
             sp_descripcionProducto=IF(sp_descripcionProducto='',NULL,sp_descripcionProducto),
             sp_esCotizado=IF(sp_esCotizado='',NULL,sp_esCotizado),
-            sp_Precio=IF(sp_Precio='',NULL,sp_Precio),
             sp_cantidadDisponible=IF(sp_cantidadDisponible='',NULL,sp_cantidadDisponible);
 		UPDATE Producto 
 			SET Usuario_id = IFNULL(sp_Usuario_id,Usuario_id), 
 			nombreProducto=  IFNULL(sp_nombreProducto,nombreProducto), 
             descripcionProducto=  IFNULL(sp_descripcionProducto,descripcionProducto), 
 			esCotizado=  IFNULL(sp_esCotizado,esCotizado), 
-			Precio=  IFNULL(sp_Precio,Precio), 
+			Precio=  IFNULL(u_Precio,Precio), 
 			cantidadDisponible= IFNULL(sp_cantidadDisponible,cantidadDisponible)
 		WHERE Producto_id=sp_Producto_id;
    END IF;
@@ -255,16 +256,16 @@ END //
 
 /*--------------------------------------------------------------------------------CATEGORIA--------------------------------------------------------------------------*/
 DROP PROCEDURE IF EXISTS sp_GestionCategoria;
-SELECT * FROM Categoria;
 DELIMITER //
 CREATE PROCEDURE sp_GestionCategoria
 (
 Operacion CHAR(1),
 sp_Categoria_id INT,
+sp_Producto_id INT,
 sp_Usuario_id INT,
 sp_nombreCategoria VARCHAR(30),
 sp_colorCategoria VARCHAR(10),
-sp_descripcionCategoria VARCHAR(30) 
+sp_descripcionCategoria VARCHAR(200) 
 )
 BEGIN
    IF Operacion = 'I' /*INSERT CATEGORIA*/
@@ -295,6 +296,72 @@ BEGIN
 		SELECT Categoria_id, nombreCategoria, colorCategoria, descripcionCategoria
 		FROM vCategoria; 
    END IF;
+   
+   #----------------------MIS CATEGORIAS DE PRODUCTOS -------------------
+    IF Operacion = 'P' /*INSERT CATEGORIA DE PRODUCTO*/
+   THEN  
+		INSERT INTO CategoriaProducto(Producto_id, Categoria_id) 
+			VALUES (sp_Producto_id,sp_Categoria_id);
+   END IF;
+   IF Operacion = 'Y' THEN /*GET DATOS CATEGORIA DE UN PRODUCTO*/
+		SELECT Categoria_id, Usuario_id, nombreCategoria, colorCategoria, descripcionCategoria, CategoriaProducto_id, Producto_id
+		FROM vCategoriaProducto
+        WHERE Producto_id = sp_Producto_id; 
+   END IF;
+    IF Operacion = 'K' THEN /*DELETE CATEGORIA DE PRODUCTO*/
+		   DELETE FROM CategoriaProducto WHERE  CategoriaProducto_id=sp_Categoria_id; #Uso el id de categoria para pasarle el id del categoria-producto
+   END IF;
+   
 END //
 
-SELECT * FROM Producto;
+/*--------------------------------------------------------------------------------MULTIMEDIA--------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS sp_GestionMultimedia;
+DELIMITER //
+CREATE PROCEDURE sp_GestionMultimedia
+(
+Operacion CHAR(1),
+sp_ProductoMultimedia_id INT,
+sp_Producto_id INT,
+sp_Multimedia MEDIUMBLOB,
+sp_esVideo BIT
+)
+BEGIN
+   IF Operacion = 'I' /*INSERT MULTIMEDIA*/
+   THEN  
+		INSERT INTO ProductoMultimedia(Producto_id,Multimedia,esVideo) 
+			VALUES (sp_Producto_id, sp_Multimedia, sp_esVideo);
+
+   END IF;
+   IF Operacion = 'E'  /*EDIT MULTIMEDIA*/
+    THEN 
+    	SET sp_Producto_id=IF(sp_Producto_id='',NULL,sp_Producto_id),
+			sp_Multimedia=IF(sp_Multimedia='',NULL,sp_Multimedia),
+            sp_esVideo=IF(sp_esVideo='',NULL,sp_esVideo);
+		UPDATE ProductoMultimedia 
+			SET Producto_id = IFNULL(sp_Producto_id,Producto_id), 
+			Multimedia=  IFNULL(sp_Multimedia,Multimedia), 
+			esVideo=  IFNULL(sp_esVideo,esVideo)
+		WHERE ProductoMultimedia_id=sp_ProductoMultimedia_id;
+   END IF;
+   
+   IF Operacion = 'D' THEN /*DELETE MULTIMEDIA*/
+          DELETE FROM ProductoMultimedia WHERE  ProductoMultimedia_id=sp_ProductoMultimedia_id;
+   END IF;
+  
+   IF Operacion = 'G' THEN /*GET DATOS MULTIMEDIA IMAGEN PRODUCTO*/
+		SELECT ProductoMultimedia_id, Producto_id, Multimedia, esVideo
+		FROM vMultimedia
+        WHERE Producto_id = sp_Producto_id AND esVideo = 0; 
+   END IF;
+   
+   IF Operacion = 'N' THEN /*GET DATOS MULTIMEDIA VIDEO PRODUCTO*/
+		SELECT ProductoMultimedia_id, Producto_id, Multimedia, esVideo
+		FROM vMultimedia
+        WHERE Producto_id = sp_Producto_id AND esVideo = 1; 
+   END IF;
+   
+   
+END //
+
+
+SELECT * FROM CategoriaProducto;

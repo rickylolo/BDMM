@@ -76,3 +76,19 @@ DROP VIEW IF EXISTS vCategoria;
 CREATE VIEW vCategoria AS
 SELECT Categoria_id, nombreCategoria, colorCategoria, descripcionCategoria FROM Categoria;
 
+DROP VIEW IF EXISTS vCategoriaProducto;
+
+CREATE VIEW vCategoriaProducto AS
+SELECT A.Categoria_id, Usuario_id, nombreCategoria, colorCategoria, descripcionCategoria, CategoriaProducto_id, Producto_id FROM Categoria A
+INNER JOIN CategoriaProducto B ON A.Categoria_id = B.Categoria_id;
+
+/*--------------------------------------------------------------------------------M--------------------------------------------------------------------------*/
+DROP VIEW IF EXISTS vMultimedia;
+
+CREATE VIEW vMultimedia AS
+SELECT ProductoMultimedia_id, A.Producto_id, Multimedia, esVideo FROM ProductoMultimedia A
+INNER JOIN Producto B ON A.Producto_id = B.Producto_id;
+
+
+
+

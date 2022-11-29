@@ -10,6 +10,64 @@ $(document).ready(function () {
     $("#tipoMetodo").val($(this).text());
   });
 
+  cargarCategoriasAdmin();
+  // CATEGORIAS
+  function cargarCategoriasAdmin() {
+    $.ajax({
+      type: "POST",
+      data: { funcion: "getCategorias" },
+      url: "php/categoria_API.php",
+    })
+      .done(function (data) {
+        var items = JSON.parse(data);
+        $("#misCategorias").empty();
+        $("#VerMisCategorias").empty();
+        for (let i = 0; i < items.length; i++) {
+          $("#misCategorias").append(
+            `
+            <li><a class="dropdown-item miBusquedaCategoria" id="` +
+              items[i].Categoria_id +
+              `"><i class="bi bi-square-fill" style="color:` +
+              items[i].colorCategoria +
+              `;"></i>  ` +
+              items[i].nombreCategoria +
+              `</a></li>
+          `
+          );
+
+          $("#VerMisCategorias").append(
+            `
+          <tr>
+          <th scope="row">` +
+              items[i].Categoria_id +
+              `</th>
+          <td>` +
+              items[i].nombreCategoria +
+              `</td>
+          <td>` +
+              items[i].descripcionCategoria +
+              `</td>
+              <td><i class="bi bi-square-fill" style="color:` +
+              items[i].colorCategoria +
+              `;"></i></td>
+          <td>
+           <div class="btn bg-primary editarCategoria" data-bs-toggle="modal" data-bs-target="#miModalEditarCategoria" id="` +
+              items[i].Categoria_id +
+              `"><i class="bi bi-pen"></i></div>
+                        <div class="btn bg-danger eliminarCategoria" id="` +
+              items[i].Categoria_id +
+              `"><i class="bi bi-trash"></i></div>
+          </td>
+          </tr>
+          `
+          );
+        }
+      })
+      .fail(function (data) {
+        console.error(data);
+      });
+  }
+
   // Registro de usuarios administradores con dataform
   //-------------------------SUPER ADMIN----------------------------
   $("#ButtonRegistro").click(funcRegistrarUsuarioAdmin);
@@ -124,6 +182,10 @@ $(document).ready(function () {
     })
       .done(function (data) {
         console.log(data);
+        $("#nameCat").val("");
+        $("#colorCat").val("");
+        $("#descCat").val("");
+        cargarCategoriasAdmin();
         alert("Categoria insertada correctamente");
       })
       .fail(function (data) {

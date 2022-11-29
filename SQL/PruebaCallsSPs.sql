@@ -38,3 +38,23 @@ NULL,
 899.99,
 500
 );
+
+CALL sp_GestionProducto('N', #Operacion
+NULL,
+8,
+"Album Twice Cheer Up",
+"Fallen Version Limited Edition",
+0,
+899.99,
+500
+);
+
+CALL sp_GestionProducto('E', #Operacion
+1,
+8,
+"Album Twice Cheer Up",
+"Fallen Version Limited Edition",
+0,
+899.98,
+500
+);

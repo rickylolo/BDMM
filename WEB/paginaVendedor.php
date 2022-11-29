@@ -23,7 +23,7 @@ session_start(); // Inicio mi sesion PHP
 <body>
     <!--                 HEADER                 -->
     <div class="container">
-         <header class="miHeader">
+        <header class="miHeader">
             <div class="row">
                 <div class="col-6 ">
                     <a class="navbar-brand" href="mainPage.php"><img src="img/jyp-logo.jpg" id="jypLogo"></a>
@@ -41,7 +41,8 @@ session_start(); // Inicio mi sesion PHP
                                 <p class="fs-5 p-1 mx-auto" id="miNombre"></p>
                             </li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="" id="EditarPerfil" data-bs-toggle="modal" data-bs-target="#miModalEditUser">Editar Perfil</a></li>
+                            <li><a class="dropdown-item" href="" id="EditarPerfil" data-bs-toggle="modal"
+                                    data-bs-target="#miModalEditUser">Editar Perfil</a></li>
                             <?php 
                             if($_SESSION["rol"] == 1){
                             echo' <li><a class="dropdown-item" href="paginaAdmin.php">Página Admin</a></li>';
@@ -60,10 +61,10 @@ session_start(); // Inicio mi sesion PHP
                             
                             }
                             ?>
-                           
-                           
-                      
-                          
+
+
+
+
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" href="index.php">Salir</a></li>
                         </ul>
@@ -73,7 +74,7 @@ session_start(); // Inicio mi sesion PHP
         </header>
 
     </div>
-        <!--                 NAVBAR                 -->
+    <!--                 NAVBAR                 -->
     <nav class="navbar sticky-top navbar-expand-lg navbar-light miNav">
         <div class="container">
 
@@ -103,7 +104,7 @@ session_start(); // Inicio mi sesion PHP
     </nav>
 
     <div class="container">
-          <input type="text" id="idProductoSeleccionado">
+        <input type="hidden" id="idProductoSeleccionado">
         <div class="separador"></div>
         <div class="col-12 fs-2 fw-bolder d-flex justify-content-center">
             <div class="btn btn-sm bg-primary" data-bs-toggle="modal" data-bs-target="#miModalReporte">Consulta de
@@ -117,8 +118,8 @@ session_start(); // Inicio mi sesion PHP
                 <div class="col-6 fs-4 fw-bolder d-flex justify-content-start">
                     Pendientes por aprobar:
                 </div>
-                 <div class="col-6 d-flex justify-content-end">
-                   <div class="btn btn-sm bg-primary" id="mostrarMasPendientes">Ocultar/Mostrar</div>
+                <div class="col-6 d-flex justify-content-end">
+                    <div class="btn btn-sm bg-primary" id="mostrarMasPendientes">Ocultar/Mostrar</div>
                 </div>
 
 
@@ -135,8 +136,6 @@ session_start(); // Inicio mi sesion PHP
                     <th scope="col" class="text-center">Acciones</th>
                 </tr>
             </thead>
-
-
             <tbody id="misProductosNoAprobados">
             </tbody>
 
@@ -149,14 +148,14 @@ session_start(); // Inicio mi sesion PHP
                     Productos aprobados:
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                  <div class="btn btn-sm bg-primary" id="mostrarMasAprobados">Ocultar/Mostrar</div>
+                    <div class="btn btn-sm bg-primary" id="mostrarMasAprobados">Ocultar/Mostrar</div>
                 </div>
 
             </div>
             <hr class="bg-danger border-2 border-top border-dark">
             <thead>
                 <tr>
-                   <th scope="col" class="text-center">Imagen</th>
+                    <th scope="col" class="text-center">Imagen</th>
                     <th scope="col" class="text-center">Nombre</th>
                     <th scope="col" class="text-center">Descripción</th>
                     <th scope="col" class="text-center">Stock</th>
@@ -168,9 +167,6 @@ session_start(); // Inicio mi sesion PHP
 
 
             <tbody id="misProductosAprobados">
-
-           
-
             </tbody>
 
         </table>
@@ -339,7 +335,6 @@ session_start(); // Inicio mi sesion PHP
                                     placeholder="Nombre del producto" aria-label="Username"
                                     aria-describedby="basic-addon1" required>
                             </div>
-
                             <div class="row modalTexto">
                                 Cantidad producto:
                             </div>
@@ -349,7 +344,6 @@ session_start(); // Inicio mi sesion PHP
                                     placeholder="Cantidad de producto" aria-label="Username"
                                     aria-describedby="basic-addon1" required>
                             </div>
-
                             <div class="row modalTexto">
                                 Descripción:
                             </div>
@@ -359,7 +353,6 @@ session_start(); // Inicio mi sesion PHP
                                     placeholder="Descripción" aria-label="Username" aria-describedby="basic-addon1"
                                     required>
                             </div>
-
                             <div class="row modalTexto">
                                 Precio:
                             </div>
@@ -373,160 +366,23 @@ session_start(); // Inicio mi sesion PHP
                             </div>
                             <div class="input-group">
                                 <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="radio" name="product_cotizado" id="product_cotizado" value="1"
+                                    <input class="form-check-input mt-0" type="radio" name="product_cotizado"
+                                        id="product_cotizado" value="1"
                                         aria-label="Radio button for following text input">
                                 </div>
                                 <input type="text" class="form-control" placeholder="El producto es cotizado"
                                     aria-label="Text input with radio button" onlyread>
 
                             </div>
-                        <input type="hidden" id="product_cot" value="0">
-                            <button type="button" class="btn btn-success" id="ButtonRegistrarProducto">Crear
-                                Producto</button>
+                            <input type="hidden" id="product_cot" value="0">
+
                         </div>
 
-                        <div id="añadirCategorias">
-                            <div class="row modalTexto">
-                                Categoria:
-                            </div>
-                            <div class="input-group mb-3">
-
-                                <div class="dropdown input-group-text" id="basic-addon1">
-                                    <button class="btn dropdown-toggle text-black-50" type="button"
-                                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Selecciona aquí:
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"
-                                        id="misCategoriasDropdown">
-
-
-                                    </ul>
-                                </div>
-                                <input type="text" class="form-control" name="product-category" id="product-category"
-                                    placeholder="Categoría" aria-label="Username" aria-describedby="basic-addon1"
-                                    readonly required>
-
-                            </div>
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
-                        </div>
-                        <div id="añadirImagenes">
-                            <div class="row modalTexto">
-                                Imagen del producto(mín 3):
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
-                                <input type="file" onchange="vista_preliminarProducto(event)" class="form-control"
-                                    id="producto_IMG" name="producto_IMG" placeholder="Foto del producto"
-                                    aria-label="Username" aria-describedby="basic-addon1" required>
-                            </div>
-                              <div id="miCarruselImagenes">
-                                <div id="carouselExampleDark" class="carousel carousel-dark slide"
-                                    data-bs-ride="carousel">
-                                    <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
-                                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
-                                            aria-label="Slide 2"></button>
-                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
-                                            aria-label="Slide 3"></button>
-                                    </div>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active" data-bs-interval="10000">
-                                            <img src="..." class="d-block w-100" alt="...">
-                                            <div class="carousel-caption d-none d-md-block">
-                                                <h5>First slide label</h5>
-                                                <p>Some representative placeholder content for the first slide.</p>
-                                            </div>
-                                        </div>
-                                        <div class="carousel-item" data-bs-interval="2000">
-                                            <img src="..." class="d-block w-100" alt="...">
-                                            <div class="carousel-caption d-none d-md-block">
-                                                <h5>Second slide label</h5>
-                                                <p>Some representative placeholder content for the second slide.</p>
-                                            </div>
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="..." class="d-block w-100" alt="...">
-                                            <div class="carousel-caption d-none d-md-block">
-                                                <h5>Third slide label</h5>
-                                                <p>Some representative placeholder content for the third slide.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button"
-                                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
-                        </div>
-                        <div id="añadirVideos">
-                            <div class="row modalTexto">
-                                Video del producto(mín 1):
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
-                                <input type="file" onchange="vista_preliminarProductoVideo(event)" class="form-control"
-                                    id="producto_IMG_Video" name="producto_IMG" placeholder="Foto del producto"
-                                    aria-label="Username" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div id="miCarruselVideos">
-                                <div id="carouselExampleDark" class="carousel carousel-dark slide"
-                                    data-bs-ride="carousel">
-                                    <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
-                                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
-                                            aria-label="Slide 2"></button>
-                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
-                                            aria-label="Slide 3"></button>
-                                    </div>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active" data-bs-interval="10000">
-                                            <img src="..." class="d-block w-100" alt="...">
-                                            <div class="carousel-caption d-none d-md-block">
-                                                <h5>First slide label</h5>
-                                                <p>Some representative placeholder content for the first slide.</p>
-                                            </div>
-                                        </div>
-                                        <div class="carousel-item" data-bs-interval="2000">
-                                            <img src="..." class="d-block w-100" alt="...">
-                                            <div class="carousel-caption d-none d-md-block">
-                                                <h5>Second slide label</h5>
-                                                <p>Some representative placeholder content for the second slide.</p>
-                                            </div>
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="..." class="d-block w-100" alt="...">
-                                            <div class="carousel-caption d-none d-md-block">
-                                                <h5>Third slide label</h5>
-                                                <p>Some representative placeholder content for the third slide.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button"
-                                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
-                        </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="ButtonRegistrarProducto"
+                            data-bs-dismiss="modal">Crear
+                            Producto</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
@@ -534,7 +390,7 @@ session_start(); // Inicio mi sesion PHP
         </div>
     </div>
 
-      <!--  >MODAL EDITAR PRODUCTO<-->
+    <!--  >MODAL EDITAR PRODUCTO<-->
     <div class="modal fade" id="miModalEditarProducto" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
         data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -546,7 +402,7 @@ session_start(); // Inicio mi sesion PHP
                 <form method="post">
                     <div class="modal-body">
                         <div id="E_divAltaProducto">
-                                  
+
                             <input type="hidden" id="E_product_cot" value="0">
                             <div class="row">
                                 <div class="col-12">
@@ -594,20 +450,38 @@ session_start(); // Inicio mi sesion PHP
                             </div>
                             <div class="input-group">
                                 <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="radio" name="E_product_cotizado" id="E_product_cotizado" value="1"
+                                    <input class="form-check-input mt-0" type="radio" name="E_product_cotizado"
+                                        id="E_product_cotizado" value="1"
                                         aria-label="Radio button for following text input">
                                 </div>
                                 <input type="text" class="form-control" placeholder="El producto es cotizado"
                                     aria-label="Text input with radio button" onlyread>
 
-                            </div>          
+                            </div>
                             <button type="button" class="btn btn-success" id="ButtonActualizarProducto">Actualizar
                                 Producto</button>
                         </div>
                         <div id="E_añadirCategorias">
+                                 <div class="row modalTexto">
+                                Categoria añadidas:
+                            </div>
+                            <table class="table table-hover" >
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="VerMisCategoriasProducto">
+
+                            </tbody>
+                            </table>
                             <div class="row modalTexto">
                                 Categoria:
                             </div>
+
                             <div class="input-group mb-3">
 
                                 <div class="dropdown input-group-text" id="basic-addon1">
@@ -616,32 +490,35 @@ session_start(); // Inicio mi sesion PHP
                                         Selecciona aquí:
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"
-                                        id="misCategoriasDropdown">
+                                        id="misCategoriasDropdownEdit">
 
 
                                     </ul>
                                 </div>
-                                <input type="text" class="form-control" name="E_product-category" id="E_product-category"
-                                    placeholder="Categoría" aria-label="Username" aria-describedby="basic-addon1"
-                                    readonly required>
+                                <input type="text" class="form-control" name="E_product-category"
+                                    id="E_product-category" placeholder="Categoría" aria-label="Username"
+                                    aria-describedby="basic-addon1" readonly required>
+
+                                <input type="hidden" id="miIdCategoriaSeleccionada">
+                                   
 
                             </div>
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
+                            <button type="button" class="btn btn-success" id="AsignarCategoriaProducto">Asignar</button>
                         </div>
                         <div id="E_añadirImagenes">
                             <div class="row modalTexto">
-                                Imagen del producto(mín 3):
+                                Imagenes del producto:
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="E_basic-addon1"> <i class="bi bi-camera"> </i></span>
-                                <input type="file" onchange="vista_preliminarProducto(event)" class="form-control"
+                                <input type="file" class="form-control"
                                     id="E_producto_IMG" name="E_producto_IMG" placeholder="Foto del producto"
-                                    aria-label="Username" aria-describedby="E_basic-addon1" required>
+                                    aria-label="Username" aria-describedby="E_basic-addon1"  accept="image/jpeg" required>
                             </div>
-                              <div id="E_miCarruselImagenes">
+                            <div id="E_miCarruselImagenes">
                                 <div id="carouselExampleDark" class="carousel carousel-dark slide"
                                     data-bs-ride="carousel">
-                                    <div class="carousel-indicators">
+                                    <div class="carousel-indicators" id="misIndicadores">
                                         <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
                                             class="active" aria-current="true" aria-label="Slide 1"></button>
                                         <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
@@ -684,7 +561,7 @@ session_start(); // Inicio mi sesion PHP
                                     </button>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
+                            <button type="button" class="btn btn-success" id="añadirImagenesProducto">Añadir Imagen</button>
                         </div>
                         <div id="E_añadirVideos">
                             <div class="row modalTexto">
@@ -692,9 +569,9 @@ session_start(); // Inicio mi sesion PHP
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="E_basic-addon2"> <i class="bi bi-camera"> </i></span>
-                                <input type="file" onchange="vista_preliminarProductoVideo(event)" class="form-control"
-                                    id="E_producto_Video" name="producto_IMG" placeholder="Foto del producto"
-                                    aria-label="Username" aria-describedby="E_basic-addon2" required>
+                                <input type="file" class="form-control"
+                                    id="E_producto_Video" name="producto_IMG" placeholder="Video del producto"
+                                    aria-label="Username" aria-describedby="E_basic-addon2" accept="video/mp4" required>
                             </div>
                             <div id="E_miCarruselVideos">
                                 <div id="carouselExampleDark" class="carousel carousel-dark slide"
@@ -742,16 +619,19 @@ session_start(); // Inicio mi sesion PHP
                                     </button>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Añadir</button>
+                            <button type="button" class="btn btn-success" id="añadirVideosProducto">Añadir</button>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="mostrarCategoriaProductEdit">Siguiente</button>
+                        <button type="button" class="btn btn-primary"
+                            id="mostrarCategoriaProductEdit">Siguiente</button>
                         <button type="button" class="btn btn-primary" id="mostrarProductoBack">Anterior</button>
                         <button type="button" class="btn btn-primary" id="mostrarImagenesProductEdit">Siguiente</button>
-                        <button type="button" class="btn btn-primary" id="mostrarCategoriaProductEditBack">Anterior</button>
+                        <button type="button" class="btn btn-primary"
+                            id="mostrarCategoriaProductEditBack">Anterior</button>
                         <button type="button" class="btn btn-primary" id="mostrarVideosProductEdit">Siguiente</button>
-                        <button type="button" class="btn btn-primary" id="mostrarImagenesProductEditBack">Anterior</button>
+                        <button type="button" class="btn btn-primary"
+                            id="mostrarImagenesProductEditBack">Anterior</button>
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </form>

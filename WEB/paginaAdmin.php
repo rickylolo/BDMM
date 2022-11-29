@@ -118,6 +118,8 @@ session_start(); // Inicio mi sesion PHP
          if($_SESSION["rol"] == 2){
             echo'<div class="separador"></div>';
             echo'<div class="col-12 fs-2 fw-bolder d-flex justify-content-end">';
+            echo'<div class="btn btn-sm bg-primary" data-bs-toggle="modal" data-bs-target="#miModalVerCategorias">';
+            echo'Ver Categorias</div>';
             echo'<div class="btn btn-sm bg-success" data-bs-toggle="modal" data-bs-target="#miModalRegistroCategoria">';
             echo'Registrar Categoria</div>';
             echo'</div>';
@@ -594,9 +596,176 @@ session_start(); // Inicio mi sesion PHP
                 </form>
             </div>
         </div>
-    </div>';
+    </div>
+     <!--  >MODAL WINDOW VER CATEGORIA<-->
+    <div class="modal fade" id="miModalVerCategorias" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Categorías</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post">
+                	<div class="modal-body">
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Color</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody id="VerMisCategorias">
+ 
+  </tbody>
+</table>
+					
+				    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    ';
      }
     ?>
+
+      <!--  >MODAL EDIT USER<-->
+    <div class="modal fade" id="miModalEditUser" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Edita tus datos</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST">
+                    <div class="modal-body">
+
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12">
+                                <h5>Ingresa los siguientes datos:</h5>
+                            </div>
+                        </div>
+                        <div class="row modalTexto">
+                            Correo Electrónico
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+
+                            <input type="text" class="form-control" id="E_email" name="E_email"
+                                placeholder="Correo Electrónico" aria-label="Username" aria-describedby="basic-addon1"
+                                value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Nombre de usuario
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-person"></i></span>
+
+                            <input type="text" class="form-control" id="E_usuario" name="E_usuario"
+                                placeholder="Nombre de usuario" aria-label="Username" aria-describedby="basic-addon1"
+                                value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Nombre(s)
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-file-person"></i></span>
+                            <input type="text" class="form-control" id="E_names" name="E_names" placeholder="Nombre(s)"
+                                aria-label="Username" aria-describedby="basic-addon1" value="">
+
+                        </div>
+
+
+                        <div class="row modalTexto">
+                            Apellido Paterno
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i
+                                    class="bi bi-file-person-fill"></i></span>
+
+                            <input type="text" class="form-control" id="E_lastNameP" name="E_lastName"
+                                placeholder="Apellido(s)" aria-label="Username" aria-describedby="basic-addon1"
+                                value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Apellido Materno
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i
+                                    class="bi bi-file-person-fill"></i></span>
+
+                            <input type="text" class="form-control" id="E_lastNameM" name="E_lastName"
+                                placeholder="Apellido Materno" aria-label="Apellido Materno"
+                                aria-describedby="basic-addon1" value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Contraseña
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-key"></i></span>
+                            <input type="password" class="form-control" id="E_contrasenia" name="E_contrasenia"
+                                placeholder="Contraseña" aria-label="Username" aria-describedby="basic-addon1" value="">
+
+                        </div>
+                        <p style="font-size: small;">Contraseña con un mínimo de 8 caracteres, una
+                            mayúscula, una minúscula, un número y un carácter
+                            especial.
+                        <p>
+
+
+                        <div class="row modalTexto">
+                            Fecha de nacimiento
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i
+                                    class="bi bi-file-person-fill"></i></span>
+
+                            <input type="date" class="form-control" id="E_FechaNacimiento" name="E_FechaNacimiento"
+                                placeholder="Fecha de Nacimiento" aria-label="Fecha Nacimiento"
+                                aria-describedby="basic-addon1" value="">
+
+                        </div>
+
+                        <div class="row modalTexto">
+                            Foto de perfil
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+                            <input type="file" onchange="vista_preliminarEditarPerfil(event)" class="form-control"
+                                id="E_userIMG" name="E_userIMG" placeholder="Foto de perfil" aria-label="Username"
+                                aria-describedby="basic-addon1">
+
+
+                        </div>
+                        <div class="d-flex justify-content-center"><img src="" alt="" id="img-foto" width="250px"
+                                height="250px"></div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="ButtonActualizarPerfil" name="EditUser"
+                            data-bs-dismiss="modal">Actualizar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!--FOOTER<-->
     <footer class="w-100 d-flex align-items justify-content-center flex-wrap">
         <p class="fs-5 px-3 pt-3 PCELText"><img src="img/jyp-logo.jpg" class="" width="80" height="40">

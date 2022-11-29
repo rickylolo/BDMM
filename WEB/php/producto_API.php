@@ -209,10 +209,10 @@ class ProductoAPI
         }
     }
 
-    function actualizarProducto($Producto_id,$Usuario_id,$nombreProducto,$descProducto,$esCotizado,$Precio,$cantidadDisponible)
+    function actualizarProducto($Producto_id,$Usuario_id,$nombreProducto,$descProducto,$esCotizado,float $Precio,$cantidadDisponible)
     {
         $producto = new producto();
-        $producto->actualizarProducto($Producto_id,$Usuario_id,$nombreProducto,$descProducto,$esCotizado,$Precio,$cantidadDisponible);
+        $producto->actualizarProducto($Producto_id,$Usuario_id,$nombreProducto,$descProducto,$esCotizado, $Precio,$cantidadDisponible);
     }
  
     function eliminarProducto($Producto_id)
@@ -235,6 +235,7 @@ if (isset($_POST['funcion'])) {
             $var->insertarProducto($id,$_POST['nombreProducto'],$_POST['descProducto'],$_POST['esCotizado'],$_POST['Precio'],$_POST['cantidadDisponible']);
             break;
         case "actualizarProducto":
+            session_start();
             $id = $_SESSION['id'];
             $var = new ProductoAPI();
             $var->actualizarProducto($_POST['Producto_id'],$id,$_POST['nombreProducto'],$_POST['descProducto'],$_POST['esCotizado'],$_POST['Precio'],$_POST['cantidadDisponible']);
