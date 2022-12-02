@@ -237,6 +237,10 @@ BEGIN
 		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia, esVideo
 		FROM vProducto; 
    END IF;
+   IF Operacion = 'S' THEN /*GET DATOS PRODUCTO*/
+		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia, esVideo
+		FROM vProducto WHERE Producto_id = sp_Producto_id; 
+   END IF;
     IF Operacion = 'N' THEN /*GET DATOS PRODUCTOS NO APROBADOS*/
 		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia, esVideo
 		FROM vProductoNoAprobado; 
@@ -376,4 +380,58 @@ BEGIN
 END //
 
 
-SELECT * FROM ProductoMultimedia;
+/*--------------------------------------------------------------------------------LISTA--------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS sp_GestionLista;
+DELIMITER //
+CREATE PROCEDURE sp_GestionLista
+(
+Operacion CHAR(1),
+sp_Lista_id INT,
+sp_Usuario_id INT,
+sp_UsuarioComprador_id INT,
+sp_nombreLista VARCHAR(30),
+sp_descripcion TINYTEXT,
+sp_imagenLista MEDIUMBLOB,
+sp_esPrivado BIT,
+sp_esCarrito BIT
+)
+BEGIN
+   IF Operacion = 'I' /*INSERT LISTA*/
+   THEN  
+		INSERT INTO Lista(Usuario_id, UsuarioComprador_id, nombreLista,descripcion,imagenLista) 
+			VALUES (sp_Usuario_id, sp_UsuarioComprador_id, sp_nombreLista,sp_descripcion,sp_imagenLista);
+
+   END IF;
+   IF Operacion = 'E'  /*EDIT LISTA*/
+    THEN 
+    	SET sp_Usuario_id=IF(sp_Usuario_id='',NULL,sp_Usuario_id),
+			sp_UsuarioComprador_id=IF(sp_UsuarioComprador_id='',NULL,sp_UsuarioComprador_id),
+            sp_nombreLista=IF(sp_nombreLista='',NULL,sp_nombreLista),
+            sp_descripcion=IF(sp_descripcion='',NULL,sp_descripcion),
+            sp_imagenLista=IF(sp_imagenLista='',NULL,sp_imagenLista);
+		UPDATE Lista 
+			SET Usuario_id = IFNULL(sp_Usuario_id,Usuario_id), 
+			UsuarioComprador_id=  IFNULL(sp_UsuarioComprador_id,UsuarioComprador_id), 
+			nombreLista=  IFNULL(sp_nombreLista,nombreLista),
+            descripcion=  IFNULL(sp_descripcion,descripcion), 
+            imagenLista=  IFNULL(sp_imagenLista,imagenLista)
+		WHERE Lista_id=sp_Lista_id;
+   END IF;
+   
+   IF Operacion = 'D' THEN /*DELETE LISTA*/
+          DELETE FROM Lista WHERE  Lista_id=sp_Lista_id;
+   END IF;
+   
+	IF Operacion = 'G' THEN /*GET LISTA*/
+          SELECT Lista_id, Usuario_id, UsuarioComprador_id, nombreLista, descripcion, imagenLista, esPrivado, esCarrito 
+          FROM vLista 
+          WHERE  Lista_id=sp_Lista_id;
+   END IF;
+  
+  
+  
+   
+END //
+
+
+SELECT * FROM Lista;

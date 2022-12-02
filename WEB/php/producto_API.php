@@ -37,6 +37,36 @@ class ProductoAPI
         }
     }
 
+   function getProducto($Producto_id)
+    {
+        $producto = new producto();
+        $arrProductos = array();
+        $arrProductos["Datos"] = array();
+        $res = $producto->getProducto($Producto_id);
+        if ($res) { // Entra si hay información
+            while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
+
+                $obj = array(
+                    "Producto_id" => $row['Producto_id'],
+                    "Usuario_id" => $row['Usuario_id'],
+                    "nombreProducto" => $row['nombreProducto'],
+                    "descripcionProducto" => $row['descripcionProducto'],
+                    "esCotizado" => $row['esCotizado'],
+                    "Precio" => $row['Precio'],
+                    "cantidadDisponible" => $row['cantidadDisponible'],
+                    "esVideo" =>$row['esVideo'],
+                    "Multimedia" => base64_encode(($row['Multimedia']))
+                   
+                );
+                array_push($arrProductos["Datos"], $obj);
+            }
+            echo json_encode($arrProductos["Datos"]);
+        } else {
+            header("Location:../paginaVendedor.php");
+            exit();
+        }
+    }
+
     function getProductosNoAprobados()
     {
         $producto = new producto();
@@ -254,6 +284,10 @@ if (isset($_POST['funcion'])) {
         case "getProductos":
             $var = new ProductoAPI();
             $var->getProductos();
+            break;
+        case "getProducto":
+            $var = new ProductoAPI();
+            $var->getProducto($_POST['Producto_id']);
             break;
         case "getProductosNoAprobados":
             $var = new ProductoAPI();

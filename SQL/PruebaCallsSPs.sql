@@ -69,4 +69,17 @@ NULL,
 NULL
 );
 
+CALL sp_GestionLista('G', #Operacion
+1,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL
+);
+
+
+
 SET GLOBAL max_allowed_packet=1073741824;

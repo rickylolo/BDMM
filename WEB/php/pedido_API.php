@@ -118,7 +118,6 @@ if (isset($_POST['funcion'])) {
             $var->insertarPedido($_POST['Lista_id'],$id,$_POST['Usuario_id'],$_POST['estadoPedido']);
             break;
         case "actualizarPedido":
-            $id = $_SESSION['id'];
             $var = new PedidoAPI();
             $var->actualizarPedido($_POST['Pedido_id'],$_POST['Lista_id'],$id,$_POST['Usuario_id'],$_POST['estadoPedido'],$_POST['fechaEntrega']);
             break;
@@ -131,8 +130,8 @@ if (isset($_POST['funcion'])) {
             $var->getPedidos();
             break;
         case "getPedidosUsuario":
+            session_start();
             $id = $_SESSION['id'];
-            $var = new PedidoAPI();
             $var = new PedidoAPI();
             $var->getPedidoUser($id);
             break;

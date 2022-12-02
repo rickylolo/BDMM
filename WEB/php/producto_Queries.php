@@ -20,6 +20,21 @@ class producto extends DB
         return $query;
     }
 
+         // QUERY Get Datos del producto
+    function getProducto($Producto_id)
+    {
+        $get = "CALL sp_GestionProducto('S', 
+        $Producto_id,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL);";
+        $query = $this->connect()->query($get);
+        return $query;
+    }
+
    // QUERY Get Datos de todos los productos aprobados
     function getAllProductosNoAprobados()
     {

@@ -67,8 +67,8 @@ CREATE TABLE Lista(
     UsuarioComprador_id  INT NOT NULL COMMENT'Clave Foránea del cliente que pago la lista',
     nombreLista VARCHAR(30) NOT NULL COMMENT'Nombre de la lista',
 	descripcion TINYTEXT COMMENT'Breve descripcion de la lista',
-    imagenLista BLOB COMMENT'Imagen ilustrativa de la lista',
-    esPrivado BIT DEFAULT 1 COMMENT'Bandera que indica la privacidad de la lista 1:Privada 2:Wishlist',
+    imagenLista MEDIUMBLOB COMMENT'Imagen ilustrativa de la lista',
+    esPrivado BIT DEFAULT 1 COMMENT'Bandera que indica la privacidad de la lista 1:Privada 0:Wishlist',
     esCarrito BIT DEFAULT 0 COMMENT'Bandera que indica si la lista es el carrito',
  CONSTRAINT PK_Lista
 	PRIMARY KEY (Lista_id),

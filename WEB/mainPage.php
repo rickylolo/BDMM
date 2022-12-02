@@ -13,13 +13,17 @@ session_start(); // Inicio mi sesion PHP
     <link rel="shortcut icon" href="img\jyp-logo.jpg">
     <script src="js/jquery-3.6.0.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/scriptProducto.js"></script>
+    <script src="js/compradorMainScript.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/mainPage.css" rel="stylesheet">
+    <link href="css/productoPage.css" rel="stylesheet">
+    <link href="css/pedidoPage.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 
 <body>
-      <?php
+    <?php
   if ($_SESSION != NULL) { // Si mi sesion no es nula significa que un usuario inicio sesion
     echo '<input type="hidden" value="' . $_SESSION['id'] . '" id="miUserIdActual">'; // Valor del id del usuario en un campo invisible
   }
@@ -44,7 +48,8 @@ session_start(); // Inicio mi sesion PHP
                                 <p class="fs-5 p-1 mx-auto" id="miNombre"></p>
                             </li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="" id="EditarPerfil" data-bs-toggle="modal" data-bs-target="#miModalEditUser">Editar Perfil</a></li>
+                            <li><a class="dropdown-item" href="" id="EditarPerfil" data-bs-toggle="modal"
+                                    data-bs-target="#miModalEditUser">Editar Perfil</a></li>
                             <?php 
                             if($_SESSION["rol"] == 1){
                             echo' <li><a class="dropdown-item" href="paginaAdmin.php">Página Admin</a></li>';
@@ -57,16 +62,16 @@ session_start(); // Inicio mi sesion PHP
                             }
                              if($_SESSION["rol"] == 4){
                              echo'<li><a class="dropdown-item" href="">Hacer perfil público/privado</a></li>';
-                             echo' <li><a class="dropdown-item" href="pedidos.php">Mis pedidos</a></li>';
-                             echo'<li><a class="dropdown-item" href="listas.php">Mis listas</a></li>';
+                             echo' <li><a class="dropdown-item" id="MostrarPedidos">Mis pedidos</a></li>';
+                             echo'<li><a class="dropdown-item" id="MostrarListas">Mis listas</a></li>';
                              
                             
                             }
                             ?>
-                           
-                           
-                      
-                          
+
+
+
+
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" href="index.php">Salir</a></li>
                         </ul>
@@ -103,49 +108,14 @@ session_start(); // Inicio mi sesion PHP
             </div>
         </div>
     </nav>
-
-    <div class="container">
+    <input type="hidden" id="miProductoSeleccionado">
+    <div class="container" id="miPaginaPrincipal">
         <!--                 CAROUSEL                 -->
         <div class="container">
             <div class="container">
-                <div class="d-flex justify-content-center">
-                    <div id="myCarousel" class="carousel slide carousel-fade " data-bs-ride="carousel">
-                        <ol class="carousel-indicators" id="numero-carrusel">
-                            <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
-                            <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
-                            <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
-                            <li data-bs-target="#myCarousel" data-bs-slide-to="3"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <a href="producto.php">
-                                    <img src="img/Stray-Kids-Comeback-2022.jpg" class="mx-auto d-block w-100" alt="...">
-                                </a>
-                            </div>
-                            <div class="carousel-item ">
-                                <a href="producto.php">
-                                    <img src="img/TwiceTTT.jpg" class="mx-auto d-block w-100" alt="...">
-                                </a>
-                            </div>
-                            <div class="carousel-item ">
-                                <a href="producto.php">
-                                    <img src="img/itzyCheckmate.jpg" class="mx-auto d-block w-100" alt="...">
-                                </a>
-                            </div>
-                            <div class="carousel-item ">
-                                <a href="producto.php">
-                                    <img src="img/nmixxOO.jpg" class="mx-auto d-block w-100" alt="...">
-                                </a>
-                            </div>
-                        </div>
-                        <a href="#myCarousel" class="carousel-control-prev" role="button" data-bs-slide="prev">
-                            <span class="sr-only"></span>
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        </a>
-                        <a href="#myCarousel" class="carousel-control-next" role="button" data-bs-slide="next">
-                            <span class="sr-only"></span>
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        </a>
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" id="miCarrusel">
+
                     </div>
                 </div>
             </div>
@@ -157,62 +127,9 @@ session_start(); // Inicio mi sesion PHP
             <div class="row fs-4 product-title"><b>PRODUCTOS RECOMENDADOS</b></div>
             <hr class="solid">
             <section class="post-list">
-                <div class="content">
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/celebrate.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum Twice Celebrate</b></h4>
-                            <p class="descripcion">Celebrate - Version A - incl. DVD</p>
-                            <span>1,352<sup>.56</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
+                <div class="content" id="misProductosRecomendados">
 
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/tasteOfLove.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum Twice Taste of love</b></h4>
-                            <p class="descripcion">Taste Of Love - Fallen Version Photocards Included</p>
-                            <span>899<sup>.00</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
 
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/nmixxAlbum.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum NMIXX AD MARE</b></h4>
-                            <p class="descripcion">NMIXX 1st Single</p>
-                            <span>673<sup>.00</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
-
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/oddinarySK.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum Stray Kids Oddinary</b></h4>
-                            <p class="descripcion">Oddinary Mask Off & Scanning Version</p>
-                            <span>673<sup>.00</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
                 </div>
 
             </section>
@@ -223,63 +140,8 @@ session_start(); // Inicio mi sesion PHP
             <div class="row fs-4 product-title"><b>PRODUCTOS POPULARES</b></div>
             <hr class="solid">
             <section class="post-list">
-                <div class="content">
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/celebrate.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum Twice Celebrate</b></h4>
-                            <p class="descripcion">Celebrate - Version A - incl. DVD</p>
-                            <span>1,352<sup>.56</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
+                <div class="content" id="misProductosPopulares">
 
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/tasteOfLove.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum Twice Taste of love</b></h4>
-                            <p class="descripcion">Taste Of Love - Fallen Version Photocards Included</p>
-                            <span>899<sup>.00</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
-
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/nmixxAlbum.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum NMIXX AD MARE</b></h4>
-                            <p class="descripcion">NMIXX 1st Single</p>
-                            <span>673<sup>.00</sup></span><br>
-                            <div class="btn miCarrito" data-bs-toggle="modal" data-bs-target="#miModalCotizar"><i
-                                    class="bi bi-cart-fill"></i>| Cotizar</div>
-                        </div>
-                    </article>
-
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/oddinarySK.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum Stray Kids Oddinary</b></h4>
-                            <p class="descripcion">Oddinary Mask Off & Scanning Version</p>
-                            <span>673<sup>.00</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
                 </div>
 
             </section>
@@ -290,68 +152,219 @@ session_start(); // Inicio mi sesion PHP
             <div class="row fs-4 product-title"><b>MEJORES PRODUCTOS</b></div>
             <hr class="solid">
             <section class="post-list">
-                <div class="content">
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/celebrate.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum Twice Celebrate</b></h4>
-                            <p class="descripcion">Celebrate - Version A - incl. DVD</p>
-                            <span>1,352<sup>.56</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
+                <div class="content" id="misProductosMejores">
 
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/tasteOfLove.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum Twice Taste of love</b></h4>
-                            <p class="descripcion">Taste Of Love - Fallen Version Photocards Included</p>
-                            <span>899<sup>.00</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
-
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/nmixxAlbum.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum NMIXX AD MARE</b></h4>
-                            <p class="descripcion">NMIXX 1st Single</p>
-                            <span>673<sup>.00</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
-
-                    <article class="post">
-                        <div class="post-header">
-                            <a href="producto.php">
-                                <img src="img/oddinarySK.jpg" class="post-img">
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h4><b>Álbum Stray Kids Oddinary</b></h4>
-                            <p class="descripcion">Oddinary Mask Off & Scanning Version</p>
-                            <span>673<sup>.00</sup></span><br>
-                            <div class="btn miCarrito"><i class="bi bi-cart-fill"></i>| Agregar</div>
-                        </div>
-                    </article>
                 </div>
 
             </section>
         </div>
 
     </div>
+
+    <div class="container" id="miProducto">
+    </div>
+
+
+    <!-- LISTAS -->
+    <div class="container" id="misListas">
+        <table class="table">
+            <div class="row">
+                <div class="col-6 fs-2 fw-bolder d-flex justify-content-start">
+
+                    Listas
+
+
+                </div>
+
+
+
+            </div>
+            <div class="col-12 fs-2 fw-bolder d-flex justify-content-end">
+                <div class="btn btn-sm bg-success" data-bs-toggle="modal" data-bs-target="#miModalAltaListas">Agregar
+                    lista</div>
+            </div>
+            <hr class="bg-danger border-2 border-top border-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Cantidad productos</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Tipo de lista</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+                    <td class="productoImagen">
+                        <img src="img/TwiceTTT.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
+                            alt="...">
+                    </td>
+                    <td>
+                        Productos Twice
+                    </td>
+                    <td>
+                        8
+                    </td>
+                    <td>
+                        $14,398.58
+                    </td>
+                    <td>
+                        Privada
+                    </td>
+                    <td>
+                        <div class="btn btn-sm bg-primary"><i class="bi bi-arrow-repeat"></i></div>
+                        <div class="btn btn-sm bg-success">Usar</div>
+                        <div class="btn btn-sm bg-danger"><i class="bi bi-trash"></i></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="productoImagen">
+                        <img src="img/Stray-Kids-Comeback-2022.jpg"
+                            class="mx-auto d-block rounded border border-4 productoImagenes" alt="...">
+                    </td>
+                    <td>
+                        Productos Stray kids
+                    </td>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        $4,795.48
+                    </td>
+                    <td>
+                        Pública
+                    </td>
+                    <td>
+                        <div class="btn btn-sm bg-primary"><i class="bi bi-arrow-repeat"></i></div>
+                        <div class="btn btn-sm bg-success">Usar</div>
+                        <div class="btn btn-sm bg-danger"><i class="bi bi-trash"></i></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="productoImagen">
+                        <img src="img/itzyCheckmate.jpg"
+                            class="mx-auto d-block rounded border border-4 productoImagenes" alt="...">
+                    </td>
+                    <td>
+                        Productos Itzy
+                    </td>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        $4,398.58
+                    </td>
+                    <td>
+                        Privada
+                    </td>
+                    <td>
+                        <div class="btn btn-sm bg-primary"><i class="bi bi-arrow-repeat"></i></div>
+                        <div class="btn btn-sm bg-success">Usar</div>
+                        <div class="btn btn-sm bg-danger"><i class="bi bi-trash"></i></div>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <div class="separador"></div>
+    </div>
+
+
+
+     <!-- PEDIDOS -->
+    <div class="container" id="misPedidos">
+        <table class="table">
+            <div class="row">
+                <div class="col-6 fs-2 fw-bolder d-flex justify-content-start">
+                    Pedidos
+
+
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                    <div class="btn btn-success" data-bs-toggle="modal" data-bs-target="#miModalConsultaPedidos">
+                        Consulta de pedidos</div>
+                </div>
+
+            </div>
+            <hr class="bg-danger border-2 border-top border-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre Pedido</th>
+                    <th scope="col">Fecha de entrega</th>
+                    <th scope="col">Estado del pedido</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        1230165
+                    </td>
+                    <td>
+                        Productos Twice
+                    </td>
+                    <td>
+                        20/02/2022
+                    </td>
+                    <td>
+                        Pendiente de envío
+                    </td>
+                    <td>
+                        <div class="btn btn-sm bg-primary Ver-Detalles">Detalles</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        1236546
+                    </td>
+                    <td>
+                        Productos Stray Kids
+                    </td>
+                    <td>
+                        19/01/2022
+                    </td>
+                    <td>
+                        Enviado
+                    </td>
+                    <td>
+                        <div class="btn btn-sm bg-primary Ver-Detalles">Detalles</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        254231
+                    </td>
+                    <td>
+                        Productos Itzy
+                    </td>
+                    <td>
+                        15/01/2022
+                    </td>
+                    <td>
+                        Recibido
+                    </td>
+                    <td>
+                        <div class="btn btn-sm bg-primary Ver-Detalles">Detalles</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+
+
 
     <!--                MODALS                 -->
 
@@ -429,8 +442,8 @@ session_start(); // Inicio mi sesion PHP
                                     class="bi bi-file-person-fill"></i></span>
 
                             <input type="text" class="form-control" id="E_lastNameM" name="E_lastName"
-                                placeholder="Apellido Materno" aria-label="Apellido Materno" aria-describedby="basic-addon1"
-                                value="">
+                                placeholder="Apellido Materno" aria-label="Apellido Materno"
+                                aria-describedby="basic-addon1" value="">
 
                         </div>
 
@@ -467,8 +480,8 @@ session_start(); // Inicio mi sesion PHP
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
-                            <input type="file" onchange="vista_preliminarEditarPerfil(event)" class="form-control" id="E_userIMG"
-                                name="E_userIMG" placeholder="Foto de perfil" aria-label="Username"
+                            <input type="file" onchange="vista_preliminarEditarPerfil(event)" class="form-control"
+                                id="E_userIMG" name="E_userIMG" placeholder="Foto de perfil" aria-label="Username"
                                 aria-describedby="basic-addon1">
 
 
@@ -478,7 +491,8 @@ session_start(); // Inicio mi sesion PHP
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="ButtonActualizarPerfil" name="EditUser" data-bs-dismiss="modal">Actualizar</button>
+                        <button type="button" class="btn btn-success" id="ButtonActualizarPerfil" name="EditUser"
+                            data-bs-dismiss="modal">Actualizar</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
@@ -498,8 +512,8 @@ session_start(); // Inicio mi sesion PHP
                     <div class="row">
                         <div class="input-group">
                             <img src="img/avatar.jpg" width="65px" />
-                            <textarea class="form-control" aria-label="Comement_news"
-                                readonly>Buen dia, quisiera una cotización</textarea>
+                            <textarea class="form-control" aria-label="Comement_news" readonly>Buen dia, quisiera una
+                                cotización</textarea>
                             <span class="btn-secondary input-group-text eliminar-comentario"></span>
                         </div>
                         <div class="separadorCorto"></div>
@@ -526,8 +540,163 @@ session_start(); // Inicio mi sesion PHP
             </div>
         </div>
     </div>
+    <!-- MODAL WINDOW ADD LIST<-->
+    <div class="modal fade" id="miModalAltaListas" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Alta listas</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="php\user_API.php" enctype="multipart/form-data">
+                    <div class="modal-body">
 
+                        <div class="row">
+                            <div class="col-12">
+                                <h5>Ingresa los siguientes datos:</h5>
+                            </div>
+                        </div>
+
+                        <div class="row modalTexto">
+                            Nombre
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-file-person"></i></span>
+                            <input type="text" class="form-control" name="names" placeholder="Nombre(s)"
+                                aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+
+
+                        <div class="row modalTexto">
+                            Descripción
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-card-text"></i></span>
+
+                            <input type="text" class="form-control" id="Description" name="Description"
+                                placeholder="Descripción" aria-label="Descripción" aria-describedby="basic-addon1"
+                                value="" required>
+
+                        </div>
+
+
+                        <div class="row modalTexto">
+                            Foto (opcional)
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"> <i class="bi bi-camera"> </i></span>
+                            <input type="file" onchange="vista_preliminar2(event)" class="form-control" id="userIMG"
+                                name="userIMG" placeholder="Foto de perfil" aria-label="Username"
+                                aria-describedby="basic-addon1">
+
+
+                        </div>
+                        <div class="d-flex justify-content-center"><img src="" alt="" id="img-foto2" width="250px"
+                                height="250px"></div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Añadir Lista</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+    <!--  >MODAL CONSULTA DE PEDIDOS <-->
+    <div class="modal fade" id="miModalConsultaPedidos" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Consulta de pedidos</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Fecha y hora de la venta</th>
+                                <th scope="col">Categoría</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Calificación</th>
+                                <th scope="col">Precio</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    15/02/2022 23:54
+                                </td>
+                                <td>
+                                    Photocards
+                                </td>
+                                <td>
+                                    PC de Nayeon Cry For Me
+                                </td>
+                                <td>
+                                    4.8
+                                </td>
+                                <td>
+                                    $50.24
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    20/12/2022 20:54
+                                </td>
+                                <td>
+                                    Photobooks
+                                </td>
+                                <td>
+                                    PB de Sana I'm Sana
+                                </td>
+                                <td>
+                                    4.2
+                                </td>
+                                <td>
+                                    $507.24
+                                </td>
+
+                            </tr>
+                            <tr>
+
+
+                                <td>
+                                    10/09/2022 07:12
+                                </td>
+                                <td>
+                                    Póster Stray kids
+                                </td>
+                                <td>
+                                    Póster de stray kids
+                                </td>
+                                <td>
+                                    4.0
+                                </td>
+                                <td>
+                                    $200.54
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!--FOOTER<-->
     <footer class="w-100 d-flex align-items justify-content-center flex-wrap">
