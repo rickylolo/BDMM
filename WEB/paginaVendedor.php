@@ -113,7 +113,7 @@ session_start(); // Inicio mi sesion PHP
                 productos</div>
         </div>
         <!-- PRODUCTOS -->
-        <table class="table" id="ProductosPendientes">
+        <table class="table table-hover" id="ProductosPendientes">
             <div class="row">
                 <div class="col-6 fs-4 fw-bolder d-flex justify-content-start">
                     Pendientes por aprobar:
@@ -140,9 +140,8 @@ session_start(); // Inicio mi sesion PHP
             </tbody>
 
         </table>
-
         <div class="separador"></div>
-        <table class="table" id="ProductosAprobados">
+        <table class="table table-hover" id="ProductosAprobados">
             <div class="row">
                 <div class="col-6 fs-4 fw-bolder d-flex justify-content-start">
                     Productos aprobados:
@@ -458,8 +457,12 @@ session_start(); // Inicio mi sesion PHP
                                     aria-label="Text input with radio button" onlyread>
 
                             </div>
+                            <div class="separador"></div>
+                            <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-success" id="ButtonActualizarProducto">Actualizar
                                 Producto</button>
+                            </div>
+                             <div class="separador"></div>
                         </div>
                         <div id="E_añadirCategorias">
                                  <div class="row modalTexto">
@@ -503,7 +506,11 @@ session_start(); // Inicio mi sesion PHP
                                    
 
                             </div>
-                            <button type="button" class="btn btn-success" id="AsignarCategoriaProducto">Asignar</button>
+                            <div class="separador"></div>
+                            <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-success" id="AsignarCategoriaProducto">Asignar Categoría</button>
+                            </div>
+                             <div class="separador"></div>
                         </div>
                         <div id="E_añadirImagenes">
                             <div class="row modalTexto">
@@ -524,7 +531,11 @@ session_start(); // Inicio mi sesion PHP
                                     </div>         
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-success" id="añadirImagenesProducto">Añadir Imagen</button>
+                            <div class="separador"></div>
+                            <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-success d-flex justify-content-end" id="añadirImagenesProducto">Añadir Imagen</button>
+                            </div>
+                             <div class="separador"></div>
                         </div>
                         <div id="E_añadirVideos">
                             <div class="row modalTexto">
@@ -548,7 +559,11 @@ session_start(); // Inicio mi sesion PHP
                                   
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-success" id="añadirVideosProducto">Añadir</button>
+                            <div class="separador"></div>
+                            <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-success" id="añadirVideosProducto">Añadir Video</button>
+                            </div>
+                             <div class="separador"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -561,7 +576,7 @@ session_start(); // Inicio mi sesion PHP
                         <button type="button" class="btn btn-primary" id="mostrarVideosProductEdit">Siguiente</button>
                         <button type="button" class="btn btn-primary"
                             id="mostrarImagenesProductEditBack">Anterior</button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="RecargarNoAprobados">Cancelar</button>
                     </div>
                 </form>
             </div>

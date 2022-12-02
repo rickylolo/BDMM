@@ -200,9 +200,9 @@ $(document).ready(function () {
     })
       .done(function (data) {
         var items = JSON.parse(data);
+        $("#misIndicadoresVideos").empty();
+        $("#itemsCarruselVideo").empty();
         if (items.length > 0) {
-          $("#misIndicadoresVideos").empty();
-          $("#itemsCarruselVideo").empty();
           $("#misIndicadoresVideos").append(
             `
                <button type="button" data-bs-target="#carouselExampleDark2" data-bs-slide-to="0"
@@ -279,82 +279,76 @@ $(document).ready(function () {
     })
       .done(function (data) {
         var items = JSON.parse(data);
+        var miString = "";
         $("#misProductosAprobados").empty();
         for (let i = 0; i < items.length; i++) {
-          $("#misProductosAprobados").append(
-            `
+          miString += `
                   <tr>
-                    <td class="productoImagen">`
-          );
+                    `;
           if (items[i].Multimedia == "") {
-            $("#misProductosAprobados").append(
-              `
+            miString = `
+              <th scope="row" class="productoImagen">
                         <img src="img/nophoto.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
                             alt="...">
-                            `
-            );
+                    </td>
+                            `;
           } else {
-            $("#misProductosAprobados").append(
+            miString +=
               `
+              <th scope="row" class="productoImagen">
                         <img src="data:image/jpeg;base64,` +
-                items[i].Multimedia +
-                `" class="mx-auto d-block rounded border border-4 productoImagenes"
+              items[i].Multimedia +
+              `" class="mx-auto d-block rounded border border-4 productoImagenes"
                             alt="...">
-                            `
-            );
+                  </td>
+                            `;
           }
 
-          $("#misProductosAprobados").append(
+          miString +=
             `
-                    </td>
+                  
                     <td class="productoNombre">
                         ` +
-              items[i].nombreProducto +
-              `
+            items[i].nombreProducto +
+            `
                     </td>
                     <td class="productodesc">
                          ` +
-              items[i].descripcionProducto +
-              `
+            items[i].descripcionProducto +
+            `
                     </td>
                     <td class="productoStock">
                          ` +
-              items[i].cantidadDisponible +
-              `
+            items[i].cantidadDisponible +
+            `
                     </td>
                     <td class="productoPrecio">
                         $` +
-              items[i].Precio +
-              `
+            items[i].Precio +
+            `
                     </td>
-                    `
-          );
+                    `;
           if (items[i].esCotizado == "1") {
-            $("#misProductosAprobados").append(
-              `
+            miString += `
                     <td class="productoCotizado">
                        Si
                     </td>
-                     `
-            );
+                     `;
           } else {
-            $("#misProductosAprobados").append(
-              `
+            miString += `
                     <td class="productoCotizado">
                        No
                     </td>
-                     `
-            );
+                     `;
           }
-          $("#misProductosAprobados").append(
-            `
+          miString += `
                     <td>
                        <div class="btn btn-primary">Detalles</div> 
                     </td>
                 </tr>
-          `
-          );
+          `;
         }
+        $("#misProductosAprobados").append(miString);
       })
       .fail(function (data) {
         console.error(data);
@@ -367,88 +361,84 @@ $(document).ready(function () {
       url: "php/producto_API.php",
     })
       .done(function (data) {
+        console.log(data);
         var items = JSON.parse(data);
+        var miString2 = "";
         $("#misProductosNoAprobados").empty();
         for (let i = 0; i < items.length; i++) {
-          $("#misProductosNoAprobados").append(
-            `
+          miString2 += `
                   <tr>
-                    <td class="productoImagen">`
-          );
+                    `;
           if (items[i].Multimedia == "") {
-            $("#misProductosNoAprobados").append(
-              `
+            miString2 += `
+              <th scope="row" class="productoImagen">
                         <img src="img/nophoto.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
                             alt="...">
-                            `
-            );
+                    </th>
+                            `;
           } else {
-            $("#misProductosNoAprobados").append(
+            miString2 +=
               `
+              <th scope="row" class="productoImagen">
                         <img src="data:image/jpeg;base64,` +
-                items[i].Multimedia +
-                `" class="mx-auto d-block rounded border border-4 productoImagenes"
+              items[i].Multimedia +
+              `" class="mx-auto d-block rounded border border-4 productoImagenes"
                             alt="...">
-                            `
-            );
+                  </th>
+                            `;
           }
 
-          $("#misProductosNoAprobados").append(
+          miString2 +=
             `
-                    </td>
                     <td class="productoNombre">
                         ` +
-              items[i].nombreProducto +
-              `
+            items[i].nombreProducto +
+            `
                     </td>
                     <td class="productodesc">
                          ` +
-              items[i].descripcionProducto +
-              `
+            items[i].descripcionProducto +
+            `
                     </td>
                     <td class="productoStock">
                          ` +
-              items[i].cantidadDisponible +
-              `
+            items[i].cantidadDisponible +
+            `
                     </td>
                     <td class="productoPrecio">
                         $` +
-              items[i].Precio +
-              `
+            items[i].Precio +
+            `
                     </td>
-                    `
-          );
+                    `;
           if (items[i].esCotizado == "1") {
-            $("#misProductosNoAprobados").append(
-              `
+            miString2 += `
                     <td class="productoCotizado">
                        Si
                     </td>
-                     `
-            );
+                     `;
           } else {
-            $("#misProductosNoAprobados").append(
-              `
+            miString2 += `
                     <td class="productoCotizado">
                        No
                     </td>
-                     `
-            );
+                     `;
           }
-
-          $("#misProductosNoAprobados").append(
+          miString2 +=
             `
-                    <td>
+              <td>
                         <div class="btn bg-primary editarProducto" data-bs-toggle="modal" data-bs-target="#miModalEditarProducto" id="` +
-              items[i].Producto_id +
-              `"><i class="bi bi-pen"></i></div>
+            items[i].Producto_id +
+            `"><i class="bi bi-pen"></i></div>
                         <div class="btn bg-danger eliminarProducto" id="` +
-              items[i].Producto_id +
-              `"><i class="bi bi-trash"></i></div>
+            items[i].Producto_id +
+            `"><i class="bi bi-trash"></i></div>
                     </td>
-          `
-          );
+                  
+          `;
         }
+        console.log(miString2);
+        $("#misProductosNoAprobados").append(miString2);
       })
       .fail(function (data) {
         console.error(data);
@@ -486,7 +476,7 @@ $(document).ready(function () {
       .done(function (data) {
         var items = JSON.parse(data);
         alert("Producto insertado correctamente");
-
+        cargarProductosVendedorNoAprobados();
         $("#idProductoSeleccionado").val(items[0].Producto_id);
         $("#divAltaProducto").hide();
         $("#añadirCategorias").show();
@@ -698,6 +688,20 @@ $(document).ready(function () {
   //Pasar Id Para editar mi producto
   $("#misProductosNoAprobados").on("click", ".editarProducto", funcPasarId);
   function funcPasarId() {
+    //DIVS
+    $("#E_divAltaProducto").show();
+    $("#E_añadirCategorias").hide();
+    $("#E_añadirImagenes").hide();
+    $("#E_añadirVideos").hide();
+
+    //BOTONES
+    $("#mostrarCategoriaProductEdit").show();
+    $("#mostrarProductoBack").hide();
+    $("#mostrarImagenesProductEdit").hide();
+    $("#mostrarCategoriaProductEditBack").hide();
+    $("#mostrarVideosProductEdit").hide();
+    $("#mostrarImagenesProductEditBack").hide();
+
     $("#idProductoSeleccionado").val($(this).attr("id"));
     //Ahora traere la informacion del producto
     var miIdProducto = $("#idProductoSeleccionado").val();
@@ -773,6 +777,10 @@ $(document).ready(function () {
     $("#miIdCategoriaSeleccionada").val(miIdCategoria);
   }
 
+  //Boton Cancelar
+  $("#RecargarNoAprobados").click(function () {
+    cargarProductosVendedorNoAprobados();
+  });
   // BOTONES MI MODAL EDIT
   $("#mostrarCategoriaProductEdit").click(function () {
     //DIVS

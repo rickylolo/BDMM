@@ -128,7 +128,7 @@ session_start(); // Inicio mi sesion PHP
         ?>
          <!-- PRODUCTOS -->
          <div class="separador"></div>
-        <table class="table" id="ProductosPendientes">
+        <table class="table table-hover" id="ProductosPendientes">
             <div class="row">
                 <div class="col-6 fs-4 fw-bolder d-flex justify-content-start">
                     Pendientes por aprobar:
@@ -157,7 +157,7 @@ session_start(); // Inicio mi sesion PHP
         </table>
 
         <div class="separador"></div>
-        <table class="table" id="ProductosAprobados">
+        <table class="table table-hover" id="ProductosAprobados">
             <div class="row">
                 <div class="col-6 fs-4 fw-bolder d-flex justify-content-start">
                     Productos aprobados:
