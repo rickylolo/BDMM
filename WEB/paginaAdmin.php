@@ -126,11 +126,15 @@ session_start(); // Inicio mi sesion PHP
         }
      
         ?>
-        <!-- PEDIDO -->
-        <table class="table">
+         <!-- PRODUCTOS -->
+         <div class="separador"></div>
+        <table class="table" id="ProductosPendientes">
             <div class="row">
-                <div class="col-6 fs-2 fw-bolder d-flex justify-content-start">
+                <div class="col-6 fs-4 fw-bolder d-flex justify-content-start">
                     Pendientes por aprobar:
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                    <div class="btn btn-sm bg-primary" id="mostrarMasPendientes">Ocultar/Mostrar</div>
                 </div>
 
 
@@ -138,203 +142,46 @@ session_start(); // Inicio mi sesion PHP
             <hr class="bg-danger border-2 border-top border-dark">
             <thead>
                 <tr>
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio Unitario</th>
-                    <th scope="col">Precio Total</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col" class="text-center">Imagen</th>
+                    <th scope="col" class="text-center">Nombre</th>
+                    <th scope="col" class="text-center">Descripción</th>
+                    <th scope="col" class="text-center">Stock</th>
+                    <th scope="col" class="text-center">Precio</th>
+                    <th scope="col" class="text-center">Es cotizado</th>
+                    <th scope="col" class="text-center">Aprobar</th>
                 </tr>
             </thead>
-
-
-            <tbody>
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/celebrate.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum Twice Celebrate
-                    </td>
-                    <td class="productodesc">
-                        Celebrate - Version A - incl. DVD
-                    </td>
-                    <td class="productoStock">
-                        1
-                    </td>
-                    <td class="productoPrecio">
-                        $1,352.56
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $1,352.56
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-success"><i class="bi bi-check2"></i></div>
-                        <div class="btn btn-sm bg-danger"><i class="bi bi-x"></i></div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/tasteOfLove.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum Twice Taste of love
-                    </td>
-                    <td class="productodesc">
-                        Taste Of Love - Fallen Version Photocards Included
-                    </td>
-                    <td class="productoStock">
-                        2
-                    </td>
-                    <td class="productoPrecio">
-                        $899.00
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $1,798.00
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-success"><i class="bi bi-check2"></i></div>
-                        <div class="btn btn-sm bg-danger"><i class="bi bi-x"></i></div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/nmixxAlbum.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum NMIXX AD MARE
-                    </td>
-                    <td class="productodesc">
-                        NMIXX 1st Single - incl. DVD
-                    </td>
-                    <td class="productoStock">
-                        1
-                    </td>
-                    <td class="productoPrecio">
-                        $673.00
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $673.00
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-success"><i class="bi bi-check2"></i></div>
-                        <div class="btn btn-sm bg-danger"><i class="bi bi-x"></i></div>
-                    </td>
-                </tr>
-
+            <tbody id="misProductosNoAprobados">
             </tbody>
 
         </table>
 
         <div class="separador"></div>
-        <table class="table">
+        <table class="table" id="ProductosAprobados">
             <div class="row">
-                <div class="col-6 fs-2 fw-bolder d-flex justify-content-start">
+                <div class="col-6 fs-4 fw-bolder d-flex justify-content-start">
                     Productos aprobados:
                 </div>
-
+                <div class="col-6 d-flex justify-content-end">
+                    <div class="btn btn-sm bg-primary" id="mostrarMasAprobados">Ocultar/Mostrar</div>
+                </div>
 
             </div>
             <hr class="bg-danger border-2 border-top border-dark">
             <thead>
                 <tr>
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio Unitario</th>
-                    <th scope="col">Precio Total</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col" class="text-center">Imagen</th>
+                    <th scope="col" class="text-center">Nombre</th>
+                    <th scope="col" class="text-center">Descripción</th>
+                    <th scope="col" class="text-center">Stock</th>
+                    <th scope="col" class="text-center">Precio</th>
+                    <th scope="col" class="text-center">Es cotizado</th>
+                    <th scope="col" class="text-center">Acciones</th>
                 </tr>
             </thead>
 
 
-            <tbody>
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/celebrate.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum Twice Celebrate
-                    </td>
-                    <td class="productodesc">
-                        Celebrate - Version A - incl. DVD
-                    </td>
-                    <td class="productoStock">
-                        1
-                    </td>
-                    <td class="productoPrecio">
-                        $1,352.56
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $1,352.56
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-primary">Detalles</div>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/tasteOfLove.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum Twice Taste of love
-                    </td>
-                    <td class="productodesc">
-                        Taste Of Love - Fallen Version Photocards Included
-                    </td>
-                    <td class="productoStock">
-                        2
-                    </td>
-                    <td class="productoPrecio">
-                        $899.00
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $1,798.00
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-primary">Detalles</div>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="productoImagen">
-                        <img src="img/nmixxAlbum.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
-                            alt="...">
-                    </td>
-                    <td class="productoNombre">
-                        Álbum NMIXX AD MARE
-                    </td>
-                    <td class="productodesc">
-                        NMIXX 1st Single - incl. DVD
-                    </td>
-                    <td class="productoStock">
-                        1
-                    </td>
-                    <td class="productoPrecio">
-                        $673.00
-                    </td>
-                    <td class="productoPrecioTotal">
-                        $673.00
-                    </td>
-                    <td>
-                        <div class="btn btn-sm bg-primary">Detalles</div>
-                    </td>
-                </tr>
-
+            <tbody id="misProductosAprobados">
             </tbody>
 
         </table>
@@ -600,7 +447,7 @@ session_start(); // Inicio mi sesion PHP
      <!--  >MODAL WINDOW VER CATEGORIA<-->
     <div class="modal fade" id="miModalVerCategorias" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
         data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="modalTitle">Categorías</h4>
@@ -608,7 +455,7 @@ session_start(); // Inicio mi sesion PHP
                 </div>
                 <form method="post">
                 	<div class="modal-body">
-<table class="table table-hover" >
+    <table class="table table-hover" >
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -621,12 +468,58 @@ session_start(); // Inicio mi sesion PHP
   <tbody id="VerMisCategorias">
  
   </tbody>
-</table>
-					
-				    </div>
+    </table>
+	</div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!--  >MODAL WINDOW EDITAR CATEGORIA<-->
+    <div class="modal fade" id="miModalEditarCategoria" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Editar categoría</h4>
+                    <input type="hidden" id="miCategoriaSeleccionada">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post">
+                	<div class="modal-body">
+					<div class="row">
+						<div class="col-12">
+							<h5>Ingresa los siguientes datos:</h5>
+						</div>
+					</div>
+					<form method="POST">
+						<div class="row modalTexto">
+							Nombre de Categoria:
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1">@</span>
+							<input type="text" class="form-control" id="E_nameCat" name="E_nameCat" placeholder="Nombre de la categoría" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+						<div class="row modalTexto">
+							Color de la categoría:
+						</div>
+                    	<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1"> <i class="bi bi-file-person-fill"></i></span>
+							<input type="color" class="form-control" id="E_colorCat" name="E_colorCat"  placeholder="Descripción de la categoría" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+						<div class="row modalTexto">
+							Descripción de la categoría:
+						</div>
+					
+                        <textarea class="form-control" id="E_descCat" name="E_descCat"></textarea>
+				</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="ButtonActualizarCategoria" data-bs-toggle="modal" data-bs-target="#miModalVerCategorias">Actualizar
+                            Categoría</button>
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#miModalVerCategorias">Cancelar</button>
                     </div>
                 </form>
             </div>

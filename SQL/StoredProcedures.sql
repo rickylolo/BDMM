@@ -224,15 +224,21 @@ BEGIN
 			cantidadDisponible= IFNULL(sp_cantidadDisponible,cantidadDisponible)
 		WHERE Producto_id=sp_Producto_id;
    END IF;
+     IF Operacion = 'C' THEN /*APROBAR PRODUCTO*/
+          UPDATE Producto 
+          SET esAprobado = 1 
+          WHERE  Producto_id=sp_Producto_id;
+   END IF;
+   
    IF Operacion = 'D' THEN /*DELETE PRODUCTO*/
           DELETE FROM Producto WHERE  Producto_id=sp_Producto_id;
    END IF;
    IF Operacion = 'A' THEN /*GET DATOS PRODUCTOS*/
-		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia
+		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia, esVideo
 		FROM vProducto; 
    END IF;
     IF Operacion = 'N' THEN /*GET DATOS PRODUCTOS NO APROBADOS*/
-		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia
+		SELECT Producto_id, Usuario_id, nombreProducto, descripcionProducto, esCotizado, Precio, cantidadDisponible, Multimedia, esVideo
 		FROM vProductoNoAprobado; 
    END IF;
      IF Operacion = 'V' THEN /*GET DATOS PRODUCTOS VENDEDOR*/
@@ -297,6 +303,12 @@ BEGIN
 		FROM vCategoria; 
    END IF;
    
+   IF Operacion = 'H' THEN /*GET DATOS CATEGORIA*/
+		SELECT Categoria_id, nombreCategoria, colorCategoria, descripcionCategoria
+		FROM vCategoria 
+        WHERE Categoria_id = sp_Categoria_id; 
+   END IF;
+   
    #----------------------MIS CATEGORIAS DE PRODUCTOS -------------------
     IF Operacion = 'P' /*INSERT CATEGORIA DE PRODUCTO*/
    THEN  
@@ -322,7 +334,7 @@ CREATE PROCEDURE sp_GestionMultimedia
 Operacion CHAR(1),
 sp_ProductoMultimedia_id INT,
 sp_Producto_id INT,
-sp_Multimedia MEDIUMBLOB,
+sp_Multimedia LONGBLOB,
 sp_esVideo BIT
 )
 BEGIN
@@ -364,4 +376,4 @@ BEGIN
 END //
 
 
-SELECT * FROM CategoriaProducto;
+SELECT * FROM ProductoMultimedia;

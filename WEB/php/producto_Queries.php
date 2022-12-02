@@ -128,6 +128,22 @@ class producto extends DB
         $query = $this->connect()->query($update);
         return $query;
     }
+
+    
+    // Aprobar Producto
+    function AprobarProducto($Producto_id)
+    {
+        $get = "CALL sp_GestionProducto('C', 
+        $Producto_id,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL);";
+        $query = $this->connect()->query($get);
+        return $query;
+    }
      // ---------------------------------------ELIMINAR INFORMACION------------------------------------------
     // QUERY Eliminar producto
     function eliminarProducto($Producto_id)

@@ -34,6 +34,32 @@ class CategoriaAPI
         }
     }
 
+        function getCategoria($Categoria_id)
+    {
+        $categoria = new categoria();
+        $arrCategorias = array();
+        $arrCategorias["Datos"] = array();
+        $res = $categoria->getCategoria($Categoria_id);
+        if ($res) { // Entra si hay información
+            while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
+
+                $obj = array(
+                    "Categoria_id" => $row['Categoria_id'],
+                    "nombreCategoria" => $row['nombreCategoria'],
+                    "colorCategoria" => $row['colorCategoria'],
+                    "descripcionCategoria" => $row['descripcionCategoria']
+                   
+                );
+                array_push($arrCategorias["Datos"], $obj);
+            }
+            echo json_encode($arrCategorias["Datos"]);
+        } else {
+            header("Location:../index.php");
+            exit();
+        }
+    }
+
+
      function getCategoriasProducto($Producto_id)
     {
         $categoria = new categoria();
@@ -104,6 +130,7 @@ if (isset($_POST['funcion'])) {
             $var->insertarCategoria($id,$_POST['nombreCategoria'],$_POST['colorCategoria'],$_POST['descripcionCategoria']);
             break;
         case "actualizarCategoria":
+            session_start();
             $id = $_SESSION['id'];
             $var = new CategoriaAPI();
             $var->actualizarCategoria($_POST['Categoria_id'],$id,$_POST['nombreCategoria'],$_POST['colorCategoria'],$_POST['descripcionCategoria']);
@@ -115,6 +142,10 @@ if (isset($_POST['funcion'])) {
         case "getCategorias":
             $var = new CategoriaAPI();
             $var->getCategorias();
+            break;
+        case "getCategoria":
+            $var = new CategoriaAPI();
+            $var->getCategoria($_POST['Categoria_id']);
             break;
         case "getCategoriasProducto":
             $var = new CategoriaAPI();

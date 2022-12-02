@@ -120,13 +120,149 @@ $(document).ready(function () {
     })
       .done(function (data) {
         var items = JSON.parse(data);
-        $("#VerMisCategoriasProducto").empty();
-        for (let i = 1; i < items.length; i++) {
-          $("#VerMisCategoriasProducto").append(
+        $("#misIndicadoresImagenes").empty();
+        $("#misItemsCarruselImagenes").empty();
+        if (items.length > 0) {
+          $("#misIndicadoresImagenes").append(
             `
-          
+               <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
+                                            class="active" aria-current="true" aria-label="Slide 1"></button>
           `
           );
+          $("#misItemsCarruselImagenes").append(
+            `
+                                         <div class="carousel-item active" data-bs-interval="10000">
+                                            <img src="data:image/jpeg;base64,` +
+              items[0].Multimedia +
+              `" class="misImagenes">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                 <p><div class="btn btm-sm btn-danger eliminarImagen" id="` +
+              items[0].ProductoMultimedia_id +
+              `">Eliminar</div></p>
+                                            </div>
+                                        </div>
+          `
+          );
+          for (let i = 1; i < items.length; i++) {
+            $("#misIndicadoresImagenes").append(
+              `
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="` +
+                i +
+                `"
+                                            aria-label="Slide ` +
+                i +
+                `"></button>
+                                     
+          `
+            );
+
+            $("#misItemsCarruselImagenes").append(
+              `
+                 <div class="carousel-item">
+                                            <img  src="data:image/jpeg;base64,` +
+                items[i].Multimedia +
+                `" class="misImagenes">
+                                            <div class="carousel-caption d-none d-md-block">
+                                               
+                                                <p><div class="btn btm-sm btn-danger eliminarImagen" id="` +
+                items[i].ProductoMultimedia_id +
+                `">Eliminar</div></p>
+                                            </div>
+                                        </div>
+                <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                 
+          `
+            );
+          }
+        }
+      })
+      .fail(function (data) {
+        console.error(data);
+      });
+  }
+  function cargarVideos(idProducto) {
+    $.ajax({
+      url: "php/multimedia_API.php",
+      type: "POST",
+      data: {
+        funcion: "getMultimediaProductoVideo",
+        Producto_id: idProducto,
+      },
+    })
+      .done(function (data) {
+        var items = JSON.parse(data);
+        if (items.length > 0) {
+          $("#misIndicadoresVideos").empty();
+          $("#itemsCarruselVideo").empty();
+          $("#misIndicadoresVideos").append(
+            `
+               <button type="button" data-bs-target="#carouselExampleDark2" data-bs-slide-to="0"
+                                            class="active" aria-current="true" aria-label="Slide 1"></button>
+          `
+          );
+          $("#itemsCarruselVideo").append(
+            `
+                                         <div class="carousel-item active" data-bs-interval="10000">
+                                                   <video controls  class="misVideos mx-auto"> <source class="misVideos" src="data:video/mp4;base64,` +
+              items[0].Multimedia +
+              `" type="video/mp4"></video>
+                                            <div class="carousel-caption d-none d-md-block">
+                                              <p><div class="btn btn-danger borrarVideo" id="` +
+              items[0].ProductoMultimedia_id +
+              `">Borrar Video</div></p>
+                                            </div>
+                                        </div>
+          `
+          );
+          for (let i = 1; i < items.length; i++) {
+            $("#misIndicadoresVideos").append(
+              `
+                                        <button type="button" data-bs-target="#carouselExampleDark2" data-bs-slide-to="` +
+                i +
+                `"
+                                            aria-label="Slide ` +
+                i +
+                `"></button>
+                                     
+          `
+            );
+
+            $("#itemsCarruselVideo").append(
+              `
+                 <div class="carousel-item">
+                                          <video controls  class="misVideos mx-auto"> <source src="data:video/mp4;base64,` +
+                items[i].Multimedia +
+                `" type="video/mp4"></video>
+                                            <div class="carousel-caption d-none d-md-block">
+                                               
+                                                <p><div class="btn btn-danger borrarVideo" id="` +
+                items[i].ProductoMultimedia_id +
+                `">Borrar Video</div></p>
+                                            </div>
+                                        </div>
+                                           <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleDark2" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleDark2" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                 
+          `
+            );
+          }
         }
       })
       .fail(function (data) {
@@ -452,6 +588,10 @@ $(document).ready(function () {
   function AgregarImagenesProducto() {
     var form_data = new FormData();
     var file_data = $("#E_producto_IMG").prop("files")[0];
+    if (file_data == null || file_data == "") {
+      alert("imagen no cargada");
+      return;
+    }
     var miIdProducto = $("#idProductoSeleccionado").val();
     form_data.append("file", file_data);
     form_data.append("funcion", "insertarMultimedia");
@@ -467,15 +607,48 @@ $(document).ready(function () {
       enctype: "multipart/form-data",
       processData: false,
     }).fail(function (data) {
+      cargarImagenes(miIdProducto);
       alert("Imagen Agregada Correctamente");
     });
   }
 
+  // Eliminar Imagenes
+  $("#misItemsCarruselImagenes").on(
+    "click",
+    ".eliminarImagen",
+    funcEliminarImagen
+  );
+  function funcEliminarImagen() {
+    var miIdMultimediaProducto = $(this).attr("id");
+    var miIdProducto = $("#idProductoSeleccionado").val();
+    if (confirm("¿Seguro deseas eliminar esta imagen?")) {
+      $.ajax({
+        url: "php/multimedia_API.php",
+        type: "POST",
+        data: {
+          funcion: "eliminarMultimedia",
+          ProductoMultimedia_id: miIdMultimediaProducto,
+        },
+      })
+        .done(function (data) {
+          console.log(data);
+          cargarImagenes(miIdProducto);
+          alert("Imagen Eliminada Correctamente");
+        })
+        .fail(function (data) {
+          console.error(data);
+        });
+    }
+  }
   //Agregar Videos
   $("#añadirVideosProducto").click(AgregarVideosProducto);
   function AgregarVideosProducto() {
     var form_data = new FormData();
     var file_data = $("#E_producto_Video").prop("files")[0];
+    if (file_data == null || file_data == "") {
+      alert("Video no cargado");
+      return;
+    }
     var miIdProducto = $("#idProductoSeleccionado").val();
     form_data.append("file", file_data);
     form_data.append("funcion", "insertarMultimedia");
@@ -491,8 +664,35 @@ $(document).ready(function () {
       enctype: "multipart/form-data",
       processData: false,
     }).fail(function (data) {
-      alert("Video Agregada Correctamente");
+      console.log(data);
+      cargarVideos(miIdProducto);
+      alert("Video Agregado Correctamente");
     });
+  }
+
+  // Eliminar Videos
+  $("#itemsCarruselVideo").on("click", ".borrarVideo", funcEliminarVideo);
+  function funcEliminarVideo() {
+    var miIdMultimediaProducto = $(this).attr("id");
+    var miIdProducto = $("#idProductoSeleccionado").val();
+    if (confirm("¿Seguro deseas eliminar esta imagen?")) {
+      $.ajax({
+        url: "php/multimedia_API.php",
+        type: "POST",
+        data: {
+          funcion: "eliminarMultimedia",
+          ProductoMultimedia_id: miIdMultimediaProducto,
+        },
+      })
+        .done(function (data) {
+          console.log(data);
+          cargarVideos(miIdProducto);
+          alert("Video Eliminado Correctamente");
+        })
+        .fail(function (data) {
+          console.error(data);
+        });
+    }
   }
 
   //Pasar Id Para editar mi producto
@@ -522,6 +722,38 @@ $(document).ready(function () {
       });
     //Ahora traere la informacion de las categorias del producto
     categoriasProducto(miIdProducto);
+    //Ahora traere la informacion de las imagenes del producto
+    cargarImagenes(miIdProducto);
+    //Ahora traere la informacion de los videos del producto
+    cargarVideos(miIdProducto);
+  }
+
+  //Eliminar mi producto
+  $("#misProductosNoAprobados").on(
+    "click",
+    ".eliminarProducto",
+    funcEliminarProducto
+  );
+  function funcEliminarProducto() {
+    var miIdProducto = $(this).attr("id");
+    if (confirm("¿Seguro deseas eliminar este producto?")) {
+      $.ajax({
+        url: "php/producto_API.php",
+        type: "POST",
+        data: {
+          funcion: "eliminarProducto",
+          Producto_id: miIdProducto,
+        },
+      })
+        .done(function (data) {
+          console.log(data);
+          alert("Producto eliminado");
+          cargarProductosVendedorNoAprobados();
+        })
+        .fail(function (data) {
+          console.error(data);
+        });
+    }
   }
 
   // Prevenir que este evento cierre mi modal

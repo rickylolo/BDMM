@@ -214,6 +214,13 @@ class ProductoAPI
         $producto = new producto();
         $producto->actualizarProducto($Producto_id,$Usuario_id,$nombreProducto,$descProducto,$esCotizado, $Precio,$cantidadDisponible);
     }
+
+    
+    function aprobarProducto($isAprobado)
+    {
+        $producto = new producto();
+        $producto->aprobarProducto($isAprobado);
+    }
  
     function eliminarProducto($Producto_id)
     {
@@ -242,7 +249,7 @@ if (isset($_POST['funcion'])) {
             break;
         case "eliminarProducto":
             $var = new ProductoAPI();
-            $var->eliminarProducto($_POST['producto_id']);
+            $var->eliminarProducto($_POST['Producto_id']);
             break;
         case "getProductos":
             $var = new ProductoAPI();
@@ -271,6 +278,10 @@ if (isset($_POST['funcion'])) {
         case "getProductoNoAprobado":
             $var = new ProductoAPI();
             $var->getProductoNoAprobado($_POST['Producto_id']);
+            break;
+        case "aprobarProducto":
+            $var = new ProductoAPI();
+            $var->aprobarProducto($_POST['Producto_id']);
             break;
     }
 }

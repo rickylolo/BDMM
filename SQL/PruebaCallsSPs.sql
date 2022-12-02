@@ -58,3 +58,15 @@ CALL sp_GestionProducto('E', #Operacion
 899.98,
 500
 );
+
+
+CALL sp_GestionCategoria('H', #Operacion
+1,
+NULL,
+NULL,
+NULL,
+NULL,
+NULL
+);
+
+SET GLOBAL max_allowed_packet=1073741824;

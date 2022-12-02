@@ -21,7 +21,7 @@ session_start(); // Inicio mi sesion PHP
 <body>
       <?php
   if ($_SESSION != NULL) { // Si mi sesion no es nula significa que un usuario inicio sesion
-    echo '<input type="hidden" value="' . $_SESSION['Usuario_id'] . '" id="miUserIdActual">'; // Valor del id del usuario en un campo invisible
+    echo '<input type="hidden" value="' . $_SESSION['id'] . '" id="miUserIdActual">'; // Valor del id del usuario en un campo invisible
   }
   ?>
     <!--                 HEADER                 -->

@@ -178,7 +178,7 @@ DROP TABLE IF EXISTS ProductoMultimedia;
 CREATE TABLE ProductoMultimedia(
 	ProductoMultimedia_id INT AUTO_INCREMENT NOT NULL COMMENT'Clave Primaria de la multimedia en los productos',
     Producto_id  INT NOT NULL COMMENT'Clave Foránea de el producto',
-    Multimedia  MEDIUMBLOB NOT NULL COMMENT'Imagen o video',
+    Multimedia  LONGBLOB NOT NULL COMMENT'Imagen o video',
 	esVideo BIT NOT NULL COMMENT'Bandera que indica si el producto es un video',
     
  CONSTRAINT PK_ProductoMultimedia

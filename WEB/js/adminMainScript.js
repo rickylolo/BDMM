@@ -11,6 +11,8 @@ $(document).ready(function () {
   });
 
   cargarCategoriasAdmin();
+  cargarProductosAprobados();
+  cargarProductosNoAprobados();
   // CATEGORIAS
   function cargarCategoriasAdmin() {
     $.ajax({
@@ -67,7 +69,188 @@ $(document).ready(function () {
         console.error(data);
       });
   }
+  //PRODUCTOS VENDEDOR
+  function cargarProductosAprobados() {
+    $.ajax({
+      type: "POST",
+      data: { funcion: "getProductos" },
+      url: "php/producto_API.php",
+    })
+      .done(function (data) {
+        var items = JSON.parse(data);
+        $("#misProductosAprobados").empty();
+        for (let i = 0; i < items.length; i++) {
+          $("#misProductosAprobados").append(
+            `
+                  <tr>
+                    <td class="productoImagen">`
+          );
+          if (items[i].Multimedia == "") {
+            $("#misProductosAprobados").append(
+              `
+                        <img src="img/nophoto.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
+                            alt="...">
+                            `
+            );
+          } else {
+            $("#misProductosAprobados").append(
+              `
+                        <img src="data:image/jpeg;base64,` +
+                items[i].Multimedia +
+                `" class="mx-auto d-block rounded border border-4 productoImagenes"
+                            alt="...">
+                            `
+            );
+          }
 
+          $("#misProductosAprobados").append(
+            `
+                    </td>
+                    <td class="productoNombre">
+                        ` +
+              items[i].nombreProducto +
+              `
+                    </td>
+                    <td class="productodesc">
+                         ` +
+              items[i].descripcionProducto +
+              `
+                    </td>
+                    <td class="productoStock">
+                         ` +
+              items[i].cantidadDisponible +
+              `
+                    </td>
+                    <td class="productoPrecio">
+                        $` +
+              items[i].Precio +
+              `
+                    </td>
+                    `
+          );
+          if (items[i].esCotizado == "1") {
+            $("#misProductosAprobados").append(
+              `
+                    <td class="productoCotizado">
+                       Si
+                    </td>
+                     `
+            );
+          } else {
+            $("#misProductosAprobados").append(
+              `
+                    <td class="productoCotizado">
+                       No
+                    </td>
+                     `
+            );
+          }
+          $("#misProductosAprobados").append(
+            `
+                    <td>
+                       <div class="btn btn-primary">Detalles</div> 
+                    </td>
+                </tr>
+          `
+          );
+        }
+      })
+      .fail(function (data) {
+        console.error(data);
+      });
+  }
+  function cargarProductosNoAprobados() {
+    $.ajax({
+      type: "POST",
+      data: { funcion: "getProductosNoAprobados" },
+      url: "php/producto_API.php",
+    })
+      .done(function (data) {
+        console.log(data);
+        var items = JSON.parse(data);
+        $("#misProductosNoAprobados").empty();
+        for (let i = 0; i < items.length; i++) {
+          $("#misProductosNoAprobados").append(
+            `
+                  <tr>
+                    <td class="productoImagen">`
+          );
+          if (items[i].Multimedia == "") {
+            $("#misProductosNoAprobados").append(
+              `
+                        <img src="img/nophoto.jpg" class="mx-auto d-block rounded border border-4 productoImagenes"
+                            alt="...">
+                            `
+            );
+          } else {
+            $("#misProductosNoAprobados").append(
+              `
+                        <img src="data:image/jpeg;base64,` +
+                items[i].Multimedia +
+                `" class="mx-auto d-block rounded border border-4 productoImagenes"
+                            alt="...">
+                            `
+            );
+          }
+
+          $("#misProductosNoAprobados").append(
+            `
+                    </td>
+                    <td class="productoNombre">
+                        ` +
+              items[i].nombreProducto +
+              `
+                    </td>
+                    <td class="productodesc">
+                         ` +
+              items[i].descripcionProducto +
+              `
+                    </td>
+                    <td class="productoStock">
+                         ` +
+              items[i].cantidadDisponible +
+              `
+                    </td>
+                    <td class="productoPrecio">
+                        $` +
+              items[i].Precio +
+              `
+                    </td>
+                    `
+          );
+          if (items[i].esCotizado == "1") {
+            $("#misProductosNoAprobados").append(
+              `
+                    <td class="productoCotizado">
+                       Si
+                    </td>
+                     `
+            );
+          } else {
+            $("#misProductosNoAprobados").append(
+              `
+                    <td class="productoCotizado">
+                       No
+                    </td>
+                     `
+            );
+          }
+
+          $("#misProductosNoAprobados").append(
+            `
+                    <td>
+                      <div class="btn btn-sm bg-success AprobarProducto" id="` +
+              items[i].Producto_id +
+              `"><i class="bi bi-check2"></i></div>
+                    </td>
+          `
+          );
+        }
+      })
+      .fail(function (data) {
+        console.error(data);
+      });
+  }
   // Registro de usuarios administradores con dataform
   //-------------------------SUPER ADMIN----------------------------
   $("#ButtonRegistro").click(funcRegistrarUsuarioAdmin);
@@ -163,8 +346,9 @@ $(document).ready(function () {
       }
     });
   }
-  // Registro de categorias
+
   //-------------------------ADMIN----------------------------
+  // Registro de categorias
   $("#ButtonRegistroCategoria").click(funcRegistrarCategoria);
   function funcRegistrarCategoria() {
     var nomCategoria = $("#nameCat").val();
@@ -192,6 +376,118 @@ $(document).ready(function () {
         console.error(data);
       });
   }
+  // Actualizar categorias
+  $("#ButtonActualizarCategoria").click(funcActualizarCategoria);
+  function funcActualizarCategoria() {
+    var idCategoria = $("#miCategoriaSeleccionada").val();
+    var nomCategoria = $("#E_nameCat").val();
+    var colCategoria = $("#E_colorCat").val();
+    var descCategoria = $("#E_descCat").val();
+    $.ajax({
+      url: "php/categoria_API.php",
+      type: "POST",
+      data: {
+        funcion: "actualizarCategoria",
+        Categoria_id: idCategoria,
+        nombreCategoria: nomCategoria,
+        colorCategoria: colCategoria,
+        descripcionCategoria: descCategoria,
+      },
+    })
+      .done(function (data) {
+        console.log(data);
+        $("#E_nameCat").val("");
+        $("#E_colorCat").val("");
+        $("#E_descCat").val("");
+        cargarCategoriasAdmin();
+        alert("Categoria actualizada correctamente");
+      })
+      .fail(function (data) {
+        console.error(data);
+      });
+  }
+
+  //Pasar Id Categoria
+  $("#VerMisCategorias").on("click", ".editarCategoria", funcGetMiIDCategoria);
+  function funcGetMiIDCategoria() {
+    let miIdCategoria = $(this).attr("id");
+    $("#miCategoriaSeleccionada").val(miIdCategoria);
+
+    $.ajax({
+      type: "POST",
+      data: { funcion: "getCategoria", Categoria_id: miIdCategoria },
+      url: "php/categoria_API.php",
+    })
+      .done(function (data) {
+        console.log(data);
+        if (data.length != 0) {
+          var items = JSON.parse(data);
+
+          $("#E_nameCat").val(items[0].nombreCategoria);
+          $("#E_colorCat").val(items[0].colorCategoria);
+          $("#E_descCat").val(items[0].descripcionCategoria);
+        }
+      })
+      .fail(function (data) {
+        console.error(data);
+      });
+  }
+
+  //Eliminar Categoria
+  $("#VerMisCategorias").on(
+    "click",
+    ".eliminarCategoria",
+    funcEliminarCategoria
+  );
+  function funcEliminarCategoria() {
+    let miIdCategoria = $(this).attr("id");
+    if (confirm("¿Seguro deseas eliminar esta categoria?")) {
+      $.ajax({
+        type: "POST",
+        data: { funcion: "eliminarCategoria", Categoria_id: miIdCategoria },
+        url: "php/categoria_API.php",
+      })
+        .done(function (data) {
+          cargarCategoriasAdmin();
+          alert("Categoria eliminada correctamente");
+        })
+        .fail(function (data) {
+          console.error(data);
+        });
+    }
+  }
+
+  //Eliminar Producto
+  $("#misProductosNoAprobados").on(
+    "click",
+    ".AprobarProducto",
+    funcAprobarProducto
+  );
+  function funcAprobarProducto() {
+    let miIdProducto = $(this).attr("id");
+    if (confirm("¿Seguro deseas aprobar este producto?")) {
+      $.ajax({
+        type: "POST",
+        data: { funcion: "aprobarProducto", Producto_id: miIdProducto },
+        url: "php/producto_API.php",
+      })
+        .done(function (data) {
+          cargarProductosAprobados();
+          cargarProductosNoAprobados();
+          alert("Producto Aprobado");
+        })
+        .fail(function (data) {
+          console.error(data);
+        });
+    }
+  }
+  //TOGGLE PARA MOSTRAR PRODUCTOS
+  $("#mostrarMasPendientes").click(function () {
+    $("#ProductosPendientes").toggle();
+  });
+  $("#mostrarMasAprobados").click(function () {
+    $("#ProductosAprobados").toggle();
+  });
 });
 let vista_preliminarMetPago = (event) => {
   let leer_img = new FileReader();

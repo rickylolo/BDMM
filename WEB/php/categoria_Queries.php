@@ -19,6 +19,19 @@ class categoria extends DB
         return $query;
     }
 
+         // QUERY Get categoria
+    function getCategoria($Categoria_id)
+    {
+        $get = "CALL sp_GestionCategoria('H', 
+        $Categoria_id,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL)";
+        $query = $this->connect()->query($get);
+        return $query;
+    }
     // QUERY Get Datos de todos los categorias
     function getAllCategoriasProducto($Producto_id)
     {
